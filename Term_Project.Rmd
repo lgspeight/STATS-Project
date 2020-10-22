@@ -7,11 +7,12 @@ output: html_document
 
 Title : Analyze water quality data 
 
-Abstract: 
+Abstract: So this project will involve bla bla bla 
 
 Introduction: 
 
 Toolbox discussion:
+
 
 Description:
 
