@@ -5,6 +5,12 @@ date: "10/22/2020"
 output: html_document
 ---
 
+```{r}
+data <- read.csv("waterqualitychesbay.csv")
+
+
+
+```
 Title : Analyze water quality data 
 
 Abstract: So this project will involve bla bla bla 
