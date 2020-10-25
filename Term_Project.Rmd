@@ -6,11 +6,16 @@ output: html_document
 ---
 
 ```{r}
-data <- read.csv("waterqualitychesbay.csv")
+bats_flux <- read.csv("bats_flux.csv")
 
+delete.na <- function(DF, n=0) {
+  DF[rowSums(is.na(DF)) <= n,]
+}
 
+bats_flux.noNA <- delete.na(bats_flux)
 
 ```
+
 Title : Analyze water quality data 
 
 Abstract: So this project will involve bla bla bla 
@@ -18,7 +23,6 @@ Abstract: So this project will involve bla bla bla
 Introduction: 
 
 Toolbox discussion:
-
 
 Description:
 
