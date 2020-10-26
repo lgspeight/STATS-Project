@@ -14,23 +14,30 @@ delete.na <- function(DF, n=0) {
 
 bats_flux.noNA <- delete.na(bats_flux)
 
+
+Data <- subset(bats_flux,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","M_avg","C_avg","N_avg","P_avg"))
+
+Data.noNA <- delete.na(Data)
+
+Data_noNA <- write.csv(x= Data.noNA,file = "Data_noNA.csv")
 ```
 
-Title : Analyze water quality data 
 
-Abstract: So this project will involve bla bla bla 
+# Title : Analyze water quality data 
 
-Introduction: 
+# Abstract: So this project will involve bla bla bla 
 
-Toolbox discussion:
+# Introduction: 
 
-Description:
+# Toolbox discussion:
 
-Implementation:
+# Description:
 
-Results discussion:
+# Implementation:
 
-Limitations:
+# Results discussion:
 
-References:
+# Limitations:
+
+# References:
 
