@@ -10,18 +10,55 @@ bats_flux <- read.csv("bats_flux.csv")
 
 delete.na <- function(DF, n=0) {
   DF[rowSums(is.na(DF)) <= n,]
-}
+} #Function that takes rows out that contains NAs 
 
-bats_flux.noNA <- delete.na(bats_flux)
+bats_flux.noNA <- delete.na(bats_flux) # Take out rows containing NAs 
 
 
 Data <- subset(bats_flux,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","M_avg","C_avg","N_avg","P_avg"))
 
 Data.noNA <- delete.na(Data)
 
-Data_noNA <- write.csv(x= Data.noNA,file = "Data_noNA.csv")
+#Data_noNA <- write.csv(x= Data.noNA,file = "Data_noNA.csv")
 ```
 
+
+ANOVA Trial 
+```{r}
+#we want to make predictions on the Mass average flux. 
+
+# we want to compare this against depth and C,N,P fluxes 
+
+# Depth is categorical 
+# N,P,C are numerical 
+
+library(psych) # for `pairs.panels()`
+library(lattice)
+
+ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg"))
+as.character(ANOCOVA.data$dep) # need to make dep categorical not numerical 
+attach(ANOCOVA.data)
+
+summary(ANOCOVA.data)
+
+pairs.panels(data.frame(dep,C_avg,N_avg, P_avg, M_avg))
+
+xyplot(M_avg ~ C_avg | dep, 
+                  main="Fig2a: Activity level-specific scatterplots"
+           )
+
+    xyplot(M_avg ~ C_avg, groups=dep, 
+                  auto.key=TRUE,
+                  main="Fig2b: Scatterplot with color=group level"
+           )
+    
+    xyplot(M_avg ~ C_avg, groups=dep, 
+                  type=c("p","r"), # `p` for _points_, `r` for _regression line_
+                                   # see https://stackoverflow.com/questions/12972039/plotting-xyplot-with-regression-line-on-lattice-graphics for more
+                  auto.key=TRUE,
+                  main="Fig3: Three standalone depth level-specific `lm()` fits"
+           )
+```
 
 # Title : Analyze water quality data 
 
