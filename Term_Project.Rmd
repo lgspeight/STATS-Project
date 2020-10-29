@@ -60,6 +60,12 @@ xyplot(M_avg ~ C_avg | dep,
            )
 ```
 
+Bar graph trial 
+```{r}
+
+#Liz was here
+
+```
 # Title : Analyze water quality data 
 
 # Abstract: So this project will involve bla bla bla 
