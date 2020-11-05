@@ -65,6 +65,20 @@ Bar graph trial
 
 
 ```
+
+
+Looking at fluxes over depths and hypothesizing that flux will decrease over depth 
+```{r}
+# separate each flux into its own dataframe 
+# delete rows that contain NAs 
+C_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","C_avg")))
+N_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","N_avg")))
+P_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","P_avg")))
+M_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","M_avg")))
+
+````
+
+
 # Title : Analyze water quality data 
 
 # Abstract: So this project will involve bla bla bla 
