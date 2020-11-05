@@ -76,7 +76,74 @@ N_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","
 P_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","P_avg")))
 M_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","M_avg")))
 
-````
+
+# Subset each depth and rename columns 
+library(plyr)
+C_flux.depth.150 <- subset(C_flux.data, dep == 150)
+C_flux.depth.150 <- rename(C_flux.depth.150, c("dep"="dep.150"))
+C_flux.depth.150 <- rename(C_flux.depth.150, c("C_avg" ="C_avg.150"))
+C_flux.depth.200 <- subset(C_flux.data, dep == 200)
+C_flux.depth.200 <- rename(C_flux.depth.200, c("dep"="dep.200"))
+C_flux.depth.200 <- rename(C_flux.depth.200, c("C_avg" ="C_avg.200"))
+C_flux.depth.300 <- subset(C_flux.data, dep == 300)
+C_flux.depth.300 <- rename(C_flux.depth.300, c("dep"="dep.300"))
+C_flux.depth.300 <- rename(C_flux.depth.300, c("C_avg" ="C_avg.300"))
+C_flux.depth.400 <- subset(C_flux.data, dep == 400)
+C_flux.depth.400 <- rename(C_flux.depth.400, c("dep"="dep.400"))
+C_flux.depth.400 <- rename(C_flux.depth.400, c("C_avg" ="C_avg.400"))
+```
+
+
+Paired sample t test for each depth and the depth below it 
+*This is a paired test because some samples were collected on the same cruise and at the same location. So for each flux value at one depth, there was a flux value collected at a different depth at the same location!
+* Data frames were merged based on cruise, year, and location to have the same number of values.  
+
+(1.1)
+
+$\mu_1$ = mean Carbon flux at depth 150
+$\mu_2$ = mean Carbon flux at depth 200
+
+$H_0$ : Carbon flux does not change between 150 and 200 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Carbon flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+C.depth.150.200 <- merge(C_flux.depth.150,C_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(C.depth.150.200$C_avg.150 ,C.depth.150.200$C_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+
+```
+
+(1.2)
+
+$\mu_1$ = mean Carbon flux at depth 200
+$\mu_2$ = mean Carbon flux at depth 300
+
+$H_0$ : Carbon flux does not change between 200 and 300 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Carbon flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+C.depth.200.300 <- merge(C_flux.depth.200,C_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(C.depth.200.300$C_avg.200 ,C.depth.200.300$C_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+(1.3)
+
+$\mu_1$ = mean Carbon flux at depth 300
+$\mu_2$ = mean Carbon flux at depth 400
+
+$H_0$ : Carbon flux does not change between 300 and 400 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Carbon flux is lower at 400 meter then at 300 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+C.depth.300.400 <- merge(C_flux.depth.300,C_flux.depth.400,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(C.depth.300.400$C_avg.300 ,C.depth.300.400$C_avg.400, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+
+
+
 
 
 # Title : Analyze water quality data 
