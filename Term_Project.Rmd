@@ -60,11 +60,81 @@ xyplot(M_avg ~ C_avg | dep,
            )
 ```
 
-Bar graph trial 
+Bar graph trial
 ```{r}
+# this code is to specify the depth I want to look at that contains the rows and the columns
+Study_depths <- c("150", "200", "300", "400" ) #vector of depths I want to retain
+
+Study_Rows <- which(bats_flux$dep %in% Study_depths) #which() to ask R which rows in spp name are on the list
+
+
+bats_flux2 <- bats_flux[Study_Rows,] #has all the rows we want as well as all the columns
+
+```
+
+
+Mean and se of each depth of C-flux
+
+
+```{r}
+Cflux <- bats_flux2[-which(is.na(bats_flux2$C_avg)),] #removes na from C-avg
+Cflux.noNAs <- delete.na(bats_flux2)
+
+levels(as.factor(Cflux.noNAs$dep150)) #this looks at the distribution of toxins in the organism selected
+
+
+dep150 <- subset(Cflux.noNAs, dep=="150") #focusing on mean of C-avg at depth 150
+dep150
+
+muCflux150 <- mean(dep150$C_avg, data=dep150)
+muCflux150
+
+s.e150 <- muCflux150 * sqrt(10)
+
+
+dep200 <- subset(Cflux.noNAs, dep=="200") #focusing on mean of C-avg at depth 200
+dep200
+
+muCflux200 <- mean(dep200$C_avg, data=dep200)
+muCflux200
+
+dep300 <- subset(Cflux.noNAs, dep=="300") #focusing on mean of C-avg at depth 300
+dep300
+
+muCflux300 <- mean(dep300$C_avg, data=dep300)
+muCflux300
+
+dep400 <- subset(Cflux.noNAs, dep=="400") #focusing on mean of C-avg at depth 400
+dep400
+
+muCflux400 <- mean(dep400$C_avg, data=dep400)
+muCflux400
+
+```
+
+```{r}
+site.freq <- table(bats_flux2$dep) #Creates table with frequency of each Site
+site.freq
+
+barplot(site.freq)
+
+
+barplot(site.freq[order(site.freq, decreasing = T)],
+        horiz = F,         #Horizontal
+        border = NA,    
+        
+        main = "Average C Flux at Depths: 150, 200, 300, 400",
+        xlab = "Depths", ylab = "Average C Flux")
 
 
 ```
+
+
+
+
+
+
+
 
 
 Looking at fluxes over depths and hypothesizing that flux will decrease over depth 
