@@ -75,10 +75,7 @@ bats_flux2 <- bats_flux[Study_Rows,] #has all the rows we want as well as all th
 ```
 
 
-```{r}
 
-summary(Cflux.noNAs$dep400)
-```
 
 Mean and se of each depth of C-flux
 
@@ -138,24 +135,13 @@ Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Cflux$Depth #character objects need quotes
 yval <- bar.Cflux$`C_flux Mean`
 
-ggplot()+geom_col(bar.Cflux, mapping=aes(x= Depth, y = C_fluxMean))
+ggplot()+geom_col(bar.Cflux, mapping=aes(x= Depth, y = C_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+xlab("Depth (m)") + ylab("Mean of C Flux(mg carbon m^-2 day^-1)") +                
+                                           
+ theme(text = element_text(family = 'serif')) +                       
+scale_fill_manual(values = Viridis_palette)                        
+  
 
-#ggplot(data = bar.Cflux)+ geom_bar( aes(x=xval, y= yval))
-  
-            # Tell R you only want to use data from                                                                             toxindata2 that has pesticide toxin data
-            # We make histograms in ggplot using the `                                                                           geom_histogram()` function 
-            # `aes() is aesthetics. It tells ggplot what                                                                          you want to plot                     
-            # Within `aes(), we want to plot                                                                                     log-transformed reported values and group                                                                          by the chemical name.
-                                                                  # This is the end of the `aes()`                                                                                     sub-function.
-    #color="#e9ecef", alpha=0.6,) +                                    # Back in `geom_histogram()`, this sets                                                                              border color, and transparency
-  #xlab("Log-transformed Toxin concentrations (PPB WT)")+                 # Add our nice and pretty x-label
- # labs(fill = "PCB") +                                          # This adds the legend title
- # theme(text = element_text(family = 'serif'))+                       # This plots the text in Times New Roman Font
- # scale_fill_manual(values = Viridis_palette)+                        # Add your color palette
-  
-  
-# Finally, `facet_grid()` will make small sub-plots based on a grouping variable want to split the data by. Think of it as subsetting, but without all the work!
- # facet_wrap(~bar.Cflux) 
 
 ```
 
@@ -163,10 +149,10 @@ ggplot()+geom_col(bar.Cflux, mapping=aes(x= Depth, y = C_fluxMean))
 Mean and se of each depth of P-flux
 
 ```{r}
-Pflux <- bats_flux2[-which(is.na(bats_flux2$P_avg)),] #removes na from C-avg
-Pflux.noNAs <- delete.na(bats_flux2)
+#Pflux <- bats_flux2[-which(is.na(bats_flux2$P_avg)),] #removes na from C-avg
+#Pflux.noNAs <- delete.na(bats_flux2)
 
-levels(as.factor(Pflux.noNAs$dep150p)) #this looks at the distribution of toxins in the organism selected
+#levels(as.factor(Pflux.noNAs$dep150p)) #this looks at the distribution of toxins in the organism selected
 
 
 dep150p <- subset(Pflux.noNAs, dep=="150") #focusing on mean of C-avg at depth 150
@@ -202,15 +188,39 @@ muPflux400
 
 s.e400p <- muPflux400 * sqrt(10)
 
+bar.Pflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muPflux150,muPflux200,muPflux300,muPflux400))
+colnames(bar.Pflux)[1] <- "Depth"
+colnames(bar.Pflux)[2] <- "P_fluxMean"
+
+
 ```
 
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(viridisLite)
+
+Viridis_palette <- viridis(40)[seq(1,40, 2)]
+xval <- bar.Pflux$Depth #character objects need quotes
+yval <- bar.Pflux$`P_flux Mean`
+
+ggplot()+geom_col(bar.Pflux, mapping=aes(x= Depth, y = P_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+xlab("Depth (m)") + ylab("Mean of P Flux(mg phospohorous m^-2 day^-1)") +                
+                                           
+ theme(text = element_text(family = 'serif')) +                       
+scale_fill_manual(values = Viridis_palette)                        
+  
+
+
+```
 Mean and se of each depth of N-flux
 
 ```{r}
-Nflux <- bats_flux2[-which(is.na(bats_flux2$P_avg)),] #removes na from C-avg
-Nflux.noNAs <- delete.na(bats_flux2)
+#Nflux <- bats_flux2[-which(is.na(bats_flux2$P_avg)),] #removes na from C-avg
+#Nflux.noNAs <- delete.na(bats_flux2)
 
-levels(as.factor(Nflux.noNAs$dep150n)) #this looks at the distribution of toxins in the organism selected
+#levels(as.factor(Nflux.noNAs$dep150n)) #this looks at the distribution of toxins in the organism selected
 
 
 dep150n <- subset(Nflux.noNAs, dep=="150") #focusing on mean of C-avg at depth 150
@@ -246,7 +256,34 @@ muNflux400
 
 s.e400n <- muNflux400 * sqrt(10)
 
+bar.Nflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muNflux150,muNflux200,muNflux300,muNflux400))
+colnames(bar.Nflux)[1] <- "Depth"
+colnames(bar.Nflux)[2] <- "N_fluxMean"
+
+
 ```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(viridisLite)
+
+Viridis_palette <- viridis(40)[seq(1,40, 2)]
+xval <- bar.Nflux$Depth #character objects need quotes
+yval <- bar.Nflux$`N_flux Mean`
+
+ggplot()+geom_col(bar.Nflux, mapping=aes(x= Depth, y = N_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+xlab("Depth (m)") + ylab("Mean of N Flux(mg nitrogen m^-2 day^-1)") +                
+                                           
+ theme(text = element_text(family = 'serif')) +                       
+scale_fill_manual(values = Viridis_palette)                        
+  
+
+
+```
+
+
 
 Mean and se of each depth of M-flux
 
@@ -290,27 +327,65 @@ muMflux400
 
 s.e400m <- muMflux400 * sqrt(10)
 
+bar.Mflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muMflux150,muMflux200,muMflux300,muMflux400))
+colnames(bar.Mflux)[1] <- "Depth"
+colnames(bar.Mflux)[2] <- "M_fluxMean"
+
+
 ```
 
 ```{r}
-site.freq <- table(bats_flux2$dep) #Creates table with frequency of each Site
-site.freq
+library(ggplot2)
+library(dplyr)
+library(viridisLite)
 
-barplot(site.freq)
+Viridis_palette <- viridis(40)[seq(1,40, 2)]
+xval <- bar.Mflux$Depth #character objects need quotes
+yval <- bar.Mflux$`M_flux Mean`
 
-
-barplot(site.freq[order(site.freq, decreasing = T)],
-        horiz = F,         #Horizontal
-        border = NA,    
-        
-        main = "Average C Flux at Depths: 150, 200, 300, 400",
-        xlab = "Depths", ylab = "Average C Flux")
+ggplot()+geom_col(bar.Mflux, mapping=aes(x= Depth, y = M_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+xlab("Depth (m)") + ylab("Mean of M Flux(mg mass m^-2 day^-1)") +                
+                                           
+ theme(text = element_text(family = 'serif')) +                       
+scale_fill_manual(values = Viridis_palette)                        
+  
 
 
 ```
 
 
+EDA
 
+```{r}
+lmfit <- lm( M_avg ~ C_avg + P_avg + N_avg,
+         data=bats_flux.noNA)
+
+resids <- resid( lmfit ) # extract epsilon_hats
+fit <- fitted ( lmfit ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20)
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="resid vs y_hat")
+abline(h=0)
+
+summary(lmfit)
+```
+
+lin reg
+
+```{r}
+# dept v. average for C_avg
+predict <- plot(bats_flux.noNA$dep, bats_flux.noNA$C_avg)
+
+
+```
 
 
 
