@@ -318,6 +318,39 @@ t.test(M.depth.300.400$M_avg.300 ,M.depth.300.400$M_avg.400, alternative = "grea
 
 ### Simple Linear Regression 
 
+EDA
+
+```{r}
+lmfit <- lm( M_avg ~ C_avg + P_avg + N_avg,
+         data=bats_flux.noNA)
+
+resids <- resid( lmfit ) # extract epsilon_hats
+fit <- fitted ( lmfit ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20)
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="resid vs y_hat")
+abline(h=0)
+
+summary(lmfit)
+```
+
+lin reg
+
+```{r}
+# dept v. average for C_avg
+predict <- plot(bats_flux.noNA$dep, bats_flux.noNA$C_avg)
+
+
+```
+
 ### ANCOVA 
 
 # Results discussion:
