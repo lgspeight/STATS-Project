@@ -394,6 +394,13 @@ Paired sample t test for each depth and the depth below it
 *This is a paired test because some samples were collected on the same cruise and at the same location. So for each flux value at one depth, there was a flux value collected at a different depth at the same location!
 * Data frames were merged based on cruise, year, and location to have the same number of values.  
 
+For a paired t test to be preformed it must meet these assumptions:
+
+-The dependent variable must be continuous (interval/ratio).
+-The observations are independent of one another.
+-The dependent variable should be approximately normally distributed.
+-The dependent variable should not contain any outliers.
+
 <br>
 
 (1.1)
@@ -403,6 +410,23 @@ $\mu_2$ = mean Carbon flux at depth 200
 
 $H_0$ : Carbon flux does not change between 150 and 200 meter. $\mu_1$ = $\mu_2$
 $H_1$ : Carbon flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+# Checking for normaility and no outliers 
+
+hist(C_flux.depth.150$C_avg.150)
+hist(C_flux.depth.200$C_avg.200)
+
+# add a normal distribution line in histogram
+hist(C_flux.depth.150$C_avg.150, freq = FALSE, main="Colored histogram",breaks = "FD")+
+  curve(dnorm(x, mean=mean(C_flux.depth.150$C_avg.150), sd=sd(C_flux.depth.150$C_avg.150)), add=TRUE, col="red") #line
+
+hist(C_flux.depth.200$C_avg.200, freq = FALSE, main="Colored histogram",breaks = "FD")+
+  curve(dnorm(x, mean=mean(C_flux.depth.200$C_avg.200), sd=sd(C_flux.depth.200$C_avg.200)), add=TRUE, col="red") #line
+
+boxplot(C_flux.depth.150$C_avg.150)
+boxplot(C_flux.depth.200$C_avg.200)
+```
 
 ```{r}
 C.depth.150.200 <- merge(C_flux.depth.150,C_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
