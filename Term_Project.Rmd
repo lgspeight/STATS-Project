@@ -13,15 +13,12 @@ bats_flux <- read.csv("bats_flux.csv")
 delete.na <- function(DF, n=0) {
   DF[rowSums(is.na(DF)) <= n,]
 } #Function that takes rows out that contains NAs 
-
 bats_flux.noNA <- delete.na(bats_flux) # Take out rows containing NAs 
 
 
 Data <- subset(bats_flux,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","M_avg","C_avg","N_avg","P_avg"))
+Data.noNA <- delete.na(Data) #Take out rows conatin NAs 
 
-Data.noNA <- delete.na(Data)
-
-#Data_noNA <- write.csv(x= Data.noNA,file = "Data_noNA.csv")
 ```
 
 
@@ -659,21 +656,4 @@ t.test(M.depth.300.400$M_avg.300 ,M.depth.300.400$M_avg.400, alternative = "grea
 ```
 
 
-# Title : Analyze water quality data 
-
-# Abstract: So this project will involve bla bla bla 
-
-# Introduction: 
-
-# Toolbox discussion:
-
-# Description:
-
-# Implementation:
-
-# Results discussion:
-
-# Limitations:
-
-# References:
 

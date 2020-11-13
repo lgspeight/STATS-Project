@@ -1,0 +1,328 @@
+---
+title: "Project.Final"
+author: "Leslie Speight Youtsey and Liz Weatherup"
+date: "11/13/2020"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Title : Fluxes in the ocean 
+
+# Abstract: 
+
+# Introduction: 
+
+# Toolbox discussion:
+
+# Description:
+
+# Implementation:
+
+### Reading csv data in 
+
+```{r, eval=TRUE}
+bats_flux <- read.csv("bats_flux.csv")
+
+delete.na <- function(DF, n=0) {
+  DF[rowSums(is.na(DF)) <= n,]
+} #Function that takes rows out that contains NAs 
+bats_flux.noNA <- delete.na(bats_flux) # Take out rows containing NAs 
+
+
+Data <- subset(bats_flux,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","M_avg","C_avg","N_avg","P_avg"))
+Data.noNA <- delete.na(Data)
+
+```
+
+### Subsetting each flux out seperatly 
+
+```{r,eval=TRUE}
+# separate each flux into its own dataframe 
+# delete rows that contain NAs 
+C_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","C_avg")))
+N_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","N_avg")))
+P_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","P_avg")))
+M_flux.data <- delete.na(subset(Data,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","M_avg")))
+```
+
+### Subseting each depth and Renaming Columns 
+
+```{r,eval=TRUE}
+# Subset each depth and rename columns 
+library(plyr)
+C_flux.depth.150 <- subset(C_flux.data, dep == 150)
+C_flux.depth.150 <- rename(C_flux.depth.150,c("dep.150" = "dep"))
+C_flux.depth.150 <- rename(C_flux.depth.150, c("C_avg.150" = "C_avg" ))
+C_flux.depth.200 <- subset(C_flux.data, dep == 200)
+C_flux.depth.200 <- rename(C_flux.depth.200, c("dep.200"="dep"))
+C_flux.depth.200 <- rename(C_flux.depth.200, c("C_avg.200" ="C_avg"))
+C_flux.depth.300 <- subset(C_flux.data, dep == 300)
+C_flux.depth.300 <- rename(C_flux.depth.300, c("dep.300"="dep"))
+C_flux.depth.300 <- rename(C_flux.depth.300, c("C_avg.300" ="C_avg"))
+C_flux.depth.400 <- subset(C_flux.data, dep == 400)
+C_flux.depth.400 <- rename(C_flux.depth.400, c("dep.400"="dep"))
+C_flux.depth.400 <- rename(C_flux.depth.400, c("C_avg.400" ="C_avg"))
+```
+
+```{r,eval=TRUE}
+N_flux.depth.150 <- subset(N_flux.data, dep == 150)
+N_flux.depth.150 <- rename(N_flux.depth.150, c("dep.150"="dep"))
+N_flux.depth.150 <- rename(N_flux.depth.150, c("N_avg.150" ="N_avg"))
+N_flux.depth.200 <- subset(N_flux.data, dep == 200)
+N_flux.depth.200 <- rename(N_flux.depth.200, c("dep.200"="dep"))
+N_flux.depth.200 <- rename(N_flux.depth.200, c("N_avg.200" ="N_avg"))
+N_flux.depth.300 <- subset(N_flux.data, dep == 300)
+N_flux.depth.300 <- rename(N_flux.depth.300, c("dep.300"="dep"))
+N_flux.depth.300 <- rename(N_flux.depth.300, c("N_avg.300" ="N_avg"))
+N_flux.depth.400 <- subset(N_flux.data, dep == 400)
+N_flux.depth.400 <- rename(N_flux.depth.400, c("dep.400"="dep"))
+N_flux.depth.400 <- rename(N_flux.depth.400, c("N_avg.400" ="N_avg"))
+```
+
+```{r,eval=TRUE}
+P_flux.depth.150 <- subset(P_flux.data, dep == 150)
+P_flux.depth.150 <- rename(P_flux.depth.150, c("dep.150"="dep"))
+P_flux.depth.150 <- rename(P_flux.depth.150, c("P_avg.150" ="P_avg"))
+P_flux.depth.200 <- subset(P_flux.data, dep == 200)
+P_flux.depth.200 <- rename(P_flux.depth.200, c("dep.200"="dep"))
+P_flux.depth.200 <- rename(P_flux.depth.200, c("P_avg.200" ="P_avg"))
+P_flux.depth.300 <- subset(P_flux.data, dep == 300)
+P_flux.depth.300 <- rename(P_flux.depth.300, c("dep.300"="dep"))
+P_flux.depth.300 <- rename(P_flux.depth.300, c("P_avg.300" ="P_avg"))
+P_flux.depth.400 <- subset(P_flux.data, dep == 400)
+P_flux.depth.400 <- rename(P_flux.depth.400, c("dep.400"="dep"))
+P_flux.depth.400 <- rename(P_flux.depth.400, c("P_avg.400" ="P_avg"))
+```
+
+```{r,eval=TRUE}
+M_flux.depth.150 <- subset(M_flux.data, dep == 150)
+M_flux.depth.150 <- rename(M_flux.depth.150, c("dep.150"="dep"))
+M_flux.depth.150 <- rename(M_flux.depth.150, c("M_avg.150" ="M_avg"))
+M_flux.depth.200 <- subset(M_flux.data, dep == 200)
+M_flux.depth.200 <- rename(M_flux.depth.200, c("dep.200"="dep"))
+M_flux.depth.200 <- rename(M_flux.depth.200, c("M_avg.200" ="M_avg"))
+M_flux.depth.300 <- subset(M_flux.data, dep == 300)
+M_flux.depth.300 <- rename(M_flux.depth.300, c("dep.300"="dep"))
+M_flux.depth.300 <- rename(M_flux.depth.300, c("M_avg.300" ="M_avg"))
+M_flux.depth.400 <- subset(M_flux.data, dep == 400)
+M_flux.depth.400 <- rename(M_flux.depth.400, c("dep.400"="dep"))
+M_flux.depth.400 <- rename(M_flux.depth.400, c("M_avg.400" ="M_avg"))
+```
+
+### Bar plots to access relationship between fluxes and depths 
+
+
+### Paired sample t test for each depth and the depth below it 
+
+This is a paired test because some samples were collected on the same cruise and at the same location. So for each flux value at one depth, there was a flux value collected at a different depth at the same location!
+Data frames were merged based on cruise, year, and location to have the same number of values.  
+
+For a paired t test to be preformed it must meet these assumptions:
+
+-The dependent variable must be continuous (interval/ratio).
+-The observations are independent of one another.
+-The dependent variable should be approximately normally distributed.
+-The dependent variable should not contain any outliers.
+
+
+```{r,eval=TRUE}
+# Checking for normaility and no outliers 
+
+hist(as.numeric(C_flux.depth.150$C_avg.150), breaks = "FD")
+hist(as.numeric(C_flux.depth.200$C_avg.200), breaks = "FD")
+hist(as.numeric(C_flux.depth.300$C_avg.300), breaks = "FD")
+hist(as.numeric(C_flux.depth.400$C_avg.400), breaks = "FD")
+
+# using natural lof to Transform the data 
+
+hist(log(C_flux.depth.150$C_avg.150))
+hist(log(C_flux.depth.200$C_avg.200))
+hist(log(C_flux.depth.300$C_avg.300))
+hist(log(C_flux.depth.400$C_avg.400))
+
+# Checking for outliers
+
+boxplot(log(C_flux.depth.150$C_avg.150))
+boxplot(log(C_flux.depth.200$C_avg.200))
+boxplot(log(C_flux.depth.300$C_avg.300))
+boxplot(log(C_flux.depth.400$C_avg.400))
+```
+
+<br>
+
+(1.1)
+
+$\mu_1$ = mean Carbon flux at depth 150
+$\mu_2$ = mean Carbon flux at depth 200
+
+$H_0$ : Carbon flux does not change between 150 and 200 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Carbon flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
+
+
+
+```{r}
+C.depth.150.200 <- merge(C_flux.depth.150,C_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(C.depth.150.200$C_avg.150 ,C.depth.150.200$C_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+
+```
+
+(1.2)
+
+$\mu_1$ = mean Carbon flux at depth 200
+$\mu_2$ = mean Carbon flux at depth 300
+
+$H_0$ : Carbon flux does not change between 200 and 300 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Carbon flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+C.depth.200.300 <- merge(C_flux.depth.200,C_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(C.depth.200.300$C_avg.200 ,C.depth.200.300$C_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+(1.3)
+
+$\mu_1$ = mean Carbon flux at depth 300
+$\mu_2$ = mean Carbon flux at depth 400
+
+$H_0$ : Carbon flux does not change between 300 and 400 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Carbon flux is lower at 400 meter then at 300 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+C.depth.300.400 <- merge(C_flux.depth.300,C_flux.depth.400,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(C.depth.300.400$C_avg.300 ,C.depth.300.400$C_avg.400, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+(2.1)
+
+$\mu_1$ = mean Nitrogen flux at depth 150
+$\mu_2$ = mean Nitrogen flux at depth 200
+
+$H_0$ : Nitrogen flux does not change between 150 and 200 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Nitrogen flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+N.depth.150.200 <- merge(N_flux.depth.150,N_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(N.depth.150.200$N_avg.150 ,N.depth.150.200$N_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+
+```
+
+(2.2)
+
+$\mu_1$ = mean Nitrogen flux at depth 200
+$\mu_2$ = mean Nitrogen flux at depth 300
+
+$H_0$ : Nitrogen flux does not change between 200 and 300 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Nitrogen flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+N.depth.200.300 <- merge(N_flux.depth.200,N_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(N.depth.200.300$N_avg.200 ,N.depth.200.300$N_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+
+(2.3)
+
+$\mu_1$ = mean Nitrogen flux at depth 300
+$\mu_2$ = mean Nitrogen flux at depth 400
+
+$H_0$ : Nitrogen flux does not change between 300 and 400 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Nitrogen flux is lower at 400 meter then at 300 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+N.depth.300.400 <- merge(N_flux.depth.300,N_flux.depth.400,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(N.depth.300.400$N_avg.300 ,N.depth.300.400$N_avg.400, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+<br>
+
+(3.1)
+
+$\mu_1$ = mean Phosporous flux at depth 150
+$\mu_2$ = mean Phosporous flux at depth 200
+
+$H_0$ : Phosporous flux does not change between 150 and 200 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Phosporous flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+P.depth.150.200 <- merge(P_flux.depth.150,P_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(P.depth.150.200$P_avg.150 ,P.depth.150.200$P_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+
+```
+
+(3.2)
+
+$\mu_1$ = mean Phosporous flux at depth 200
+$\mu_2$ = mean Phosporous flux at depth 300
+
+$H_0$ : Phosporous flux does not change between 200 and 300 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Phosporous flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+P.depth.200.300 <- merge(P_flux.depth.200,P_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(P.depth.200.300$P_avg.200 ,P.depth.200.300$P_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+<br>
+
+(4.1)
+
+$\mu_1$ = mean Mass flux at depth 150
+$\mu_2$ = mean Mass flux at depth 200
+
+$H_0$ : Mass flux does not change between 150 and 200 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Mass flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+M.depth.150.200 <- merge(M_flux.depth.150,M_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(M.depth.150.200$M_avg.150 ,M.depth.150.200$M_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+
+```
+
+(4.2)
+
+$\mu_1$ = mean Mass flux at depth 200
+$\mu_2$ = mean Mass flux at depth 300
+
+$H_0$ : Mass flux does not change between 200 and 300 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Mass flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+M.depth.200.300 <- merge(M_flux.depth.200,M_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(M.depth.200.300$M_avg.200 ,M.depth.200.300$M_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+(4.3)
+
+$\mu_1$ = mean Mass flux at depth 300
+$\mu_2$ = mean Mass flux at depth 400
+
+$H_0$ : Mass flux does not change between 300 and 400 meter. $\mu_1$ = $\mu_2$
+$H_1$ : Mass flux is lower at 400 meter then at 300 meter. $\mu_1$ > $\mu_2$
+
+```{r}
+M.depth.300.400 <- merge(M_flux.depth.300,M_flux.depth.400,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
+
+t.test(M.depth.300.400$M_avg.300 ,M.depth.300.400$M_avg.400, alternative = "greater", paired = TRUE, var.equal = TRUE)
+```
+
+### Simple Linear Regression 
+
+### ANCOVA 
+
+# Results discussion:
+
+# Limitations:
+
+# References:
+
