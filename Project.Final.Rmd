@@ -21,6 +21,14 @@ output:
 
 ### Reading csv data in 
 
+```{r}
+rm(list=ls(all=TRUE))  #Housekeeping: clear out old files
+
+options(warn = -1)
+knitr::opts_chunk$set(echo = T, fig.height=6, fig.width=8, warning = F, message = F) 
+
+```
+
 ```{r, eval=TRUE}
 bats_flux <- read.csv("bats_flux.csv")
 
@@ -316,16 +324,35 @@ M.depth.300.400 <- merge(M_flux.depth.300,M_flux.depth.400,by = c("cr","yymmdd1"
 t.test(M.depth.300.400$M_avg.300 ,M.depth.300.400$M_avg.400, alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
 
-### Simple Linear Regression 
-
-EDA
+### Simple Linear Regression via LS
 
 ```{r}
-lmfit <- lm( M_avg ~ C_avg + P_avg + N_avg,
-         data=bats_flux.noNA)
+# plotting each nutrient flux against mass flux
 
-resids <- resid( lmfit ) # extract epsilon_hats
-fit <- fitted ( lmfit ) # extract y_hats
+plot(Data.noNA) # we see some relationships between mass flux and the rest of the nutrient fluxes
+
+plot(Data.noNA$C_avg,Data.noNA$M_avg) #good linearity, but clumping
+lmfit_C.M <- lm(M_avg ~ C_avg, data = Data.noNA)
+summary(lmfit_C.M)
+abline(lmfit_C.M)
+
+plot(Data.noNA$N_avg,Data.noNA$M_avg) # alright linearity, still clumping 
+lmfit_N.M <- lm(M_avg ~ N_avg, data = Data.noNA)
+summary(lmfit_N.M)
+abline(lmfit_N.M)
+
+plot(Data.noNA$P_avg,Data.noNA$M_avg) # worse, still clumping 
+lmfit_P.M <- lm(M_avg ~ P_avg, data = Data.noNA)
+summary(lmfit_P.M)
+abline(lmfit_P.M)
+
+```
+
+Carbon flux seems to be the best predictor of Mass flux. Lets run some EDA. 
+
+```{r}
+resids <- resid( lmfit_C.M ) # extract epsilon_hats
+fit <- fitted ( lmfit_C.M ) # extract y_hats
 
 par(mfrow=c(1,2))
 
@@ -339,19 +366,139 @@ abline(h=0) # mean of epsilon_hat
 plot(x=fit, y=resids, main="resid vs y_hat")
 abline(h=0)
 
-summary(lmfit)
 ```
 
-lin reg
+*Comment on these* 
+
+ <br>
+ 
+Lets compare these EDA's to that of Nitrogen Flux  and Mass Flux. Nitrogen Flux was also a strong predictor of Mass Flux. 
+
+```{r}
+resids <- resid( lmfit_N.M ) # extract epsilon_hats
+fit <- fitted ( lmfit_N.M ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20)
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="resid vs y_hat")
+abline(h=0)
+
+```
+
+*comment of these* 
+
+<br> 
+
+Lets now compare these to Phosphorous Flux, a weak predcitor of Mass Flux. 
+
+```{r}
+resids <- resid( lmfit_P.M ) # extract epsilon_hats
+fit <- fitted ( lmfit_P.M ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20)
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="resid vs y_hat")
+abline(h=0)
+
+```
+
+*comment on these* 
+
+<br>
+
+
+```{r}
+flux <- Data.noNA$C_avg - Data.noNA$N_avg - Data.noNA$P_avg # combine the fluxes
+
+lmfit.flux <- lm( M_avg ~ flux,
+         data=Data.noNA)
+summary(lmfit.flux)
+plot(flux,Data.noNA$M_avg)
+abline(lmfit.flux)
+
+resids <- resid( lmfit.flux ) # extract epsilon_hats
+fit <- fitted ( lmfit.flux ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20)
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="resid vs y_hat")
+abline(h=0)
+
+```
+
+*comment on this*
+
+
+How does depth affect flux? 
 
 ```{r}
 # dept v. average for C_avg
-predict <- plot(bats_flux.noNA$dep, bats_flux.noNA$C_avg)
+plot(Data.noNA$dep, Data.noNA$C_avg)
+lmfit_Dep.C <- lm(C_avg ~ dep, data = Data.noNA)
+summary(lmfit_Dep.C)
+abline(lmfit_Dep.C)
 
 
 ```
 
 ### ANCOVA 
+
+```{r}
+#we want to make predictions on the Mass average flux. 
+
+# we want to compare this against depth and C,N,P fluxes 
+
+# Depth is categorical 
+# N,P,C are numerical 
+
+library(psych) # for `pairs.panels()`
+library(lattice)
+
+ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg"))
+as.character(ANOCOVA.data$dep) # need to make dep categorical not numerical 
+attach(ANOCOVA.data)
+
+summary(ANOCOVA.data)
+
+pairs.panels(data.frame(dep,C_avg,N_avg, P_avg, M_avg))
+
+xyplot(M_avg ~ C_avg | dep, 
+                  main="Fig2a: Activity level-specific scatterplots"
+           )
+
+    xyplot(M_avg ~ C_avg, groups=dep, 
+                  auto.key=TRUE,
+                  main="Fig2b: Scatterplot with color=group level"
+           )
+    
+    xyplot(M_avg ~ C_avg, groups=dep, 
+                  type=c("p","r"), # `p` for _points_, `r` for _regression line_
+                                   # see https://stackoverflow.com/questions/12972039/plotting-xyplot-with-regression-line-on-lattice-graphics for more
+                  auto.key=TRUE,
+                  main="Fig3: Three standalone depth level-specific `lm()` fits"
+           )
+```
 
 # Results discussion:
 
