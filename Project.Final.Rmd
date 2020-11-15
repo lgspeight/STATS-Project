@@ -123,7 +123,7 @@ M_flux.depth.400 <- rename(M_flux.depth.400, c("M_avg.400" ="M_avg"))
 
 ### Paired sample t test for each depth and the depth below it 
 
-This is a paired test because some samples were collected on the same cruise and at the same location. So for each flux value at one depth, there was a flux value collected at a different depth at the same location!
+This is a paired test because samples were collected on the same cruise and at the same location. So for each flux value at one depth, there was a flux value collected at a different depth at the same location!
 Data frames were merged based on cruise, year, and location to have the same number of values.  
 
 For a paired t test to be preformed it must meet these assumptions:
@@ -135,14 +135,14 @@ For a paired t test to be preformed it must meet these assumptions:
 
 
 ```{r,eval=TRUE}
-# Checking for normaility and no outliers 
+# Checking for normaility and no outliers in Carbon Flux 
 
-hist(as.numeric(C_flux.depth.150$C_avg.150), breaks = "FD")
-hist(as.numeric(C_flux.depth.200$C_avg.200), breaks = "FD")
-hist(as.numeric(C_flux.depth.300$C_avg.300), breaks = "FD")
-hist(as.numeric(C_flux.depth.400$C_avg.400), breaks = "FD")
+hist((C_flux.depth.150$C_avg.150), breaks = "FD")
+hist((C_flux.depth.200$C_avg.200), breaks = "FD")
+hist((C_flux.depth.300$C_avg.300), breaks = "FD")
+hist((C_flux.depth.400$C_avg.400), breaks = "FD")
 
-# using natural lof to Transform the data 
+# using natural log to Transform the data 
 
 hist(log(C_flux.depth.150$C_avg.150))
 hist(log(C_flux.depth.200$C_avg.200))
@@ -157,7 +157,85 @@ boxplot(log(C_flux.depth.300$C_avg.300))
 boxplot(log(C_flux.depth.400$C_avg.400))
 ```
 
+*Comment on these assumptions* 
+
+```{r,eval=TRUE}
+# Checking for normaility and no outliers in Nitrogen Flux 
+
+hist((N_flux.depth.150$N_avg.150), breaks = "FD")
+hist((N_flux.depth.200$N_avg.200), breaks = "FD")
+hist((N_flux.depth.300$N_avg.300), breaks = "FD")
+hist((N_flux.depth.400$N_avg.400), breaks = "FD")
+
+# using natural log to Transform the data 
+
+hist(log(N_flux.depth.150$N_avg.150))
+hist(log(N_flux.depth.200$N_avg.200))
+hist(log(N_flux.depth.300$N_avg.300))
+hist(log(N_flux.depth.400$N_avg.400))
+
+# Checking for outliers
+
+boxplot(log(N_flux.depth.150$N_avg.150))
+boxplot(log(N_flux.depth.200$N_avg.200))
+boxplot(log(N_flux.depth.300$N_avg.300))
+boxplot(log(N_flux.depth.400$N_avg.400))
+```
+
+*Comment on these assumptions* 
+
+```{r,eval=TRUE}
+# Checking for normaility and no outliers in Phosporous Flux 
+
+hist((P_flux.depth.150$P_avg.150), breaks = "FD")
+hist((P_flux.depth.200$P_avg.200), breaks = "FD")
+hist((P_flux.depth.300$P_avg.300), breaks = "FD")
+
+# using natural log to Transform the data 
+
+hist(log(P_flux.depth.150$P_avg.150))
+hist(log(P_flux.depth.200$P_avg.200))
+hist(log(P_flux.depth.300$P_avg.300))
+
+# Checking for outliers
+
+boxplot(log(P_flux.depth.150$P_avg.150))
+boxplot(log(P_flux.depth.200$P_avg.200))
+boxplot(log(P_flux.depth.300$P_avg.300))
+```
+
+*comment on these assumptions*
+
+
+```{r,eval=TRUE}
+# Checking for normaility and no outliers in Mass Flux 
+
+hist((M_flux.depth.150$M_avg.150), breaks = "FD")
+hist((M_flux.depth.200$M_avg.200), breaks = "FD")
+hist((M_flux.depth.300$M_avg.300), breaks = "FD")
+hist((M_flux.depth.400$M_avg.400), breaks = "FD")
+
+# using natural log to Transform the data 
+
+hist(log(M_flux.depth.150$M_avg.150))
+hist(log(M_flux.depth.200$M_avg.200))
+hist(log(M_flux.depth.300$M_avg.300))
+hist(log(M_flux.depth.400$M_avg.400))
+
+# Checking for outliers
+
+boxplot(log(M_flux.depth.150$M_avg.150))
+boxplot(log(M_flux.depth.200$M_avg.200))
+boxplot(log(M_flux.depth.300$M_avg.300))
+boxplot(log(M_flux.depth.400$M_avg.400))
+```
+
+*comment on these assumptions*
+
 <br>
+
+*Since many of the 400 m depth distrubutions were not normal, even after transformation and have small n, they will not be used in the hypothesis testing* 
+
 
 (1.1)
 
@@ -326,6 +404,8 @@ t.test(M.depth.300.400$M_avg.300 ,M.depth.300.400$M_avg.400, alternative = "grea
 
 ### Simple Linear Regression via LS
 
+How does each flux predict Mass Flux? 
+
 ```{r}
 # plotting each nutrient flux against mass flux
 
@@ -347,6 +427,9 @@ summary(lmfit_P.M)
 abline(lmfit_P.M)
 
 ```
+*comment on these outputs* 
+
+<br>
 
 Carbon flux seems to be the best predictor of Mass flux. Lets run some EDA. 
 
@@ -372,7 +455,7 @@ abline(h=0)
 
  <br>
  
-Lets compare these EDA's to that of Nitrogen Flux  and Mass Flux. Nitrogen Flux was also a strong predictor of Mass Flux. 
+Lets compare these EDA's to that of Nitrogen Flux and Mass Flux. Nitrogen Flux was also a strong predictor of Mass Flux. 
 
 ```{r}
 resids <- resid( lmfit_N.M ) # extract epsilon_hats
@@ -422,7 +505,7 @@ abline(h=0)
 
 
 ```{r}
-flux <- Data.noNA$C_avg - Data.noNA$N_avg - Data.noNA$P_avg # combine the fluxes
+flux <- Data.noNA$C_avg - Data.noNA$N_avg - Data.noNA$P_avg #combine the fluxes
 
 lmfit.flux <- lm( M_avg ~ flux,
          data=Data.noNA)
