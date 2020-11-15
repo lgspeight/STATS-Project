@@ -250,7 +250,7 @@ $H_1$ : Carbon flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
 ```{r}
 C.depth.150.200 <- merge(C_flux.depth.150,C_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 
-t.test(C.depth.150.200$C_avg.150 ,C.depth.150.200$C_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+t.test(log(C.depth.150.200$C_avg.150) ,log(C.depth.150.200$C_avg.200), alternative = "greater", paired = TRUE, var.equal = TRUE)
 
 ```
 
@@ -265,22 +265,9 @@ $H_1$ : Carbon flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
 ```{r}
 C.depth.200.300 <- merge(C_flux.depth.200,C_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 
-t.test(C.depth.200.300$C_avg.200 ,C.depth.200.300$C_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+t.test(log(C.depth.200.300$C_avg.200) ,log(C.depth.200.300$C_avg.300), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
 
-(1.3)
-
-$\mu_1$ = mean Carbon flux at depth 300
-$\mu_2$ = mean Carbon flux at depth 400
-
-$H_0$ : Carbon flux does not change between 300 and 400 meter. $\mu_1$ = $\mu_2$
-$H_1$ : Carbon flux is lower at 400 meter then at 300 meter. $\mu_1$ > $\mu_2$
-
-```{r}
-C.depth.300.400 <- merge(C_flux.depth.300,C_flux.depth.400,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-
-t.test(C.depth.300.400$C_avg.300 ,C.depth.300.400$C_avg.400, alternative = "greater", paired = TRUE, var.equal = TRUE)
-```
 
 (2.1)
 
@@ -293,7 +280,7 @@ $H_1$ : Nitrogen flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
 ```{r}
 N.depth.150.200 <- merge(N_flux.depth.150,N_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 
-t.test(N.depth.150.200$N_avg.150 ,N.depth.150.200$N_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+t.test(log(N.depth.150.200$N_avg.150) ,log(N.depth.150.200$N_avg.200), alternative = "greater", paired = TRUE, var.equal = TRUE)
 
 ```
 
@@ -308,25 +295,8 @@ $H_1$ : Nitrogen flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
 ```{r}
 N.depth.200.300 <- merge(N_flux.depth.200,N_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 
-t.test(N.depth.200.300$N_avg.200 ,N.depth.200.300$N_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+t.test(log(N.depth.200.300$N_avg.200) ,log(N.depth.200.300$N_avg.300), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
-
-
-(2.3)
-
-$\mu_1$ = mean Nitrogen flux at depth 300
-$\mu_2$ = mean Nitrogen flux at depth 400
-
-$H_0$ : Nitrogen flux does not change between 300 and 400 meter. $\mu_1$ = $\mu_2$
-$H_1$ : Nitrogen flux is lower at 400 meter then at 300 meter. $\mu_1$ > $\mu_2$
-
-```{r}
-N.depth.300.400 <- merge(N_flux.depth.300,N_flux.depth.400,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-
-t.test(N.depth.300.400$N_avg.300 ,N.depth.300.400$N_avg.400, alternative = "greater", paired = TRUE, var.equal = TRUE)
-```
-
-<br>
 
 (3.1)
 
@@ -339,7 +309,7 @@ $H_1$ : Phosporous flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_
 ```{r}
 P.depth.150.200 <- merge(P_flux.depth.150,P_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 
-t.test(P.depth.150.200$P_avg.150 ,P.depth.150.200$P_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+t.test(log(P.depth.150.200$P_avg.150) ,log(P.depth.150.200$P_avg.200), alternative = "greater", paired = TRUE, var.equal = TRUE)
 
 ```
 
@@ -354,10 +324,8 @@ $H_1$ : Phosporous flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_
 ```{r}
 P.depth.200.300 <- merge(P_flux.depth.200,P_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 
-t.test(P.depth.200.300$P_avg.200 ,P.depth.200.300$P_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+t.test(log(P.depth.200.300$P_avg.200) ,log(P.depth.200.300$P_avg.300), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
-
-<br>
 
 (4.1)
 
@@ -370,7 +338,7 @@ $H_1$ : Mass flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
 ```{r}
 M.depth.150.200 <- merge(M_flux.depth.150,M_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 
-t.test(M.depth.150.200$M_avg.150 ,M.depth.150.200$M_avg.200, alternative = "greater", paired = TRUE, var.equal = TRUE)
+t.test(log(M.depth.150.200$M_avg.150) ,log(M.depth.150.200$M_avg.200), alternative = "greater", paired = TRUE, var.equal = TRUE)
 
 ```
 
@@ -385,22 +353,10 @@ $H_1$ : Mass flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
 ```{r}
 M.depth.200.300 <- merge(M_flux.depth.200,M_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 
-t.test(M.depth.200.300$M_avg.200 ,M.depth.200.300$M_avg.300, alternative = "greater", paired = TRUE, var.equal = TRUE)
+t.test(log(M.depth.200.300$M_avg.200) ,log(M.depth.200.300$M_avg.300), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
 
-(4.3)
-
-$\mu_1$ = mean Mass flux at depth 300
-$\mu_2$ = mean Mass flux at depth 400
-
-$H_0$ : Mass flux does not change between 300 and 400 meter. $\mu_1$ = $\mu_2$
-$H_1$ : Mass flux is lower at 400 meter then at 300 meter. $\mu_1$ > $\mu_2$
-
-```{r}
-M.depth.300.400 <- merge(M_flux.depth.300,M_flux.depth.400,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-
-t.test(M.depth.300.400$M_avg.300 ,M.depth.300.400$M_avg.400, alternative = "greater", paired = TRUE, var.equal = TRUE)
-```
+<br>
 
 ### Simple Linear Regression via LS
 
@@ -542,8 +498,39 @@ lmfit_Dep.C <- lm(C_avg ~ dep, data = Data.noNA)
 summary(lmfit_Dep.C)
 abline(lmfit_Dep.C)
 
+plot(Data.noNA$dep, Data.noNA$N_avg)
+lmfit_Dep.N <- lm(N_avg ~ dep, data = Data.noNA)
+summary(lmfit_Dep.N)
+abline(lmfit_Dep.N)
+
+plot(Data.noNA$dep, Data.noNA$P_avg)
+lmfit_Dep.P <- lm(P_avg ~ dep, data = Data.noNA)
+summary(lmfit_Dep.P)
+abline(lmfit_Dep.P)
+
+plot(Data.noNA$dep, Data.noNA$M_avg)
+lmfit_Dep.M <- lm(M_avg ~ dep, data = Data.noNA)
+summary(lmfit_Dep.M)
+abline(lmfit_Dep.M)
+```
+
+
+### Multiple regression 
+
+```{r}
+
+lmfit.MR <- lm(M_avg ~ flux + dep, data = Data.noNA)
+summary(lmfit.MR)
 
 ```
+
+*which one is better?* 
+
+```{r}
+smaller <- lmfit.flux; larger <- lmfit.MR
+anova(smaller, larger)
+```
+
 
 ### ANCOVA 
 
@@ -581,6 +568,40 @@ xyplot(M_avg ~ C_avg | dep,
                   auto.key=TRUE,
                   main="Fig3: Three standalone depth level-specific `lm()` fits"
            )
+```
+
+```{r}
+#reformat yymmdd so that r can better use it blocking factors 
+
+# only yymmdd1 was used to create new year and month columns since yymmdd1 and yymmdd2 sampled were only a couple days apart and were averaged out in flux columns
+
+Data.noNA$Date <- as.Date(paste(substr(Data.noNA$yymmdd1,1,4),
+                                         substr(Data.noNA$yymmdd1,5,6),
+                                         substr(Data.noNA$yymmdd1,7,8), sep = "-"),
+                                   format = '%Y-%m-%d')
+
+Data.noNA$Year <- substr(Data.noNA$yymmdd1,1,4)
+
+#install.packages("lubridate")
+library(lubridate)                            
+Data.noNA$month <- as.Date(paste(substr(Data.noNA$yymmdd1,5,6),
+                              substr(Data.noNA$yymmdd1,7,8), sep = "-"),
+                        format = '%m-%d')           
+Data.noNA$month <- round_date(Data.noNA$month, unit = "month")
+Data.noNA$month <- format(Data.noNA$month,format = "%Y-%b-%d")
+Data.noNA$month <- substr(paste(Data.noNA$month),6,8)
+
+```
+
+
+```{r}
+ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg", "Year", "month"))
+ANOCOVA.data <- as.vector(ANOCOVA.data)
+ANCOVA <- lm(log(M_avg) ~ log(C_avg) + log(N_avg) + log(P_avg) + dep + as.factor(Year) + as.factor(month),data = ANOCOVA.data)
+summary(ANCOVA)
+plot(ANCOVA)
+resids <- resid(ANCOVA)
+fit <-fitted(ANCOVA)
 ```
 
 # Results discussion:

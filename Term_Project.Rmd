@@ -34,15 +34,15 @@ ANOVA Trial
 library(psych) # for `pairs.panels()`
 library(lattice)
 
-ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg"))
-as.character(ANOCOVA.data$dep) # need to make dep categorical not numerical 
+ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg", "Year", "month"))
+#ANOCOVA.data <- as.character(ANOCOVA.data$dep) # need to make dep categorical not numerical 
 attach(ANOCOVA.data)
 
 summary(ANOCOVA.data)
 
-pairs.panels(data.frame(dep,C_avg,N_avg, P_avg, M_avg))
+pairs.panels(data.frame(as.character(dep),C_avg,N_avg, P_avg, M_avg))
 
-xyplot(M_avg ~ C_avg | dep, 
+xyplot(log(M_avg) ~ C_avg | dep, 
                   main="Fig2a: Activity level-specific scatterplots"
            )
 
@@ -58,6 +58,48 @@ xyplot(M_avg ~ C_avg | dep,
                   main="Fig3: Three standalone depth level-specific `lm()` fits"
            )
 ```
+
+ANCOVA Trial 
+
+```{r}
+#reformat yymmdd so that r can better use it blocking factors 
+
+# only yymmdd1 was used to create new year and month columns since yymmdd1 and yymmdd2 sampled were only a couple days apart and were averaged out in flux columns
+
+Data.noNA$Date <- as.Date(paste(substr(Data.noNA$yymmdd1,1,4),
+                                         substr(Data.noNA$yymmdd1,5,6),
+                                         substr(Data.noNA$yymmdd1,7,8), sep = "-"),
+                                   format = '%Y-%m-%d')
+
+Data.noNA$Year <- substr(Data.noNA$yymmdd1,1,4)
+
+#install.packages("lubridate")
+library(lubridate)                            
+Data.noNA$month <- as.Date(paste(substr(Data.noNA$yymmdd1,5,6),
+                              substr(Data.noNA$yymmdd1,7,8), sep = "-"),
+                        format = '%m-%d')           
+Data.noNA$month <- round_date(Data.noNA$month, unit = "month")
+Data.noNA$month <- format(Data.noNA$month,format = "%Y-%b-%d")
+Data.noNA$month <- substr(paste(Data.noNA$month),6,8)
+
+```
+
+
+```{r}
+ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg", "Year", "month"))
+ANOCOVA.data <- as.vector(ANOCOVA.data)
+ANCOVA <- lm(log(M_avg) ~ log(C_avg) + log(N_avg) + log(P_avg) + dep + as.factor(Year) + as.factor(month),data = ANOCOVA.data)
+summary(ANCOVA)
+plot(ANCOVA)
+resids <- resid(ANCOVA)
+fit <-fitted(ANCOVA)
+```
+
+
+
+
+```
+
 
 Bar graph trial
 ```{r}
