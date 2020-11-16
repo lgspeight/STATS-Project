@@ -194,7 +194,7 @@ Mean and se of each depth of P-flux
 #levels(as.factor(Pflux.noNAs$dep150p)) #this looks at the distribution of toxins in the organism selected
 
 
-dep150p <- subset(Pflux.noNAs, dep=="150") #focusing on mean of C-avg at depth 150
+dep150p <- subset(, dep=="150") #focusing on mean of C-avg at depth 150
 dep150p
 
 muPflux150 <- mean(dep150p$P_avg, data=dep150p)

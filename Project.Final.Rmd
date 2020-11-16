@@ -37,9 +37,12 @@ delete.na <- function(DF, n=0) {
 } #Function that takes rows out that contains NAs 
 bats_flux.noNA <- delete.na(bats_flux) # Take out rows containing NAs 
 
+# Too many observations taken out, lets subset a new data frame
 
 Data <- subset(bats_flux,select = c("cr","dep","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2","M_avg","C_avg","N_avg","P_avg"))
 Data.noNA <- delete.na(Data)
+
+# now wer can use Data.noNA to compare each flux to one another, since no flux contains NAs
 
 ```
 
@@ -120,6 +123,253 @@ M_flux.depth.400 <- rename(M_flux.depth.400, c("M_avg.400" ="M_avg"))
 
 ### Bar plots to access relationship between fluxes and depths 
 
+Mean and se of each depth of C-flux
+
+```{r}
+dep150 <- subset(C_flux.data, dep=="150") #focusing on mean of C-avg at depth 150
+dep150
+
+muCflux150 <- mean(dep150$C_avg, data=dep150)
+muCflux150
+
+s.e150c <- muCflux150 * sqrt(10)  #need to find s.e
+
+
+dep200 <- subset(C_flux.data, dep=="200") #focusing on mean of C-avg at depth 200
+dep200
+
+muCflux200 <- mean(dep200$C_avg, data=dep200)
+muCflux200
+
+s.e200c <- muCflux200 * sqrt(10)
+
+dep300 <- subset(C_flux.data, dep=="300") #focusing on mean of C-avg at depth 300
+dep300
+
+muCflux300 <- mean(dep300$C_avg, data=dep300)
+muCflux300
+
+s.e300c <- muCflux300 * sqrt(10)
+
+dep400 <- subset(C_flux.data, dep=="400") #focusing on mean of C-avg at depth 400
+dep400
+
+muCflux400 <- mean(dep400$C_avg, data=dep400)
+muCflux400
+
+s.e400c <- muCflux400 * sqrt(10)
+
+bar.Cflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muCflux150,muCflux200,muCflux300,muCflux400))
+colnames(bar.Cflux)[1] <- "Depth"
+colnames(bar.Cflux)[2] <- "C_fluxMean"
+
+```
+
+graph of C-flux
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(viridisLite)
+
+Viridis_palette <- viridis(40)[seq(1,40, 2)]
+xval <- bar.Cflux$Depth #character objects need quotes
+yval <- bar.Cflux$`C_flux Mean`
+
+ggplot()+geom_col(bar.Cflux, mapping=aes(x= Depth, y = C_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+xlab("Depth (m)") + ylab("Mean of C Flux(mg carbon m^-2 day^-1)") +                
+                                           
+ theme(text = element_text(family = 'serif')) +                       
+scale_fill_manual(values = Viridis_palette)                        
+  
+
+
+```
+
+Mean and se of each depth of P-flux
+
+```{r}
+
+dep150p <- subset(P_flux.data, dep=="150") #focusing on mean of P-avg at depth 150
+dep150p
+
+muPflux150 <- mean(dep150p$P_avg, data=dep150p)
+muPflux150
+
+s.e150p <- muPflux150 * sqrt(10)  #need to find s.e
+
+
+dep200p <- subset(P_flux.data, dep=="200") #focusing on mean of P-avg at depth 200
+dep200p
+
+muPflux200 <- mean(dep200p$P_avg, data=dep200p)
+muPflux200
+
+s.e200p <- muPflux200 * sqrt(10)
+
+dep300p <- subset(P_flux.data, dep=="300") #focusing on mean of P-avg at depth 300
+dep300p
+
+muPflux300 <- mean(dep300p$P_avg, data=dep300p)
+muPflux300
+
+s.e300p <- muPflux300 * sqrt(10)
+
+
+bar.Pflux <- data.frame(c("dep150","dep200","dep300"), c(muPflux150,muPflux200,muPflux300))
+colnames(bar.Pflux)[1] <- "Depth"
+colnames(bar.Pflux)[2] <- "P_fluxMean"
+
+
+```
+
+Graph of P-flux 
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(viridisLite)
+
+Viridis_palette <- viridis(40)[seq(1,40, 2)]
+xval <- bar.Pflux$Depth #character objects need quotes
+yval <- bar.Pflux$`P_flux Mean`
+
+ggplot()+geom_col(bar.Pflux, mapping=aes(x= Depth, y = P_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+xlab("Depth (m)") + ylab("Mean of P Flux(mg phospohorous m^-2 day^-1)") +                
+                                           
+ theme(text = element_text(family = 'serif')) +                       
+scale_fill_manual(values = Viridis_palette)                        
+  
+
+
+```
+
+```{r}
+
+dep150n <- subset(N_flux.data, dep=="150") #focusing on mean of N-avg at depth 150
+dep150n
+
+muNflux150 <- mean(dep150n$N_avg, data=dep150n)
+muNflux150
+
+s.e150n <- muNflux150 * sqrt(10)  #need to find s.e
+
+
+dep200n <- subset(N_flux.data, dep=="200") #focusing on mean of N-avg at depth 200
+dep200n
+
+muNflux200 <- mean(dep200n$N_avg, data=dep200n)
+muNflux200
+
+s.e200n <- muNflux200 * sqrt(10)
+
+dep300n <- subset(N_flux.data, dep=="300") #focusing on mean of N-avg at depth 300
+dep300n
+
+muNflux300 <- mean(dep300n$N_avg, data=dep300n)
+muNflux300
+
+s.e300n <- muNflux300 * sqrt(10)
+
+dep400n <- subset(N_flux.data, dep=="400") #focusing on mean of N-avg at depth 400
+dep400n
+
+muNflux400 <- mean(dep400n$N_avg, data=dep400n)
+muNflux400
+
+s.e400n <- muNflux400 * sqrt(10)
+
+bar.Nflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muNflux150,muNflux200,muNflux300,muNflux400))
+colnames(bar.Nflux)[1] <- "Depth"
+colnames(bar.Nflux)[2] <- "N_fluxMean"
+
+
+```
+
+Graph of N-flux
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(viridisLite)
+
+Viridis_palette <- viridis(40)[seq(1,40, 2)]
+xval <- bar.Nflux$Depth #character objects need quotes
+yval <- bar.Nflux$`N_flux Mean`
+
+ggplot()+geom_col(bar.Nflux, mapping=aes(x= Depth, y = N_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+xlab("Depth (m)") + ylab("Mean of N Flux(mg nitrogen m^-2 day^-1)") +                
+                                           
+ theme(text = element_text(family = 'serif')) +                       
+scale_fill_manual(values = Viridis_palette)                        
+  
+```
+
+Mean and se of each depth of M-flux
+
+```{r}
+
+dep150m <- subset(M_flux.data,dep=="150") #focusing on mean of C-avg at depth 150
+dep150m
+
+muMflux150 <- mean(dep150m$M_avg, data=dep150m)
+muMflux150
+
+s.e150m <- muMflux150 * sqrt(10)  #need to find s.e
+
+
+dep200m <- subset(M_flux.data, dep=="200") #focusing on mean of C-avg at depth 200
+dep200m
+
+muMflux200 <- mean(dep200m$M_avg, data=dep200m)
+muMflux200
+
+s.e200m <- muMflux200 * sqrt(10)
+
+dep300m <- subset(M_flux.data, dep=="300") #focusing on mean of C-avg at depth 300
+dep300m
+
+muMflux300 <- mean(dep300m$M_avg, data=dep300m)
+muMflux300
+
+s.e300m <- muMflux300 * sqrt(10)
+
+dep400m <- subset(M_flux.data, dep=="400") #focusing on mean of C-avg at depth 400
+dep400m
+
+muMflux400 <- mean(dep400m$M_avg, data=dep400m)
+muMflux400
+
+s.e400m <- muMflux400 * sqrt(10)
+
+bar.Mflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muMflux150,muMflux200,muMflux300,muMflux400))
+colnames(bar.Mflux)[1] <- "Depth"
+colnames(bar.Mflux)[2] <- "M_fluxMean"
+
+```
+
+Graph of M-flux
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(viridisLite)
+
+Viridis_palette <- viridis(40)[seq(1,40, 2)]
+xval <- bar.Mflux$Depth #character objects need quotes
+yval <- bar.Mflux$`M_flux Mean`
+
+ggplot()+geom_col(bar.Mflux, mapping=aes(x= Depth, y = M_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+xlab("Depth (m)") + ylab("Mean of M Flux(mg mass m^-2 day^-1)") +                
+                                           
+ theme(text = element_text(family = 'serif')) +                       
+scale_fill_manual(values = Viridis_palette)                        
+  
+
+
+```
+
+<br>
 
 ### Paired sample t test for each depth and the depth below it 
 
