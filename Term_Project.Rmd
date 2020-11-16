@@ -97,10 +97,6 @@ fit <-fitted(ANCOVA)
 
 
 
-
-```
-
-
 Bar graph trial
 ```{r}
 # this code is to specify the depth I want to look at that contains the rows and the columns
@@ -112,8 +108,6 @@ Study_Rows <- which(bats_flux$dep %in% Study_depths) #which() to ask R which row
 bats_flux2 <- bats_flux[Study_Rows,] #has all the rows we want as well as all the columns
 
 ```
-
-
 
 
 Mean and se of each depth of C-flux
