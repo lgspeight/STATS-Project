@@ -13,7 +13,7 @@ output:
 
 # Introduction: 
 
-# Toolbox discussion:
+# Toolbox discussion: 
 
 # Description:
 
@@ -21,12 +21,11 @@ output:
 
 ### Reading csv data in 
 
-```{r}
+```{r, echo=FALSE}
 rm(list=ls(all=TRUE))  #Housekeeping: clear out old files
 
 options(warn = -1)
 knitr::opts_chunk$set(echo = T, fig.height=6, fig.width=8, warning = F, message = F) 
-
 ```
 
 ```{r, eval=TRUE}
@@ -48,8 +47,8 @@ Data.noNA <- delete.na(Data)
 
 Here is what our data looks like 
 
-```{r}
-head(Data)
+```{r, echo = FALSE}
+head(Data.noNA)
 ```
 
 ### Subsetting each flux out seperatly 
@@ -131,264 +130,227 @@ M_flux.depth.400 <- rename(M_flux.depth.400, c("M_avg.400" ="M_avg"))
 
 ### Bar plots to access relationship between fluxes and depths 
 
-n values for C-flux
+n values for C-flux at each depth
 
-```{r}
+```{r, echo=FALSE}
 #n values for C-flux
-length(which(Data.noNA$dep == "150" & Data.noNA$C_avg))
-length(which(Data.noNA$dep == "200" & Data.noNA$C_avg))
-length(which(Data.noNA$dep == "300" & Data.noNA$C_avg))
-length(which(Data.noNA$dep == "400" & Data.noNA$C_avg))
-
+length(C_flux.depth.150$C_avg.150)
+length(C_flux.depth.200$C_avg.200)
+length(C_flux.depth.300$C_avg.300)
+length(C_flux.depth.400$C_avg.400)
 ```
 
 Mean and SE of each depth of C-flux
 
-```{r}
-dep150 <- subset(C_flux.data, dep=="150") #focusing on mean of C-avg at depth 150
+```{r, echo=FALSE}
+muCflux150 <- mean(C_flux.depth.150$C_avg.150) #focusing on mean of C-avg at depth 150
+s.e150c <- sd(C_flux.depth.150$C_avg.150) / sqrt(314)  #need to find s.e
 
-muCflux150 <- mean(dep150$C_avg, data=dep150)
+muCflux200 <- mean(C_flux.depth.200$C_avg.200) #focusing on mean of C-avg at depth 200
+s.e200c <- sd(C_flux.depth.200$C_avg.200) / sqrt(304)
 
-s.e150c <- muCflux150 * sqrt(105)  #need to find s.e
+muCflux300 <- mean(C_flux.depth.300$C_avg.300) #focusing on mean of C-avg at depth 300
+s.e300c <- sd(C_flux.depth.300$C_avg.300) / sqrt(305)
 
-dep200 <- subset(C_flux.data, dep=="200") #focusing on mean of C-avg at depth 200
+muCflux400 <- mean(C_flux.depth.400$C_avg.400) #focusing on mean of C-avg at depth 400
+s.e400c <- sd(C_flux.depth.400$C_avg.400) / sqrt(18)
 
-muCflux200 <- mean(dep200$C_avg, data=dep200)
-
-s.e200c <- muCflux200 * sqrt(102)
-
-dep300 <- subset(C_flux.data, dep=="300") #focusing on mean of C-avg at depth 300
-
-muCflux300 <- mean(dep300$C_avg, data=dep300)
-
-s.e300c <- muCflux300 * sqrt(98)
-
-dep400 <- subset(C_flux.data, dep=="400") #focusing on mean of C-avg at depth 400
-
-muCflux400 <- mean(dep400$C_avg, data=dep400)
-
-s.e400c <- muCflux400 * sqrt(0)
-
-bar.Cflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muCflux150,muCflux200,muCflux300,muCflux400))
+bar.Cflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muCflux150,muCflux200,muCflux300,muCflux400), c(s.e150c,s.e200c,s.e300c,s.e400c))
 colnames(bar.Cflux)[1] <- "Depth"
-colnames(bar.Cflux)[2] <- "C_fluxMean"
+colnames(bar.Cflux)[2] <- "C_flux.Mean"
+colnames(bar.Cflux)[3] <- "C_flux.SE"
+bar.Cflux
 ```
 
 Graph of C-flux
 
-```{r}
+```{r, echo = FALSE}
 library(ggplot2)
 library(dplyr)
 library(viridisLite)
 
 Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Cflux$Depth #character objects need quotes
-yval <- bar.Cflux$`C_flux Mean`
+yval <- bar.Cflux$`C_flux.Mean`
 
-ggplot()+geom_col(bar.Cflux, mapping=aes(x= Depth, y = C_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+ggplot()+geom_col(bar.Cflux, mapping=aes(x= Depth, y = C_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
 xlab("Depth (m)") + ylab("Mean of C Flux(mg carbon m^-2 day^-1)") +                
                                            
  theme(text = element_text(family = 'serif')) +                       
 scale_fill_manual(values = Viridis_palette)                        
-  
-
-
 ```
 
+*C-flux decreasing with depth*
 
-##C-flux decreasing with depth
+<br>
 
-```{r}
+n values of P-flux at each depth
+
+```{r, echo = FALSE}
 #n values for P-flux
-length(which(Data.noNA$dep == "150" & Data.noNA$P_avg))
-length(which(Data.noNA$dep == "200" & Data.noNA$P_avg))
-length(which(Data.noNA$dep == "300" & Data.noNA$P_avg))
-length(which(Data.noNA$dep == "400" & Data.noNA$P_avg))
+length(P_flux.depth.150$P_avg.150)
+length(P_flux.depth.200$P_avg.200)
+length(P_flux.depth.300$P_avg.300)
+length(P_flux.depth.400$P_avg.400)
 ```
 
 
 Mean and SE of each depth of P-flux
 
-```{r}
-dep150p <- subset(P_flux.data, dep=="150") #focusing on mean of P-avg at depth 150
+```{r, echo=FALSE}
+muPflux150 <- mean(P_flux.depth.150$P_avg.150) #focusing on mean of P-avg at depth 150
+s.e150p <- sd(P_flux.depth.150$P_avg.150) / sqrt(109)  #need to find s.e
 
-muPflux150 <- mean(dep150p$P_avg, data=dep150p)
+muPflux200 <- mean(P_flux.depth.200$P_avg.200) #focusing on mean of P-avg at depth 200
+s.e200p <- sd(P_flux.depth.200$P_avg.200) / sqrt(106)
 
-s.e150p <- muPflux150 * sqrt(105)  #need to find s.e
+muPflux300 <- mean(P_flux.depth.300$P_avg.300) #focusing on mean of P-avg at depth 300
+s.e300p <- sd(P_flux.depth.300$P_avg.300) / sqrt(105)
 
-dep200p <- subset(P_flux.data, dep=="200") #focusing on mean of P-avg at depth 200
-
-muPflux200 <- mean(dep200p$P_avg, data=dep200p)
-
-s.e200p <- muPflux200 * sqrt(102)
-
-dep300p <- subset(P_flux.data, dep=="300") #focusing on mean of P-avg at depth 300
-
-muPflux300 <- mean(dep300p$P_avg, data=dep300p)
-
-
-s.e300p <- muPflux300 * sqrt(98)
-
-#dep400p <- subset(P_flux.data, dep=="400")
-#muPflux400 <- mean(dep400p$P_avg, data=dep400p)
-
-#s.e400p <- muPflux400 * sqrt(0)
-
-bar.Pflux <- data.frame(c("dep150","dep200","dep300"), c(muPflux150,muPflux200,muPflux300))
+bar.Pflux <- data.frame(c("dep150","dep200","dep300"), c(muPflux150,muPflux200,muPflux300), c(s.e150p,s.e200p,s.e300p))
 colnames(bar.Pflux)[1] <- "Depth"
-colnames(bar.Pflux)[2] <- "P_fluxMean"
+colnames(bar.Pflux)[2] <- "P_flux.Mean"
+colnames(bar.Pflux)[3] <- "P_flux.SE"
+bar.Pflux
 ```
 
 Graph of P-flux 
 
-```{r}
+```{r, echo = FALSE}
 library(ggplot2)
 library(dplyr)
 library(viridisLite)
 
 Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Pflux$Depth #character objects need quotes
-yval <- bar.Pflux$`P_flux Mean`
+yval <- bar.Pflux$`P_flux.Mean`
 
-ggplot()+geom_col(bar.Pflux, mapping=aes(x= Depth, y = P_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+ggplot()+geom_col(bar.Pflux, mapping=aes(x= Depth, y = P_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
 xlab("Depth (m)") + ylab("Mean of P Flux(mg phospohorous m^-2 day^-1)") +                
                                            
  theme(text = element_text(family = 'serif')) +                       
 scale_fill_manual(values = Viridis_palette)                        
 ```
 
-##P-flux decreaing with depth
+*P-flux decreaing with depth*
 
-```{r}
+<br>
 
+n value of N-flux at each depth
+
+```{r, echo = FALSE}
 #n values for N-flux
-length(which(Data.noNA$dep == "150" & Data.noNA$N_avg))
-length(which(Data.noNA$dep == "200" & Data.noNA$N_avg))
-length(which(Data.noNA$dep == "300" & Data.noNA$N_avg))
-length(which(Data.noNA$dep == "400" & Data.noNA$N_avg))
-
-
-
+length(N_flux.depth.150$N_avg.150)
+length(N_flux.depth.200$N_avg.200)
+length(N_flux.depth.300$N_avg.300)
+length(N_flux.depth.400$N_avg.400)
 ```
 
 Mean and SE of each depth of N-flux
 
-```{r}
-dep150n <- subset(N_flux.data, dep=="150") #focusing on mean of N-avg at depth 150
+```{r, echo=FALSE}
+muNflux150 <- mean(N_flux.depth.150$N_avg.150) #focusing on mean of P-avg at depth 150
+s.e150n <- sd(N_flux.depth.150$N_avg.150) / sqrt(312)  #need to find s.e
 
-muNflux150 <- mean(dep150n$N_avg, data=dep150n)
+muNflux200 <- mean(N_flux.depth.200$N_avg.200) #focusing on mean of P-avg at depth 200
+s.e200n <- sd(N_flux.depth.200$N_avg.200) / sqrt(302)
 
-s.e150n <- muNflux150 * sqrt(105)  #need to find s.e
+muNflux300 <- mean(N_flux.depth.300$N_avg.300) #focusing on mean of P-avg at depth 300
+s.e300n <- sd(N_flux.depth.300$N_avg.300) / sqrt(303)
 
-dep200n <- subset(N_flux.data, dep=="200") #focusing on mean of N-avg at depth 200
+muNflux400 <- mean(N_flux.depth.400$N_avg.400) #focusing on mean of C-avg at depth 400
+s.e400n <- sd(N_flux.depth.400$N_avg.400) / sqrt(18)
 
-muNflux200 <- mean(dep200n$N_avg, data=dep200n)
-
-s.e200n <- muNflux200 * sqrt(102)
-
-dep300n <- subset(N_flux.data, dep=="300") #focusing on mean of N-avg at depth 300
-
-muNflux300 <- mean(dep300n$N_avg, data=dep300n)
-
-s.e300n <- muNflux300 * sqrt(98)
-
-dep400n <- subset(N_flux.data, dep=="400") #focusing on mean of N-avg at depth 400
-
-muNflux400 <- mean(dep400n$N_avg, data=dep400n)
-
-s.e400n <- muNflux400 * sqrt(0)
-
-bar.Nflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muNflux150,muNflux200,muNflux300,muNflux400))
+bar.Nflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muNflux150,muNflux200,muNflux300,muNflux400), c(s.e150n,s.e200n,s.e300n,s.e400n))
 colnames(bar.Nflux)[1] <- "Depth"
-colnames(bar.Nflux)[2] <- "N_fluxMean"
+colnames(bar.Nflux)[2] <- "N_flux.Mean"
+colnames(bar.Nflux)[3] <- "N_flux.SE"
+bar.Nflux
 ```
 
 Graph of N-flux
 
-```{r}
+```{r, echo= FALSE}
 library(ggplot2)
 library(dplyr)
 library(viridisLite)
 
 Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Nflux$Depth #character objects need quotes
-yval <- bar.Nflux$`N_flux Mean`
+yval <- bar.Nflux$`N_flux.Mean`
 
-ggplot()+geom_col(bar.Nflux, mapping=aes(x= Depth, y = N_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+ggplot()+geom_col(bar.Nflux, mapping=aes(x= Depth, y = N_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
 xlab("Depth (m)") + ylab("Mean of N Flux(mg nitrogen m^-2 day^-1)") +                
                                            
  theme(text = element_text(family = 'serif')) +                       
 scale_fill_manual(values = Viridis_palette)                        
 ```
 
-#N-flux decreasing with depth
+*N-flux decreasing with depth*
 
+<br>
 
-```{r}
+n value for M-flux at each depth 
+
+```{r, echo=FALSE}
 #n values for M-flux
-length(which(Data.noNA$dep == "150" & Data.noNA$M_avg))
-length(which(Data.noNA$dep == "200" & Data.noNA$M_avg))
-length(which(Data.noNA$dep == "300" & Data.noNA$M_avg))
-length(which(Data.noNA$dep == "400" & Data.noNA$M_avg))
-
-
+length(M_flux.depth.150$M_avg.150)
+length(M_flux.depth.200$M_avg.200)
+length(M_flux.depth.300$M_avg.300)
+length(M_flux.depth.400$M_avg.400)
 ```
+
 Mean and SE of each depth of M-flux
 
-```{r}
-dep150m <- subset(M_flux.data,dep=="150") #focusing on mean of C-avg at depth 150
+```{r, echo=FALSE}
+muMflux150 <- mean(M_flux.depth.150$M_avg.150) #focusing on mean of P-avg at depth 150
+s.e150m <- sd(M_flux.depth.150$M_avg.150) / sqrt(314)  #need to find s.e
 
-muMflux150 <- mean(dep150m$M_avg, data=dep150m)
+muMflux200 <- mean(M_flux.depth.200$M_avg.200) #focusing on mean of P-avg at depth 200
+s.e200m <- sd(M_flux.depth.200$M_avg.200) / sqrt(305)
 
-s.e150m <- muMflux150 * sqrt(105)  #need to find s.e
+muMflux300 <- mean(M_flux.depth.300$M_avg.300) #focusing on mean of P-avg at depth 300
+s.e300m <- sd(M_flux.depth.300$M_avg.300) / sqrt(305)
 
-dep200m <- subset(M_flux.data, dep=="200") #focusing on mean of C-avg at depth 200
+muMflux400 <- mean(M_flux.depth.400$M_avg.400) #focusing on mean of C-avg at depth 400
+s.e400m <- sd(M_flux.depth.400$M_avg.400) / sqrt(17)
 
-muMflux200 <- mean(dep200m$M_avg, data=dep200m)
-
-s.e200m <- muMflux200 * sqrt(102)
-
-dep300m <- subset(M_flux.data, dep=="300") #focusing on mean of C-avg at depth 300
-
-muMflux300 <- mean(dep300m$M_avg, data=dep300m)
-
-s.e300m <- muMflux300 * sqrt(98)
-
-dep400m <- subset(M_flux.data, dep=="400") #focusing on mean of C-avg at depth 400
-
-muMflux400 <- mean(dep400m$M_avg, data=dep400m)
-
-s.e400m <- muMflux400 * sqrt(00)
-
-bar.Mflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muMflux150,muMflux200,muMflux300,muMflux400))
+bar.Mflux <- data.frame(c("dep150","dep200","dep300","dep400"), c(muMflux150,muMflux200,muMflux300,muMflux400), c(s.e150m,s.e200m,s.e300m,s.e400m))
 colnames(bar.Mflux)[1] <- "Depth"
-colnames(bar.Mflux)[2] <- "M_fluxMean"
+colnames(bar.Mflux)[2] <- "M_flux.Mean"
+colnames(bar.Mflux)[3] <- "M_flux.SE"
+bar.Mflux
 ```
 
 Graph of M-flux
 
-```{r}
+```{r, echo = FALSE}
 library(ggplot2)
 library(dplyr)
 library(viridisLite)
 
 Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Mflux$Depth #character objects need quotes
-yval <- bar.Mflux$`M_flux Mean`
+yval <- bar.Mflux$`M_flux.Mean`
 
-ggplot()+geom_col(bar.Mflux, mapping=aes(x= Depth, y = M_fluxMean), color="#e9ecef", alpha=0.6,) +                                     
+ggplot()+geom_col(bar.Mflux, mapping=aes(x= Depth, y = M_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
 xlab("Depth (m)") + ylab("Mean of M Flux(mg mass m^-2 day^-1)") +                
                                            
  theme(text = element_text(family = 'serif')) +                       
 scale_fill_manual(values = Viridis_palette)                        
 ```
 
-##M-flux decreasing with depth
+*M-flux decreasing with depth*
+
 <br>
 
-#### Distribution  and box plot of our data by depth 
+### Distributionand box plot of our data by depth 
 
-```{r,eval=TRUE}
+Checking for normality and outliers in flux distribution
+
+Log transfromation was needed for all FLuxes 
+
+```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Carbon Flux 
 par(mfrow=c(1,4))
 hist((C_flux.depth.150$C_avg.150))
@@ -411,12 +373,11 @@ boxplot(log(C_flux.depth.300$C_avg.300))
 boxplot(log(C_flux.depth.400$C_avg.400))
 ```
 
-##Needed to log transform data to make it more normal
-##boxplot means do not overlap, but box sizes for 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape which could break homosedasticity.
+*boxplot means do not overlap, but box sizes for 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape which could break homosedasticity*
 
+<br>
 
-
-```{r,eval=TRUE}
+```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Nitrogen Flux 
 par(mfrow=c(1,4))
 hist((N_flux.depth.150$N_avg.150), breaks = "FD")
@@ -439,11 +400,11 @@ boxplot(log(N_flux.depth.300$N_avg.300))
 boxplot(log(N_flux.depth.400$N_avg.400))
 ```
 
-##Needed to log transform data to make it more normal
-##boxplot means do not too seem to overlab too much for 150 and 200, but ther is a bit of overlap in 200 and 300. 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape which could break homosedasticity.
+*boxplot means do not too seem to overlab too much for 150 and 200, but ther is a bit of overlap in 200 and 300. 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape which could break homosedasticity*
 
+<br>
 
-```{r,eval=TRUE}
+```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Phosporous Flux 
 par(mfrow=c(1,3))
 hist((P_flux.depth.150$P_avg.150), breaks = "FD")
@@ -463,10 +424,9 @@ boxplot(log(P_flux.depth.200$P_avg.200))
 boxplot(log(P_flux.depth.300$P_avg.300))
 ```
 
-##Needed to log transform data to make it more normal
-##boxplot means seem to have some overlap. They are similar in box size, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity.
+*boxplot means seem to have some overlap. They are similar in box size, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity*
 
-```{r,eval=TRUE}
+```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Mass Flux 
 par(mfrow=c(1,4))
 hist((M_flux.depth.150$M_avg.150), breaks = "FD")
@@ -489,8 +449,7 @@ boxplot(log(M_flux.depth.300$M_avg.300))
 boxplot(log(M_flux.depth.400$M_avg.400))
 ```
 
-##Needed to log transform data to make it more normal
-##boxplot means seem to have some overlap. They are similar in box size, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity.
+*boxplot means seem to have some overlap. They are similar in box size, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity*
 
 *Since many of the 400 m depth distrubutions were not normal, even after transformation and have small n, they will not be used in the hypothesis testing* 
 
@@ -505,16 +464,19 @@ For a paired t test to be preformed it must meet these assumptions:
 
 $\overline{Y_1}$ - $\overline{Y_2}$ = $\overline{D}$
 
-  +The dependent variable must be continuous (interval/ratio). $\checkmark$
++ The dependent variable must be continuous (interval/ratio). $\checkmark$
 
-##can take this out ## +The observations are independent of one another. $\checkmark$ 
++ The observations are independent of one another. $\checkmark$ 
 
-  +The dependent variable ($\overline{D}$) should be approximately normally distributed. $\checkmark$
++ The dependent variable ($\overline{D}$) should be approximately normally distributed. $\Box$ ?
 
-  +The dependent variable ($\overline{D}$) should not contain any outliers. $\Box$
++ The dependent variable ($\overline{D}$) should not contain any outliers. $\Box$ ?
 
+<br>
 
-```{r}
+Creating $\overline{D}$ for each paired group
+
+```{r ,echo = FALSE}
 #create D-bar for each paired group
 C.depth.150.200 <- merge(C_flux.depth.150,C_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 C.depth.150.200$D_bar <- C.depth.150.200$C_avg.150 - C.depth.150.200$C_avg.200
@@ -539,9 +501,19 @@ M.depth.150.200$D_bar <- M.depth.150.200$M_avg.150 - M.depth.150.200$M_avg.200
 
 M.depth.200.300 <- merge(M_flux.depth.200,M_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 M.depth.200.300$D_bar <- M.depth.200.300$M_avg.200 - M.depth.200.300$M_avg.300
+
+D_bar.mean <- data.frame(c("dep150.200","dep200.300"), c(mean(C.depth.150.200$D_bar), mean(C.depth.200.300$D_bar)), c(mean(N.depth.150.200$D_bar), mean(N.depth.200.300$D_bar)), c(mean(P.depth.150.200$D_bar), mean(P.depth.200.300$D_bar)), c(mean(M.depth.150.200$D_bar), mean(M.depth.200.300$D_bar)))
+colnames(D_bar.mean)[1] <- "Depth.Compare"
+colnames(D_bar.mean)[2] <- "C_flux"
+colnames(D_bar.mean)[3] <- "N_flux"
+colnames(D_bar.mean)[4] <- "P_flux"
+colnames(D_bar.mean)[5] <- "M_flux"
+D_bar.mean
 ```
 
-```{r}
+Checking the distribution of the $\overline{D}$ for each flux 
+
+```{r, echo= FALSE}
 #check distribution of D-bar (difference between paried depth samples)
 
 # Carbon 
@@ -589,14 +561,24 @@ hist(log(M.depth.200.300$D_bar), breaks = "FD") #try lo transform
 boxplot(log(M.depth.200.300$D_bar)) #lots of outliers 
 ```
 
-##Cdepth (150.200) is not very normal even with a log transformation and the residual is not around 0
-##Cdepth (200.300) is fairly normal with a log transformation, but the residual is not around 0
-##Ndepth (150.200) is not very normal even with a log transformation, but the residual is close to 0
-##Ndepth (200.300) is fairly normal with a log transformation, and the residual is around 0
-##Pdepth (150.200) is not very normal even with a log transformation and the residual is not around 0
-##Pdepth (200.300) is not very normal even with a log transformation and the residual is not around 0
-##Mdepth (150.200) is fairly normal with a log transformation, but the residual is not around 0
-##Mdepth (200.300) is fairly normal with a log transformation, but the residual is not around 0
+*Cdepth (150.200) is not very normal even with a log transformation and the residual is not around 0*
+
+*Cdepth (200.300) is fairly normal with a log transformation, but the residual is not around 0*
+
+*Ndepth (150.200) is not very normal even with a log transformation, but the residual is close to 0*
+
+*Ndepth (200.300) is fairly normal with a log transformation, and the residual is around 0*
+
+*Pdepth (150.200) is not very normal even with a log transformation and the residual is not around 0*
+
+*Pdepth (200.300) is not very normal even with a log transformation and the residual is not around 0*
+
+*Mdepth (150.200) is fairly normal with a log transformation, but the residual is not around 0*
+
+*Mdepth (200.300) is fairly normal with a log transformation, but the residual is not around 0*
+
+<br>
+
 (1.1)
 
 $\mu_1$ = mean Carbon flux at depth 150
@@ -605,14 +587,13 @@ $\mu_2$ = mean Carbon flux at depth 200
 $H_0$ : Carbon flux does not change between 150 and 200 meter. $\mu_1$ = $\mu_2$
 $H_1$ : Carbon flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
 
-
-
 ```{r}
 t.test(log(C.depth.150.200$C_avg.150) ,log(C.depth.150.200$C_avg.200), alternative = "greater", paired = TRUE, var.equal = TRUE)
 
 ```
 
-##super low p-value,significant, reject the null
+*super low p-value,significant, reject the null*
+
 (1.2)
 
 $\mu_1$ = mean Carbon flux at depth 200
@@ -625,7 +606,8 @@ $H_1$ : Carbon flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
 t.test(log(C.depth.200.300$C_avg.200) ,log(C.depth.200.300$C_avg.300), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
 
-##very low pval. We reject the null, significant
+*very low pval. We reject the null, significant*
+
 (2.1)
 
 $\mu_1$ = mean Nitrogen flux at depth 150
@@ -638,7 +620,8 @@ $H_1$ : Nitrogen flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
 t.test(log(N.depth.150.200$N_avg.150) ,log(N.depth.150.200$N_avg.200), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
 
-##super low p-value,significant, reject the null
+*super low p-value,significant, reject the null*
+
 (2.2)
 
 $\mu_1$ = mean Nitrogen flux at depth 200
@@ -650,7 +633,9 @@ $H_1$ : Nitrogen flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
 ```{r}
 t.test(log(N.depth.200.300$N_avg.200) ,log(N.depth.200.300$N_avg.300), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
-##super low p-value,significant, reject the null
+
+*super low p-value,significant, reject the null*
+
 (3.1)
 
 $\mu_1$ = mean Phosporous flux at depth 150
@@ -662,7 +647,9 @@ $H_1$ : Phosporous flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_
 ```{r}
 t.test(log(P.depth.150.200$P_avg.150) ,log(P.depth.150.200$P_avg.200), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
-##super low p-value,significant, reject the null
+
+*super low p-value,significant, reject the null*
+
 (3.2)
 
 $\mu_1$ = mean Phosporous flux at depth 200
@@ -674,7 +661,9 @@ $H_1$ : Phosporous flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_
 ```{r}
 t.test(log(P.depth.200.300$P_avg.200) ,log(P.depth.200.300$P_avg.300), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
-##super low p-value,significant, reject the null
+
+*super low p-value,significant, reject the null*
+
 (4.1)
 
 $\mu_1$ = mean Mass flux at depth 150
@@ -686,7 +675,9 @@ $H_1$ : Mass flux is lower at 200 meter then at 150 meter. $\mu_1$ > $\mu_2$
 ```{r}
 t.test(log(M.depth.150.200$M_avg.150) ,log(M.depth.150.200$M_avg.200), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
-##super low p-value,significant, reject the null
+
+*super low p-value,significant, reject the null*
+
 (4.2)
 
 $\mu_1$ = mean Mass flux at depth 200
@@ -698,7 +689,9 @@ $H_1$ : Mass flux is lower at 300 meter then at 200 meter. $\mu_1$ > $\mu_2$
 ```{r}
 t.test(log(M.depth.200.300$M_avg.200) ,log(M.depth.200.300$M_avg.300), alternative = "greater", paired = TRUE, var.equal = TRUE)
 ```
-##super low p-value,significant, reject the null
+
+*super low p-value,significant, reject the null*
+
 <br>
 
 ### Simple Linear Regression via LS
@@ -727,10 +720,13 @@ abline(lmfit_P.M)
 
 ```
 
-##Both predictors had to be log transformed in order to make this data more linear with less clumping for all fluxes
-##For C flux, multilple r squared is 0.7405, so pretty good fit. Some clumping still
-##For N flux, multiple r squared is 0.6446, so still pretty decent, just not as strong as C flux. Some clumping still
-##For P flux, multiple r squared is 0.3592, so very poor fit and a lot of clumping.
+*Both predictor and predictee had to be log transformed in order to make this data more linear with less clumping for all fluxes*
+
+*For C flux, multilple r squared is 0.7405, so pretty good fit. Some clumping still*
+
+*For N flux, multiple r squared is 0.6446, so still pretty decent, just not as strong as C flux. Some clumping still*
+
+*For P flux, multiple r squared is 0.3592, so very poor fit and a lot of clumping*
 
 <br>
 
@@ -804,8 +800,6 @@ abline(h=0)
 ```
 
 *Somewhat normal, linearity is okay, but not great, both residual are not very evenly scattered and there is clumping around the line, so not heteroscedasicity, trifecta is broken* 
- 
-
 <br>
 
 Lets combine the fluxes
@@ -813,10 +807,10 @@ Lets combine the fluxes
 ```{r}
 Data.noNA$flux <- Data.noNA$C_avg - Data.noNA$N_avg - Data.noNA$P_avg #combine the fluxes
 
-lmfit.flux <- lm(M_avg ~ flux,
+lmfit.flux <- lm(log(M_avg) ~ log(flux),
          data=Data.noNA)
 summary(lmfit.flux)
-plot(Data.noNA$flux, Data.noNA$M_avg)
+plot(log(Data.noNA$flux), log(Data.noNA$M_avg))
 abline(lmfit.flux)
 
 resids <- resid( lmfit.flux ) # extract epsilon_hats
@@ -836,7 +830,7 @@ abline(h=0)
 
 ```
 
-*Multiple r-squared is 0.9103, so very strong, but there is a lot of clumping, perhaps we should log transform, fairly normal, not linear, residuals show a lot of clumping*
+*comment on this*
 
 
 How does depth affect flux? 
@@ -867,13 +861,15 @@ summary(lmfit_Dep.M)
 abline(lmfit_Dep.M)
 ```
 
-##shows that as depth decreases so does flux, depth can be a prdictor of flux
+*shows that as depth decreases so does flux, depth can be a predictor of flux*
+
+<br>
 
 ### Multiple regression 
 
 ```{r}
 
-lmfit.MR <- lm(M_avg ~ flux + dep, data = Data.noNA)
+lmfit.MR <- lm(log(M_avg) ~ log(flux) + dep, data = Data.noNA)
 summary(lmfit.MR)
 
 resids <- resid( lmfit.MR ) # extract epsilon_hats
@@ -892,16 +888,21 @@ plot(x=fit, y=resids, main="resid vs y_hat")
 abline(h=0)
 ```
 
-*Multiple r-squared is 0.9128, so very strong, somewhat normal, not linear,  residuals show a lot of clumping, perhaps log transform*
+*comment on this*
 
-*which one is better? I think they both look equally as bad lol* 
+<br>
+
+which one is better?
 
 ```{r}
 smaller <- lmfit.flux; larger <- lmfit.MR
 anova(smaller, larger)
+
+smaller.1 <- lmfit_Dep.M; larger <- lmfit.MR
+anova(smaller.1, larger)
 ```
 
-*No significant differnce between each of the outputs*
+*There is no significance difference in the first anova model*
 
 ### ANCOVA 
 
@@ -917,23 +918,22 @@ library(psych) # for `pairs.panels()`
 library(lattice)
 
 ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg"))
-as.character(ANOCOVA.data$dep) # need to make dep categorical not numerical 
 attach(ANOCOVA.data)
 
 summary(ANOCOVA.data)
 
-pairs.panels(data.frame(dep,C_avg,N_avg, P_avg, M_avg))
+pairs.panels(data.frame(as.factor(dep),log(C_avg),log(N_avg),log(P_avg),log(M_avg)))
 
-xyplot(M_avg ~ C_avg | dep, 
+xyplot(log(M_avg) ~ log(C_avg) | as.factor(dep), 
                   main="Fig2a: Activity level-specific scatterplots"
            )
 
-    xyplot(M_avg ~ C_avg, groups=dep, 
+    xyplot(log(M_avg) ~ log(C_avg), groups=as.factor(dep), 
                   auto.key=TRUE,
                   main="Fig2b: Scatterplot with color=group level"
            )
     
-    xyplot(M_avg ~ C_avg, groups=dep, 
+    xyplot(log(M_avg) ~ log(C_avg), groups=as.factor(dep), 
                   type=c("p","r"), # `p` for _points_, `r` for _regression line_
                                    # see https://stackoverflow.com/questions/12972039/plotting-xyplot-with-regression-line-on-lattice-graphics for more
                   auto.key=TRUE,
@@ -941,7 +941,8 @@ xyplot(M_avg ~ C_avg | dep,
            )
 ```
 
-##These are not looking like good predictors, a lot of clumping, not normal, not linear, try log transform or squaring??
+*comment on this*
+
 ```{r}
 #reformat yymmdd so that r can better use it blocking factors 
 
@@ -966,6 +967,7 @@ Data.noNA$month <- substr(paste(Data.noNA$month),6,8)
 ```
 
 
+
 ```{r}
 ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg", "Year", "month"))
 ANOCOVA.data <- as.vector(ANOCOVA.data)
@@ -976,9 +978,9 @@ resids <- resid(ANCOVA)
 fit <-fitted(ANCOVA)
 ```
 
-##This doesn't look too hot lol
+<br>
 
-# Results discussion:
+# Results discussion: 
 
 # Limitations:
 
