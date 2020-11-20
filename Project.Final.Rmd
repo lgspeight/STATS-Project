@@ -698,6 +698,10 @@ t.test(log(M.depth.200.300$M_avg.200) ,log(M.depth.200.300$M_avg.300), alternati
 
 How does each flux predict Mass Flux? 
 
+Regression Model: $Y_i$ = $\beta_0$ + $\beta_1x_i$ + $\epsilon_i$ where $\epsilon_i$ ~ $N(0,\sigma^2)$
+
+Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
+
 ```{r}
 # plotting each nutrient flux against mass flux
 
@@ -800,12 +804,18 @@ abline(h=0)
 ```
 
 *Somewhat normal, linearity is okay, but not great, both residual are not very evenly scattered and there is clumping around the line, so not heteroscedasicity, trifecta is broken* 
+
 <br>
 
-Lets combine the fluxes
+Do we see collinearity between the different fluxes that are predicting mass flux? Should we combine the fluxes? 
+
+Regression Model: $Y_i$ = $\beta_0$ + $\beta_1x_i$ + $\epsilon_i$ where $\epsilon_i$ ~ $N(0,\sigma^2)$
+
+Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
 
 ```{r}
-Data.noNA$flux <- Data.noNA$C_avg - Data.noNA$N_avg - Data.noNA$P_avg #combine the fluxes
+plot(Data.noNA) # we see collinearity between Carbon and Nitrogen
+Data.noNA$flux <- Data.noNA$C_avg - Data.noNA$N_avg  #combine the fluxes
 
 lmfit.flux <- lm(log(M_avg) ~ log(flux),
          data=Data.noNA)
@@ -830,10 +840,13 @@ abline(h=0)
 
 ```
 
-*comment on this*
-
+*We see collineary between Nitrogen and Carbon flux predictors, so they were combined into a sing flux categorie to predict mass flux*
 
 How does depth affect flux? 
+
+Regression Model: $Y_i$ = $\beta_0$ + $\beta_1x_i$ + $\epsilon_i$ where $\epsilon_i$ ~ $N(0,\sigma^2)$
+
+Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
 
 ```{r}
 # dept v. average for C_avg
@@ -867,7 +880,11 @@ abline(lmfit_Dep.M)
 
 ### Multiple regression 
 
-```{r}
+Regression Model: $Y_i$ = $\beta_0$ + $\beta_1x_i$ + ... + $\beta_{p-1}x_{i,p-1}$ + $\epsilon_i$ = $X'_i\beta$ + $\epsilon_i$ where $\epsilon_i$ ~ $N(0,\sigma^2)$
+
+Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
+
+```{r,echo=FALSE}
 
 lmfit.MR <- lm(log(M_avg) ~ log(flux) + dep, data = Data.noNA)
 summary(lmfit.MR)
@@ -898,11 +915,16 @@ which one is better?
 smaller <- lmfit.flux; larger <- lmfit.MR
 anova(smaller, larger)
 
+```
+
+*There is no significance difference in the first anova model, our p-value is to large to assume that lossing df due to an extra parameter is worthwhile*
+
+```{r}
 smaller.1 <- lmfit_Dep.M; larger <- lmfit.MR
 anova(smaller.1, larger)
 ```
 
-*There is no significance difference in the first anova model*
+*However there our p-value is small in our second anova model indicates that losing df due to an extra paramter is worthwhile, or signiicantly improves the fit*
 
 ### ANCOVA 
 
