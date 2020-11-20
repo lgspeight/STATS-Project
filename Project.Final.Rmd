@@ -887,7 +887,7 @@ plot(x=fit, y=resids, main="Fig 76 resid vs y_hat")
 abline(h=0)
 ```
 
-*comment on this*
+*Fairly normal and linear, but very clustered for residules*
 
 <br>
 
@@ -945,7 +945,7 @@ xyplot(log(M_avg) ~ log(C_avg) | as.factor(dep),
            )
 ```
 
-*comment on this*
+*After log transforming data, C, N, P, and M distributions look much more noraml. Linearlity is looking better, especially for C and N. Activity level specific scatterplots highlight the interaction with C and M through depths and have somewhat of a linear reationship*
 
 ```{r}
 #reformat yymmdd so that r can better use it blocking factors 
@@ -982,6 +982,7 @@ resids <- resid(ANCOVA)
 fit <-fitted(ANCOVA)
 ```
 
+*These do not present strong relationships*
 <br>
 
 # Results discussion: 
