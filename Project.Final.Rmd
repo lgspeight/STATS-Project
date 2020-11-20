@@ -162,22 +162,22 @@ colnames(bar.Cflux)[3] <- "C_flux.SE"
 bar.Cflux
 ```
 
-Graph of C-flux
-
+Graph of C-flux#
 ```{r, echo = FALSE}
+####
 library(ggplot2)
 library(dplyr)
-library(viridisLite)
+
 
 Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Cflux$Depth #character objects need quotes
 yval <- bar.Cflux$`C_flux.Mean`
 
 ggplot()+geom_col(bar.Cflux, mapping=aes(x= Depth, y = C_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
-xlab("Depth (m)") + ylab("Mean of C Flux(mg carbon m^-2 day^-1)") +                
+xlab("Depth (m)") + ylab("Mean of C Flux(mg carbon m^-2 day^-1)") + ggtitle("Fig 1")               
                                            
- theme(text = element_text(family = 'serif')) +                       
-scale_fill_manual(values = Viridis_palette)                        
+ theme(text = element_text(family = 'serif'))                        
+                        
 ```
 
 *C-flux decreasing with depth*
@@ -219,17 +219,16 @@ Graph of P-flux
 ```{r, echo = FALSE}
 library(ggplot2)
 library(dplyr)
-library(viridisLite)
 
 Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Pflux$Depth #character objects need quotes
 yval <- bar.Pflux$`P_flux.Mean`
 
 ggplot()+geom_col(bar.Pflux, mapping=aes(x= Depth, y = P_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
-xlab("Depth (m)") + ylab("Mean of P Flux(mg phospohorous m^-2 day^-1)") +                
+xlab("Depth (m)") + ylab("Mean of P Flux(mg phospohorous m^-2 day^-1)") + ggtitle("Fig 2")               
                                            
- theme(text = element_text(family = 'serif')) +                       
-scale_fill_manual(values = Viridis_palette)                        
+ theme(text = element_text(family = 'serif'))                        
+                      
 ```
 
 *P-flux decreaing with depth*
@@ -280,10 +279,9 @@ xval <- bar.Nflux$Depth #character objects need quotes
 yval <- bar.Nflux$`N_flux.Mean`
 
 ggplot()+geom_col(bar.Nflux, mapping=aes(x= Depth, y = N_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
-xlab("Depth (m)") + ylab("Mean of N Flux(mg nitrogen m^-2 day^-1)") +                
+xlab("Depth (m)") + ylab("Mean of N Flux(mg nitrogen m^-2 day^-1)") + ggtitle("Fig 3")               
                                            
- theme(text = element_text(family = 'serif')) +                       
-scale_fill_manual(values = Viridis_palette)                        
+ theme(text = element_text(family = 'serif'))                     
 ```
 
 *N-flux decreasing with depth*
@@ -327,17 +325,17 @@ Graph of M-flux
 ```{r, echo = FALSE}
 library(ggplot2)
 library(dplyr)
-library(viridisLite)
+
 
 Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Mflux$Depth #character objects need quotes
 yval <- bar.Mflux$`M_flux.Mean`
 
 ggplot()+geom_col(bar.Mflux, mapping=aes(x= Depth, y = M_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
-xlab("Depth (m)") + ylab("Mean of M Flux(mg mass m^-2 day^-1)") +                
+xlab("Depth (m)") + ylab("Mean of M Flux(mg mass m^-2 day^-1)") + ggtitle("Fig 4")               
                                            
- theme(text = element_text(family = 'serif')) +                       
-scale_fill_manual(values = Viridis_palette)                        
+ theme(text = element_text(family = 'serif'))                        
+                     
 ```
 
 *M-flux decreasing with depth*
@@ -353,24 +351,24 @@ Log transfromation was needed for all FLuxes
 ```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Carbon Flux 
 par(mfrow=c(1,4))
-hist((C_flux.depth.150$C_avg.150))
-hist((C_flux.depth.200$C_avg.200))
-hist((C_flux.depth.300$C_avg.300))
-hist((C_flux.depth.400$C_avg.400))
+hist((C_flux.depth.150$C_avg.150), main ="Fig 5 C Flux depth 150")
+hist((C_flux.depth.200$C_avg.200), main ="Fig 6 C Flux depth 200")
+hist((C_flux.depth.300$C_avg.300), main ="Fig 7 C Flux depth 300")
+hist((C_flux.depth.400$C_avg.400), main ="Fig 8 C Flux depth 400")
 
 # using natural log to Transform the data 
 par(mfrow=c(1,4))
-hist(log(C_flux.depth.150$C_avg.150))
-hist(log(C_flux.depth.200$C_avg.200))
-hist(log(C_flux.depth.300$C_avg.300))
-hist(log(C_flux.depth.400$C_avg.400))
+hist(log(C_flux.depth.150$C_avg.150), main ="Fig 9 C Flux depth 150 (log)")
+hist(log(C_flux.depth.200$C_avg.200), main ="Fig 10 C Flux depth 200 (log)")
+hist(log(C_flux.depth.300$C_avg.300), main ="Fig 11 C Flux depth 300 (log)")
+hist(log(C_flux.depth.400$C_avg.400), main ="Fig 12 C Flux depth 400 (log)")
 
 # Checking for outliers
 par(mfrow=c(1,4))
-boxplot(log(C_flux.depth.150$C_avg.150))
-boxplot(log(C_flux.depth.200$C_avg.200))
-boxplot(log(C_flux.depth.300$C_avg.300))
-boxplot(log(C_flux.depth.400$C_avg.400))
+boxplot(log(C_flux.depth.150$C_avg.150), main ="Fig 13 C Flux depth 150 (log)")
+boxplot(log(C_flux.depth.200$C_avg.200), main ="Fig 14 C Flux depth 200 (log)")
+boxplot(log(C_flux.depth.300$C_avg.300), main ="Fig 15 C Flux depth 300 (log)")
+boxplot(log(C_flux.depth.400$C_avg.400), main ="Fig 16 C Flux depth 400 (log)")
 ```
 
 *boxplot means do not overlap, but box sizes for 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape which could break homosedasticity*
@@ -380,24 +378,24 @@ boxplot(log(C_flux.depth.400$C_avg.400))
 ```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Nitrogen Flux 
 par(mfrow=c(1,4))
-hist((N_flux.depth.150$N_avg.150), breaks = "FD")
-hist((N_flux.depth.200$N_avg.200), breaks = "FD")
-hist((N_flux.depth.300$N_avg.300), breaks = "FD")
-hist((N_flux.depth.400$N_avg.400), breaks = "FD")
+hist((N_flux.depth.150$N_avg.150), breaks = "FD", main ="Fig 17 N Flux depth 150")
+hist((N_flux.depth.200$N_avg.200), breaks = "FD", main ="Fig 18 N Flux depth 200")
+hist((N_flux.depth.300$N_avg.300), breaks = "FD", main ="Fig 19 N Flux depth 300")
+hist((N_flux.depth.400$N_avg.400), breaks = "FD", main ="Fig 20 N Flux depth 400")
 
 # using natural log to Transform the data 
 par(mfrow=c(1,4))
-hist(log(N_flux.depth.150$N_avg.150))
-hist(log(N_flux.depth.200$N_avg.200))
-hist(log(N_flux.depth.300$N_avg.300))
-hist(log(N_flux.depth.400$N_avg.400))
+hist(log(N_flux.depth.150$N_avg.150), main ="Fig 21 N Flux depth 150 (log)")
+hist(log(N_flux.depth.200$N_avg.200), main ="Fig 22 N Flux depth 200 (log)")
+hist(log(N_flux.depth.300$N_avg.300), main ="Fig 23 N Flux depth 300 (log)")
+hist(log(N_flux.depth.400$N_avg.400), main ="Fig 24 N Flux depth 400 (log)")
 
 # Checking for outliers
 par(mfrow=c(1,4))
-boxplot(log(N_flux.depth.150$N_avg.150))
-boxplot(log(N_flux.depth.200$N_avg.200))
-boxplot(log(N_flux.depth.300$N_avg.300))
-boxplot(log(N_flux.depth.400$N_avg.400))
+boxplot(log(N_flux.depth.150$N_avg.150), main ="Fig 25 N Flux depth 150 (log)")
+boxplot(log(N_flux.depth.200$N_avg.200), main ="Fig 26 N Flux depth 200 (log)")
+boxplot(log(N_flux.depth.300$N_avg.300), main ="Fig 27 N Flux depth 300 (log)")
+boxplot(log(N_flux.depth.400$N_avg.400), main ="Fig 28 N Flux depth 400 (log)")
 ```
 
 *boxplot means do not too seem to overlab too much for 150 and 200, but ther is a bit of overlap in 200 and 300. 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape which could break homosedasticity*
@@ -407,21 +405,21 @@ boxplot(log(N_flux.depth.400$N_avg.400))
 ```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Phosporous Flux 
 par(mfrow=c(1,3))
-hist((P_flux.depth.150$P_avg.150), breaks = "FD")
-hist((P_flux.depth.200$P_avg.200), breaks = "FD")
-hist((P_flux.depth.300$P_avg.300), breaks = "FD")
+hist((P_flux.depth.150$P_avg.150), breaks = "FD", main ="Fig 29 P Flux depth 150")
+hist((P_flux.depth.200$P_avg.200), breaks = "FD", main ="Fig 30 P Flux depth 200")
+hist((P_flux.depth.300$P_avg.300), breaks = "FD", main ="Fig 31 P Flux depth 300")
 
 # using natural log to Transform the data 
 par(mfrow=c(1,3))
-hist(log(P_flux.depth.150$P_avg.150))
-hist(log(P_flux.depth.200$P_avg.200))
-hist(log(P_flux.depth.300$P_avg.300))
+hist(log(P_flux.depth.150$P_avg.150), main ="Fig 32 P Flux depth 150 (log)")
+hist(log(P_flux.depth.200$P_avg.200), main ="Fig 33 P Flux depth 200 (log)")
+hist(log(P_flux.depth.300$P_avg.300), main ="Fig 34 P Flux depth 300 (log)")
 
 # Checking for outliers
 par(mfrow=c(1,3))
-boxplot(log(P_flux.depth.150$P_avg.150))
-boxplot(log(P_flux.depth.200$P_avg.200))
-boxplot(log(P_flux.depth.300$P_avg.300))
+boxplot(log(P_flux.depth.150$P_avg.150), main ="Fig 35 P Flux depth 150 (log)")
+boxplot(log(P_flux.depth.200$P_avg.200), main ="Fig 36 P Flux depth 200 (log)")
+boxplot(log(P_flux.depth.300$P_avg.300), main ="Fig 37 P Flux depth 300 (log)")
 ```
 
 *boxplot means seem to have some overlap. They are similar in box size, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity*
@@ -429,24 +427,24 @@ boxplot(log(P_flux.depth.300$P_avg.300))
 ```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Mass Flux 
 par(mfrow=c(1,4))
-hist((M_flux.depth.150$M_avg.150), breaks = "FD")
-hist((M_flux.depth.200$M_avg.200), breaks = "FD")
-hist((M_flux.depth.300$M_avg.300), breaks = "FD")
-hist((M_flux.depth.400$M_avg.400), breaks = "FD")
+hist((M_flux.depth.150$M_avg.150), breaks = "FD", main ="Fig 38 M Flux depth 150")
+hist((M_flux.depth.200$M_avg.200), breaks = "FD", main ="Fig 39 M Flux depth 200")
+hist((M_flux.depth.300$M_avg.300), breaks = "FD", main ="Fig 40 M Flux depth 300")
+hist((M_flux.depth.400$M_avg.400), breaks = "FD", main ="Fig 41 M Flux depth 400")
 
 # using natural log to Transform the data 
 par(mfrow=c(1,4))
-hist(log(M_flux.depth.150$M_avg.150))
-hist(log(M_flux.depth.200$M_avg.200))
-hist(log(M_flux.depth.300$M_avg.300))
-hist(log(M_flux.depth.400$M_avg.400))
+hist(log(M_flux.depth.150$M_avg.150), main ="Fig 42 M Flux depth 150 (log)")
+hist(log(M_flux.depth.200$M_avg.200), main ="Fig 43 M Flux depth 200 (log)")
+hist(log(M_flux.depth.300$M_avg.300), main ="Fig 44 M Flux depth 300 (log)")
+hist(log(M_flux.depth.400$M_avg.400), main ="Fig 45 M Flux depth 400 (log)")
 
 # Checking for outliers
 par(mfrow=c(1,4))
-boxplot(log(M_flux.depth.150$M_avg.150))
-boxplot(log(M_flux.depth.200$M_avg.200))
-boxplot(log(M_flux.depth.300$M_avg.300))
-boxplot(log(M_flux.depth.400$M_avg.400))
+boxplot(log(M_flux.depth.150$M_avg.150), main ="Fig 46 M Flux depth 150 (log)")
+boxplot(log(M_flux.depth.200$M_avg.200), main ="Fig 47 M Flux depth 200 (log)")
+boxplot(log(M_flux.depth.300$M_avg.300), main ="Fig 48 M Flux depth 300 (log)")
+boxplot(log(M_flux.depth.400$M_avg.400), main ="Fig 49 M Flux depth 400 (log)")
 ```
 
 *boxplot means seem to have some overlap. They are similar in box size, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity*
@@ -519,45 +517,45 @@ Checking the distribution of the $\overline{D}$ for each flux
 # Carbon 
 par(mfrow=c(1,3))
 hist(C.depth.150.200$D_bar, breaks = "FD")
-hist(log(C.depth.150.200$D_bar), breaks = "FD") #try lo transform 
+hist(log(C.depth.150.200$D_bar), breaks = "FD", main ="Fig 50 C.depth.150.200$D_bar") #try lo transform 
 boxplot(log(C.depth.150.200$D_bar)) #lots of outliers 
 
 par(mfrow=c(1,3))
 hist(C.depth.200.300$D_bar, breaks = "FD")
-hist(log(C.depth.200.300$D_bar), breaks = "FD") #try lo transform 
+hist(log(C.depth.200.300$D_bar), breaks = "FD", main ="Fig 51 C.depth.200.300$D_bar") #try lo transform 
 boxplot(log(C.depth.200.300$D_bar)) #lots of outliers 
 
 # Nitrogen
 par(mfrow=c(1,3))
 hist(N.depth.150.200$D_bar, breaks = "FD")
-hist(log(N.depth.150.200$D_bar), breaks = "FD") #try lo transform 
+hist(log(N.depth.150.200$D_bar), breaks = "FD", main ="Fig 52 N.depth.150.200$D_bar") #try lo transform 
 boxplot(log(N.depth.150.200$D_bar)) #lots of outliers 
 
 par(mfrow=c(1,3))
 hist(N.depth.200.300$D_bar, breaks = "FD")
-hist(log(N.depth.200.300$D_bar), breaks = "FD") #try lo transform 
+hist(log(N.depth.200.300$D_bar), breaks = "FD", main ="Fig 53 N.depth.200.300$D_bar") #try lo transform 
 boxplot(log(N.depth.200.300$D_bar)) #lots of outliers 
 
 # Phosphorous
 par(mfrow=c(1,3))
 hist(P.depth.150.200$D_bar, breaks = "FD")
-hist(log(P.depth.150.200$D_bar), breaks = "FD") #try lo transform 
+hist(log(P.depth.150.200$D_bar), breaks = "FD", main ="Fig 54 P.depth.150.200$D_bar") #try lo transform 
 boxplot(log(P.depth.150.200$D_bar)) #lots of outliers 
 
 par(mfrow=c(1,3))
 hist(P.depth.200.300$D_bar, breaks = "FD")
-hist(log(P.depth.200.300$D_bar), breaks = "FD") #try lo transform 
+hist(log(P.depth.200.300$D_bar), breaks = "FD", main ="Fig 55 P.depth.200.300$D_bar") #try lo transform 
 boxplot(log(P.depth.200.300$D_bar)) #lots of outliers 
 
 # Mass 
 par(mfrow=c(1,3))
 hist(M.depth.150.200$D_bar, breaks = "FD")
-hist(log(M.depth.150.200$D_bar), breaks = "FD") #try lo transform 
+hist(log(M.depth.150.200$D_bar), breaks = "FD", main ="Fig 56 M.depth.150.200$D_bar") #try lo transform 
 boxplot(log(M.depth.150.200$D_bar)) #lots of outliers 
 
 par(mfrow=c(1,3))
 hist(M.depth.200.300$D_bar, breaks = "FD")
-hist(log(M.depth.200.300$D_bar), breaks = "FD") #try lo transform 
+hist(log(M.depth.200.300$D_bar), breaks = "FD", main ="Fig 57 C.depth.200.300$D_bar") #try lo transform 
 boxplot(log(M.depth.200.300$D_bar)) #lots of outliers 
 ```
 
@@ -707,17 +705,17 @@ Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
 
 #plot(Data.noNA) # we see some relationships between mass flux and the rest of the nutrient fluxes
 par(mfrow=c(1,3))
-plot(log(Data.noNA$C_avg),log(Data.noNA$M_avg)) #good linearity, but clumping
+plot(log(Data.noNA$C_avg),log(Data.noNA$M_avg), main ="Fig 58 M v. C") #good linearity, but clumping
 lmfit_C.M <- lm(log(M_avg) ~ log(C_avg), data = Data.noNA)
 summary(lmfit_C.M)
 abline(lmfit_C.M)
 
-plot(log(Data.noNA$N_avg),log(Data.noNA$M_avg)) # alright linearity, still clumping 
+plot(log(Data.noNA$N_avg),log(Data.noNA$M_avg), main ="Fig 59 M v. N") # alright linearity, still clumping 
 lmfit_N.M <- lm(log(M_avg) ~ log(N_avg), data = Data.noNA)
 summary(lmfit_N.M)
 abline(lmfit_N.M)
 
-plot(log(Data.noNA$P_avg),log(Data.noNA$M_avg)) # worse, still clumping 
+plot(log(Data.noNA$P_avg),log(Data.noNA$M_avg), main ="Fig 60 M v. P") # worse, still clumping 
 lmfit_P.M <- lm(log(M_avg) ~ log(P_avg), data = Data.noNA)
 summary(lmfit_P.M)
 abline(lmfit_P.M)
@@ -746,10 +744,10 @@ hist(resids, breaks=20)
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="resid vs i") 
+plot(resids, main="Fig 61 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 62 resid vs y_hat")
 abline(h=0)
 
 ```
@@ -770,10 +768,10 @@ hist(resids, breaks=20)
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="resid vs i") 
+plot(resids, main="Fig 63 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 64 resid vs y_hat")
 abline(h=0)
 
 ```
@@ -795,10 +793,10 @@ hist(resids, breaks=20)
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="resid vs i") 
+plot(resids, main="Fig 65 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 66 resid vs y_hat")
 abline(h=0)
 
 ```
@@ -820,7 +818,7 @@ Data.noNA$flux <- Data.noNA$C_avg - Data.noNA$N_avg  #combine the fluxes
 lmfit.flux <- lm(log(M_avg) ~ log(flux),
          data=Data.noNA)
 summary(lmfit.flux)
-plot(log(Data.noNA$flux), log(Data.noNA$M_avg))
+plot(log(Data.noNA$flux), log(Data.noNA$M_avg), main ="Fig 67")
 abline(lmfit.flux)
 
 resids <- resid( lmfit.flux ) # extract epsilon_hats
@@ -828,14 +826,14 @@ fit <- fitted ( lmfit.flux ) # extract y_hats
 
 par(mfrow=c(1,2))
 
-hist(resids, breaks=20)
+hist(resids, breaks=20, main ="Fig 68")
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="resid vs i") 
+plot(resids, main="Fig 69 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 69 resid vs y_hat")
 abline(h=0)
 
 ```
@@ -853,22 +851,22 @@ Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
 
 par(mfrow=c(1,4))
 
-plot(Data.noNA$dep, log(Data.noNA$C_avg))
+plot(Data.noNA$dep, log(Data.noNA$C_avg), main ="Fig 70")
 lmfit_Dep.C <- lm(log(C_avg) ~ dep, data = Data.noNA)
 summary(lmfit_Dep.C)
 abline(lmfit_Dep.C)
 
-plot(Data.noNA$dep, log(Data.noNA$N_avg))
+plot(Data.noNA$dep, log(Data.noNA$N_avg), main= "Fig 71")
 lmfit_Dep.N <- lm(log(N_avg) ~ dep, data = Data.noNA)
 summary(lmfit_Dep.N)
 abline(lmfit_Dep.N)
 
-plot(Data.noNA$dep, log(Data.noNA$P_avg))
+plot(Data.noNA$dep, log(Data.noNA$P_avg),  main= "Fig 72")
 lmfit_Dep.P <- lm(log(P_avg) ~ dep, data = Data.noNA)
 summary(lmfit_Dep.P)
 abline(lmfit_Dep.P)
 
-plot(Data.noNA$dep, log(Data.noNA$M_avg))
+plot(Data.noNA$dep, log(Data.noNA$M_avg),  main= "Fig 73")
 lmfit_Dep.M <- lm(log(M_avg) ~ dep, data = Data.noNA)
 summary(lmfit_Dep.M)
 abline(lmfit_Dep.M)
@@ -894,14 +892,14 @@ fit <- fitted ( lmfit.MR ) # extract y_hats
 
 par(mfrow=c(1,2))
 
-hist(resids, breaks=20)
+hist(resids, breaks=20,  main= "Fig 74")
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="resid vs i") 
+plot(resids, main="Fig 75 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 76 resid vs y_hat")
 abline(h=0)
 ```
 
@@ -944,22 +942,22 @@ attach(ANOCOVA.data)
 
 summary(ANOCOVA.data)
 
-pairs.panels(data.frame(as.factor(dep),log(C_avg),log(N_avg),log(P_avg),log(M_avg)))
+pairs.panels(data.frame(as.factor(dep),log(C_avg),log(N_avg),log(P_avg),log(M_avg)), main = "Fig 77")
 
 xyplot(log(M_avg) ~ log(C_avg) | as.factor(dep), 
-                  main="Fig2a: Activity level-specific scatterplots"
+                  main="Fig 78: Activity level-specific scatterplots"
            )
 
     xyplot(log(M_avg) ~ log(C_avg), groups=as.factor(dep), 
                   auto.key=TRUE,
-                  main="Fig2b: Scatterplot with color=group level"
+                  main="Fig 79: Scatterplot with color=group level"
            )
     
     xyplot(log(M_avg) ~ log(C_avg), groups=as.factor(dep), 
                   type=c("p","r"), # `p` for _points_, `r` for _regression line_
                                    # see https://stackoverflow.com/questions/12972039/plotting-xyplot-with-regression-line-on-lattice-graphics for more
                   auto.key=TRUE,
-                  main="Fig3: Three standalone depth level-specific `lm()` fits"
+                  main="Fig 80: Three standalone depth level-specific `lm()` fits"
            )
 ```
 
@@ -995,7 +993,7 @@ ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_
 ANOCOVA.data <- as.vector(ANOCOVA.data)
 ANCOVA <- lm(log(M_avg) ~ log(C_avg) + log(N_avg) + log(P_avg) + dep + as.factor(Year) + as.factor(month),data = ANOCOVA.data)
 summary(ANCOVA)
-plot(ANCOVA)
+plot(ANCOVA, main = "Fig 81") #challen
 resids <- resid(ANCOVA)
 fit <-fitted(ANCOVA)
 ```
