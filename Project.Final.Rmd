@@ -162,22 +162,18 @@ colnames(bar.Cflux)[3] <- "C_flux.SE"
 bar.Cflux
 ```
 
-Graph of C-flux#
+Graph of C-flux
+
 ```{r, echo = FALSE}
 ####
 library(ggplot2)
 library(dplyr)
 
-
-Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Cflux$Depth #character objects need quotes
 yval <- bar.Cflux$`C_flux.Mean`
 
 ggplot()+geom_col(bar.Cflux, mapping=aes(x= Depth, y = C_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
 xlab("Depth (m)") + ylab("Mean of C Flux(mg carbon m^-2 day^-1)") + ggtitle("Fig 1")               
-                                           
- theme(text = element_text(family = 'serif'))                        
-                        
 ```
 
 *C-flux decreasing with depth*
@@ -220,15 +216,11 @@ Graph of P-flux
 library(ggplot2)
 library(dplyr)
 
-Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Pflux$Depth #character objects need quotes
 yval <- bar.Pflux$`P_flux.Mean`
 
 ggplot()+geom_col(bar.Pflux, mapping=aes(x= Depth, y = P_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
-xlab("Depth (m)") + ylab("Mean of P Flux(mg phospohorous m^-2 day^-1)") + ggtitle("Fig 2")               
-                                           
- theme(text = element_text(family = 'serif'))                        
-                      
+xlab("Depth (m)") + ylab("Mean of P Flux(mg phospohorous m^-2 day^-1)") + ggtitle("Fig 2")                    
 ```
 
 *P-flux decreaing with depth*
@@ -272,16 +264,12 @@ Graph of N-flux
 ```{r, echo= FALSE}
 library(ggplot2)
 library(dplyr)
-library(viridisLite)
 
-Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Nflux$Depth #character objects need quotes
 yval <- bar.Nflux$`N_flux.Mean`
 
 ggplot()+geom_col(bar.Nflux, mapping=aes(x= Depth, y = N_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
 xlab("Depth (m)") + ylab("Mean of N Flux(mg nitrogen m^-2 day^-1)") + ggtitle("Fig 3")               
-                                           
- theme(text = element_text(family = 'serif'))                     
 ```
 
 *N-flux decreasing with depth*
@@ -327,15 +315,11 @@ library(ggplot2)
 library(dplyr)
 
 
-Viridis_palette <- viridis(40)[seq(1,40, 2)]
 xval <- bar.Mflux$Depth #character objects need quotes
 yval <- bar.Mflux$`M_flux.Mean`
 
 ggplot()+geom_col(bar.Mflux, mapping=aes(x= Depth, y = M_flux.Mean), color="#e9ecef", alpha=0.6,) +                                     
-xlab("Depth (m)") + ylab("Mean of M Flux(mg mass m^-2 day^-1)") + ggtitle("Fig 4")               
-                                           
- theme(text = element_text(family = 'serif'))                        
-                     
+xlab("Depth (m)") + ylab("Mean of M Flux(mg mass m^-2 day^-1)") + ggtitle("Fig 4")          
 ```
 
 *M-flux decreasing with depth*
