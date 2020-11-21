@@ -569,7 +569,7 @@ boxplot(log(M.depth.200.300$D_bar)) #lots of outliers
 <br>
 
 (1.1)
-
+#Hyp 1
 $\mu_1$ = mean Carbon flux at depth 150
 $\mu_2$ = mean Carbon flux at depth 200
 
