@@ -14,11 +14,14 @@ output:
 # Introduction: 
 
   Many environmental and anthropogenic activities can affect the amount of nutrient runoff into water ecosystems (1). The amount of nitrogen (N) and phosphorus (P) entering an ecosystem can affect their flux as well as many other environmental impacts (1). In a study done in Erhai Lake, it showed that nitrogen and phosphorus diffusion flux can affect the biomass and population of autotrophs in this lake that can result in algal blooms (2). We can expect a similar trend to happen in the ocean, but due to the open oceans variability, it is much easier to study these trends in a lake system. Nitrogen and phosphorus fluxes are influenced by internal and external factors such as: nutritive salt concentration, DO, pH, algal biomass, microbial activity, chlorophyll a, etc. (2). It is important to look at these controlling factors and how they will affect the fluxes and the ecosystem as a whole. For example, Erhai Lake is in a transition phase from mesotrophic to eutrophic bodies of water due to the increase of nutritive salts affecting the N and P diffusive fluxes (2). 
+  
   Carbon also enters the ocean and causes stress to organisms as it increases ocean acidity, but it enters through the earth’s atmosphere (3). The amount of carbon in the atmosphere has been steadily increasing overtime due to the large input of fossil fuels into the environment (3). Again, carbon input, like nitrogen and phosphorus is caused by anthropogenic stress.
+  
   Nitrogen, phosphorus, and carbon are all connected in that they relate to the biological pump and the solubility pump. They all interact with marine organisms that use them for growth and energy, and they are eventually respired or excreted out of these organisms to sink to depth (4). Ocean physics and the solubility pump also helps to aid these to sink to depth, especially in areas of deep, cold water mixing, like the Southern Ocean (4).  The sinking of this nitrogen, phosphorus, and carbon is flux (4). These fluxes are important, especially when it comes to carbon sequestration, which has often been a hot topic as a way to decrease the amount of carbon in the atmosphere. Typically, these fluxes tend to decrease with depth due to the carbon, phosphorus, and nitrogen being used by organisms along the way down to the benthos (4). 
+  
   The best way to measure these fluxes is using sediment traps. Sediments traps are a method for collecting and determining the sinking fluxes of particulate matter, carbon, and nitrogen in the sea. These values are expressed as mg m^-2 day^-1. Total particulate mass flux is defined as the amount of sinking particulate matter passing through a depth level as ( mg dry weight m^-2 day^-2). Total particulate carbon flux is defined as the amount of sinking particulate organic carbon passing through a depth level (mg carbon m^-2 day^-1). Total nitrogen mass flux is defined as the amount of sinking particulate organic nitrogen passing through a depth level (mg nitrogen m^-2 day^-1) (5).
-  In our study we looked at fluxes of nitrogen, phosphorus, and carbon in the Bermuda Atlantic Time-series through The Joint Global Ocean Flux Study. The Joint Global Ocean FLux Study (JGOFS) is a multi-disciplinary and international study that aims to understand the ocean's role in global carbon and nutrient cycles. One of the objectives of the U.S JGOFS- sponsored Bermuda Atlantic Time-series Study (BATS) is to “observe and interpret the annual and interannual variability in the rates of particle flux and the apparent rates of particle remineralization over the entire water column”. BATS began in October 1988 and is through December 2016. (6) 
-
+  In our study we looked at fluxes of nitrogen, phosphorus, carbon, and mass in the Bermuda Atlantic Time-series through The Joint Global Ocean Flux Study. The Joint Global Ocean FLux Study (JGOFS) is a multi-disciplinary and international study that aims to understand the ocean's role in global carbon and nutrient cycles. One of the objectives of the U.S JGOFS- sponsored Bermuda Atlantic Time-series Study (BATS) is to “observe and interpret the annual and interannual variability in the rates of particle flux and the apparent rates of particle remineralization over the entire water column”. BATS began in October 1988 and is through December 2016.(6)
+    
 # Toolbox discussion: 
 
 # Description:
@@ -469,30 +472,38 @@ Merging data bases for hypothesis test and Creating $\overline{D}$ for each pair
 
 C.depth.150.200 <- merge(C_flux.depth.150,C_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 D_bar.C.150.200 <- muCflux150 - muCflux200
+C.depth.150.200$D <- C.depth.150.200$C_avg.150 - C.depth.150.200$C_avg.200
 
 C.depth.200.300 <- merge(C_flux.depth.200,C_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 D_bar.C.200.300 <- muCflux200 - muCflux300
+C.depth.200.300$D <- C.depth.200.300$C_avg.200 - C.depth.200.300$C_avg.300
 
 N.depth.150.200 <- merge(N_flux.depth.150,N_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 D_bar.N.150.200 <- muNflux150 - muNflux200
+N.depth.150.200$D <- N.depth.150.200$N_avg.150 - N.depth.150.200$N_avg.200
 
 N.depth.200.300 <- merge(N_flux.depth.200,N_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 D_bar.N.200.300 <- muNflux200 - muNflux300
+N.depth.200.300$D <- N.depth.200.300$N_avg.200 - N.depth.200.300$N_avg.300
 
 P.depth.150.200 <- merge(P_flux.depth.150,P_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 D_bar.P.150.200 <- muPflux150 - muPflux200
+P.depth.150.200$D <- P.depth.150.200$P_avg.150 - P.depth.150.200$P_avg.200
 
 P.depth.200.300 <- merge(P_flux.depth.200,P_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 D_bar.P.200.300 <- muPflux200 - muPflux300
+P.depth.200.300$D <- P.depth.200.300$P_avg.200 - P.depth.200.300$P_avg.300
 
 M.depth.150.200 <- merge(M_flux.depth.150,M_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 D_bar.M.150.200 <- muMflux150 - muMflux200
+M.depth.150.200$D <- M.depth.150.200$M_avg.150 - M.depth.150.200$M_avg.200
 
 M.depth.200.300 <- merge(M_flux.depth.200,M_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
 D_bar.M.200.300 <- muMflux200 -muMflux300
+M.depth.200.300$D <- M.depth.200.300$M_avg.200 - M.depth.200.300$M_avg.300
 
 D_bar.mean <- data.frame(c("dep150.200","dep200.300"), c(D_bar.C.150.200, D_bar.C.200.300), c(D_bar.N.150.200, D_bar.N.200.300), c(D_bar.P.150.200 ,D_bar.P.200.300 ), c(D_bar.M.150.200 ,D_bar.M.200.300))
-colnames(D_bar.mean)[1] <- "Depth.Compare"
+colnames(D_bar.mean)[1] <- "Depth.Diff"
 colnames(D_bar.mean)[2] <- "C_flux"
 colnames(D_bar.mean)[3] <- "N_flux"
 colnames(D_bar.mean)[4] <- "P_flux"
@@ -503,70 +514,86 @@ D_bar.mean
 Checking the distribution of the $\overline{D}$ for each flux 
 
 ```{r, echo= FALSE}
-#check distribution of D-bar (difference between paried depth samples)
+#check distribution of D (difference between paried depth samples)
 
 # Carbon 
 par(mfrow=c(1,3))
-hist(C.depth.150.200$D_bar, breaks = "FD")
-hist(log(C.depth.150.200$D_bar), breaks = "FD", main ="Fig 50 C.depth.150.200$D_bar") #try lo transform 
-boxplot(log(C.depth.150.200$D_bar)) #lots of outliers 
-
-par(mfrow=c(1,3))
-hist(C.depth.200.300$D_bar, breaks = "FD")
-hist(log(C.depth.200.300$D_bar), breaks = "FD", main ="Fig 51 C.depth.200.300$D_bar") #try lo transform 
-boxplot(log(C.depth.200.300$D_bar)) #lots of outliers 
-
-# Nitrogen
-par(mfrow=c(1,3))
-hist(N.depth.150.200$D_bar, breaks = "FD")
-hist(log(N.depth.150.200$D_bar), breaks = "FD", main ="Fig 52 N.depth.150.200$D_bar") #try lo transform 
-boxplot(log(N.depth.150.200$D_bar)) #lots of outliers 
-
-par(mfrow=c(1,3))
-hist(N.depth.200.300$D_bar, breaks = "FD")
-hist(log(N.depth.200.300$D_bar), breaks = "FD", main ="Fig 53 N.depth.200.300$D_bar") #try lo transform 
-boxplot(log(N.depth.200.300$D_bar)) #lots of outliers 
-
-# Phosphorous
-par(mfrow=c(1,3))
-hist(P.depth.150.200$D_bar, breaks = "FD")
-hist(log(P.depth.150.200$D_bar), breaks = "FD", main ="Fig 54 P.depth.150.200$D_bar") #try lo transform 
-boxplot(log(P.depth.150.200$D_bar)) #lots of outliers 
-
-par(mfrow=c(1,3))
-hist(P.depth.200.300$D_bar, breaks = "FD")
-hist(log(P.depth.200.300$D_bar), breaks = "FD", main ="Fig 55 P.depth.200.300$D_bar") #try lo transform 
-boxplot(log(P.depth.200.300$D_bar)) #lots of outliers 
-
-# Mass 
-par(mfrow=c(1,3))
-hist(M.depth.150.200$D_bar, breaks = "FD")
-hist(log(M.depth.150.200$D_bar), breaks = "FD", main ="Fig 56 M.depth.150.200$D_bar") #try lo transform 
-boxplot(log(M.depth.150.200$D_bar)) #lots of outliers 
-
-par(mfrow=c(1,3))
-hist(M.depth.200.300$D_bar, breaks = "FD")
-hist(log(M.depth.200.300$D_bar), breaks = "FD", main ="Fig 57 C.depth.200.300$D_bar") #try lo transform 
-boxplot(log(M.depth.200.300$D_bar)) #lots of outliers 
+hist(C.depth.150.200$D, breaks = "FD")
+hist(log(C.depth.150.200$D), breaks = "FD", main ="Fig 50 C.depth.150.200$D_bar") #try lo transform 
+boxplot(log(C.depth.150.200$D)) #lots of outliers 
 ```
 
-*Cdepth (150.200) is not very normal even with a log transformation and the residual is not around 0*
+*Cdepth (150.200) is not very normal, but log transformation increases normality. Outliers present in box plot*
 
-*Cdepth (200.300) is fairly normal with a log transformation, but the residual is not around 0*
+```{r}
+par(mfrow=c(1,3))
+hist(C.depth.200.300$D, breaks = "FD")
+hist(log(C.depth.200.300$D), breaks = "FD", main ="Fig 51 C.depth.200.300$D_bar") #try lo transform 
+boxplot(log(C.depth.200.300$D)) #lots of outliers 
+```
 
-*Ndepth (150.200) is not very normal even with a log transformation, but the residual is close to 0*
+*Cdepth (200.300) is not normal, but log transformation increases normality. Outliers present in box plot*
 
-*Ndepth (200.300) is fairly normal with a log transformation, and the residual is around 0*
+```{r}
+# Nitrogen
+par(mfrow=c(1,3))
+hist(N.depth.150.200$D, breaks = "FD")
+hist(log(N.depth.150.200$D), breaks = "FD", main ="Fig 52 N.depth.150.200$D_bar") #try lo transform 
+boxplot(log(N.depth.150.200$D)) #lots of outliers 
+```
 
-*Pdepth (150.200) is not very normal even with a log transformation and the residual is not around 0*
+*Ndepth (150.200) is not very normal, but log transformation increases normality. Outliers present in box plot*
 
-*Pdepth (200.300) is not very normal even with a log transformation and the residual is not around 0*
+```{r}
+par(mfrow=c(1,3))
+hist(N.depth.200.300$D, breaks = "FD")
+hist(log(N.depth.200.300$D), breaks = "FD", main ="Fig 53 N.depth.200.300$D_bar") #try lo transform 
+boxplot(log(N.depth.200.300$D)) #lots of outliers 
+```
 
-*Mdepth (150.200) is fairly normal with a log transformation, but the residual is not around 0*
+*Ndepth (200.300) is skewed, but log transformation increases normality. Outliers present in box plot*
 
-*Mdepth (200.300) is fairly normal with a log transformation, but the residual is not around 0*
+```{r}
+# Phosphorous
+par(mfrow=c(1,3))
+hist(P.depth.150.200$D, breaks = "FD")
+hist(log(P.depth.150.200$D), breaks = "FD", main ="Fig 54 P.depth.150.200$D_bar") #try lo transform 
+boxplot(log(P.depth.150.200$D)) #lots of outliers 
+```
+
+*Pdepth (150.200) is not very normal, but log transformation increases normality. Outliers present in box plot*
+
+```{r}
+par(mfrow=c(1,3))
+hist(P.depth.200.300$D, breaks = "FD")
+hist(log(P.depth.200.300$D), breaks = "FD", main ="Fig 55 P.depth.200.300$D_bar") #try lo transform 
+boxplot(log(P.depth.200.300$D)) #lots of outliers 
+```
+
+*Pdepth (200.300) is not very normal, but log transformation increases normality. NO outliers present in box plot*
+
+```{r}
+# Mass 
+par(mfrow=c(1,3))
+hist(M.depth.150.200$D, breaks = "FD")
+hist(log(M.depth.150.200$D), breaks = "FD", main ="Fig 56 M.depth.150.200$D_bar") #try lo transform 
+boxplot(log(M.depth.150.200$D)) #lots of outliers 
+```
+
+*Mdepth (150.200) is fairly normal, but log transformation increases normality. Outliers present in box plot*
+
+```{r}
+par(mfrow=c(1,3))
+hist(M.depth.200.300$D, breaks = "FD")
+hist(log(M.depth.200.300$D), breaks = "FD", main ="Fig 57 C.depth.200.300$D_bar") #try lo transform 
+boxplot(log(M.depth.200.300$D)) #lots of outliers 
+```
+
+*Mdepth (200.300) is not normal, but log transformation increases normality. Outliers present in box plot*
 
 <br>
+
+Proceed with hypothesis test of log transformed data
 
 (1.1)
 
