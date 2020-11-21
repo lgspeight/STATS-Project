@@ -1033,7 +1033,6 @@ Data.noNA$month <- substr(paste(Data.noNA$month),6,8)
 ```
 
 
-
 ```{r,echo=FALSE}
 #ANCOVA
 ANOCOVA.data <- subset(Data.noNA, select = c("dep", "M_avg", "C_avg","N_avg","P_avg", "Year", "month"))
@@ -1050,30 +1049,44 @@ fit <-fitted(ANCOVA)
 <br>
 
 # Results: 
+
 Flux consistently decreases with depth in all parameters, carbon, nitrogen, phosphorus, and mass (Fig, 1-4). 
 In order to perform t-tests with our data we needed to first check for normality and outliers in our data. All fluxes went through log transformations. C-flux boxplot means do not overlap and box sizes for 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap with the other fluxes and a very different shape which could break homoscedasticity (Fig 9-16). N-flux boxplot means do not too seem to overlap too much for 150 and 200, but there is a bit of overlap in 200 and 300. 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape which could break homoscedasticity (Fig 21-28). For P-flux, boxplot means seem to have some overlap. They are similar in box size, but the concern is the overlap, making them not good predictors of one another and potentially breaking homoscedasticity (Fig 32-37). For M-flux, boxplot means seem to have some overlap. They are similar in box size, but the concern is the overlap, making them not good predictors of one another and potentially breaking homoscedasticity (Fig 42-49). 
+
 After running 95 percent confidence intervals for each flux compared to depth, we reject the null for H1. as carbon flux is lower at 200 meters than at 150 meters (t = 14.668, df = 302, p-value < 2.2e-16). We reject the null for H2 as carbon flux is lower at 300 meters than at 200 meters (t = 13.324, df = 299, p-value < 2.2e-16). We reject the null for H3 as nitrogen flux is lower at 200 meters than at 150 meters (t = 14.918, df = 300, p-value < 2.2e-16). We reject the null for H4 as nitrogen flux is lower at 300 meters than at 200 meters (t = 15.938, df = 297, p-value < 2.2e-16). We reject the null for H5 as phosphorus flux is lower at 200 meters than at 150 meters (t = 10.941, df = 105, p-value < 2.2e-16). We reject the null for H6 as phosphorus flux is lower at 300 meters than at 200 meters (t = 12.446, df = 104, p-value < 2.2e-16). We reject the null for H7 as mass flux is lower at 200 meters than at 150 meters (t = 11.049, df = 303, p-value < 2.2e-16). We reject the null for H8 as mass flux is lower at 300 meter then at 200 meter (t = 12.054, df = 300, p-value < 2.2e-16). 
+
 In order to see how well P, N, and C were able to predict mass flux, simple linear regression was performed with log transformed data. C-flux was the best predictor of mass flux, but still had a little clumping (Fig 58, r2=0.7405). N-flux was the next best predictor (Fig 59, r2 = 0.6446). P-flux was the worst predictor of mass flux (Fig 60, r2=0.3592).
+
 Even though carbon-flux seemed to be a good predictor of mass flux in the simple linear regression model, after running EDA we see that the model is not very normal, poor linearity, and both residual are not very evenly scattered and there is clumping around the line, showing that they are not heteroscedasticity. All these models suggest that trifecta is broken (Fig 61 and 62 with associated distribution and linear fit model). We see this same trend as we look at N-flux as a predictor (Fig 63 and 64 with associated distribution and linear fit model). As well as P-flux (Fig 65 and 66 with associated distribution and linear fit model).
 We next wanted to see if collinearity between the different fluxes that are predicting mass flux and potentially combine the fluxes, so we ran a ANOVA regression model and best fit line model. Collinearity was observed between Nitrogen and Carbon flux predictors, so they were combined into a single flux categorie to predict mass flux (Fig 67-68).
+
 Next, we ran a regression model to see how depth affects flux, and we see that as depth decreases so does flux, so depth can be a predictor of flux (Fig 70-73).
+
 We ran a second ANOVA model with an extra parameter to see if this would improve the model fit. The extra parameter did improve the mode and made it more normal and linear, but was still very clustered for residuals (Fig 74-76).
 In comparing our two Anova models, we see that we see that there is no significant difference in the first anova model, as our p-value is too large to assume that losing df due to an extra parameter is worthwhile (Fig 67-69). However, our p-value is significantly small in our second anova model indicating that losing df due to an extra parameter is worthwhile, and improves the fit (Fig 74-76).
+
 We then ran an ANCOVA model. After log transforming data, C, N, P, and M distributions look much more normal and linearity is looking better, especially for C and N. Activity level specific scatterplots highlight the interaction with C and M through depths and have somewhat of a linear relationship. However, the three standalone depth level-specific lm fits are not parallel to each other, suggesting that they may not be good predictors of one another.
 
 # Discussion:
+
 Through all our model tests. We see that flux consistently decreases with depth in each, N, P, C, and M. Depth can be used as a predictor of flux. We also see that C-flux seems to be the best predictor of mass flux. This could be potentially due to the additional carbon flux promoted by biological organisms such as copepods that excrete fecal pellets that are able to sink this carbon to depth (7). In our second anova model, we see that the best way to predict mass flux is by using all of the flux averages as well as depth for parameters. We expected to see these trends as previous literature had suggested that flux decrease with depth (4).
 
 # Limitations:
 We had limitations in our data from a lot of N/As that prevented us on running full analyses. If this data had been available, we could have seen much stronger trends in our data. 
 
 # References:
-1.     	B. Szymczycha, Z. Klostowska, M. Lengier, L. Dzierzbicka-Glowacka, Significance of nutrient fluxes via submarine groundwater discharge in the Bay of Puck, southern Baltic Sea. Oceanologia 62, 117-125 (2020).
-2.     	H. C. Zhao, L. Zhang, S. R. Wang, L. X. Jiao, Features and influencing factors of nitrogen and phosphorus diffusive fluxes at the sediment-water interface of Erhai Lake. Environmental Science and Pollution Research 25, 1933-1942 (2018).
-3.     	K. Khan, C. W. Su, R. Tao, L. N. Hao, Urbanization and carbon emission: causality evidence from the new industrialized economies. Environment Development and Sustainability 22, 7193-7213 (2020).
-4.     	C. A. Wynn-Edwards et al., Particle Fluxes at the Australian Southern Ocean Time Series (SOTS) Achieve Organic Carbon Sequestration at Rates Close to the Global Median, Are Dominated by Biogenic Carbonates, and Show No Temporal Trends Over 20-Years. Frontiers in Earth Science 8, 20 (2020).
-5.	BATS Methods. Chapter 20. Trap collected particle flux with surface tethered traps (2017)
-6.	BATS Methods. Chapter 1. Introduction (1997).
+1. B. Szymczycha, Z. Klostowska, M. Lengier, L. Dzierzbicka-Glowacka, Significance of nutrient fluxes via submarine groundwater discharge in the Bay of Puck, southern Baltic Sea. Oceanologia 62, 117-125 (2020).
+
+2. H. C. Zhao, L. Zhang, S. R. Wang, L. X. Jiao, Features and influencing factors of nitrogen and phosphorus diffusive fluxes at the sediment-water interface of Erhai Lake. Environmental Science and Pollution Research 25, 1933-1942 (2018).
+
+3. K. Khan, C. W. Su, R. Tao, L. N. Hao, Urbanization and carbon emission: causality evidence from the new industrialized economies. Environment Development and Sustainability 22, 7193-7213 (2020).
+
+4. C. A. Wynn-Edwards et al., Particle Fluxes at the Australian Southern Ocean Time Series (SOTS) Achieve Organic Carbon Sequestration at Rates Close to the Global Median, Are Dominated by Biogenic Carbonates, and Show No Temporal Trends Over 20-Years. Frontiers in Earth Science 8, 20 (2020).
+
+5. BATS Methods. Chapter 20. Trap collected particle flux with surface tethered traps (2017)
+
+6. BATS Methods. Chapter 1. Introduction (1997).
+
 7. H. van der Jagt, I. Wiedmann, N. Hildebrandt, B. Niehoff, M. H. Iversen, Aggregate Feeding by the Copepods Calanus and Pseudocalanus Controls Carbon Flux Attenuation in the Arctic Shelf Sea During the Productive Period. Frontiers in Marine Science 7, 16 (2020).
 
 
