@@ -1039,7 +1039,7 @@ We then ran an ANCOVA model. After log transforming data, C, N, P, and M distrib
 Through all our model tests. We see that flux consistently decreases with depth in each, N, P, C, and M. Depth can be used as a predictor of flux. We also see that C-flux seems to be the best predictor of mass flux. This could be potentially due to the additional carbon flux promoted by biological organisms such as copepods that excrete fecal pellets that are able to sink this carbon to depth (7). In our second anova model, we see that the best way to predict mass flux is by using all of the flux averages as well as depth for parameters. We expected to see these trends as previous literature had suggested that flux decrease with depth (4).
 
 # Limitations:
-We had limitations in our data from a lot of N/As that prevented us on running full analyses. If this data had been available, we could have seen much stronger trends in our data.
+We had limitations in our data from a lot of N/As that prevented us on running full analyses. If this data had been available, we could have seen much stronger trends in our data. 
 
 # References:
 1.     	B. Szymczycha, Z. Klostowska, M. Lengier, L. Dzierzbicka-Glowacka, Significance of nutrient fluxes via submarine groundwater discharge in the Bay of Puck, southern Baltic Sea. Oceanologia 62, 117-125 (2020).
