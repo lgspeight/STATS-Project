@@ -13,6 +13,12 @@ output:
 
 # Introduction: 
 
+  Many environmental and anthropogenic activities can affect the amount of nutrient runoff into water ecosystems (1). The amount of nitrogen (N) and phosphorus (P) entering an ecosystem can affect their flux as well as many other environmental impacts (1). In a study done in Erhai Lake, it showed that nitrogen and phosphorus diffusion flux can affect the biomass and population of autotrophs in this lake that can result in algal blooms (2). We can expect a similar trend to happen in the ocean, but due to the open oceans variability, it is much easier to study these trends in a lake system. Nitrogen and phosphorus fluxes are influenced by internal and external factors such as: nutritive salt concentration, DO, pH, algal biomass, microbial activity, chlorophyll a, etc. (2). It is important to look at these controlling factors and how they will affect the fluxes and the ecosystem as a whole. For example, Erhai Lake is in a transition phase from mesotrophic to eutrophic bodies of water due to the increase of nutritive salts affecting the N and P diffusive fluxes (2). 
+  Carbon also enters the ocean and causes stress to organisms as it increases ocean acidity, but it enters through the earth’s atmosphere (3). The amount of carbon in the atmosphere has been steadily increasing overtime due to the large input of fossil fuels into the environment (3). Again, carbon input, like nitrogen and phosphorus is caused by anthropogenic stress.
+  Nitrogen, phosphorus, and carbon are all connected in that they relate to the biological pump and the solubility pump. They all interact with marine organisms that use them for growth and energy, and they are eventually respired or excreted out of these organisms to sink to depth (4). Ocean physics and the solubility pump also helps to aid these to sink to depth, especially in areas of deep, cold water mixing, like the Southern Ocean (4).  The sinking of this nitrogen, phosphorus, and carbon is flux (4). These fluxes are important, especially when it comes to carbon sequestration, which has often been a hot topic as a way to decrease the amount of carbon in the atmosphere. Typically, these fluxes tend to decrease with depth due to the carbon, phosphorus, and nitrogen being used by organisms along the way down to the benthos (4). 
+  The best way to measure these fluxes is using sediment traps. Sediments traps are a method for collecting and determining the sinking fluxes of particulate matter, carbon, and nitrogen in the sea. These values are expressed as mg m^-2 day^-1. Total particulate mass flux is defined as the amount of sinking particulate matter passing through a depth level as ( mg dry weight m^-2 day^-2). Total particulate carbon flux is defined as the amount of sinking particulate organic carbon passing through a depth level (mg carbon m^-2 day^-1). Total nitrogen mass flux is defined as the amount of sinking particulate organic nitrogen passing through a depth level (mg nitrogen m^-2 day^-1) (5).
+  In our study we looked at fluxes of nitrogen, phosphorus, and carbon in the Bermuda Atlantic Time-series through The Joint Global Ocean Flux Study. The Joint Global Ocean FLux Study (JGOFS) is a multi-disciplinary and international study that aims to understand the ocean's role in global carbon and nutrient cycles. One of the objectives of the U.S JGOFS- sponsored Bermuda Atlantic Time-series Study (BATS) is to “observe and interpret the annual and interannual variability in the rates of particle flux and the apparent rates of particle remineralization over the entire water column”. BATS began in October 1988 and is through December 2016. (6) 
+
 # Toolbox discussion: 
 
 # Description:
@@ -330,7 +336,7 @@ xlab("Depth (m)") + ylab("Mean of M Flux(mg mass m^-2 day^-1)") + ggtitle("Fig 4
 
 Checking for normality and outliers in flux distribution
 
-Log transfromation was needed for all FLuxes 
+Log transfromation was needed for all Fluxes 
 
 ```{r,eval=TRUE, echo=FALSE}
 # Checking for normaility and no outliers in Carbon Flux 
@@ -456,35 +462,36 @@ $\overline{Y_1}$ - $\overline{Y_2}$ = $\overline{D}$
 
 <br>
 
-Creating $\overline{D}$ for each paired group
+Merging data bases for hypothesis test and Creating $\overline{D}$ for each paired group
 
 ```{r ,echo = FALSE}
 #create D-bar for each paired group
+
 C.depth.150.200 <- merge(C_flux.depth.150,C_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-C.depth.150.200$D_bar <- C.depth.150.200$C_avg.150 - C.depth.150.200$C_avg.200
+D_bar.C.150.200 <- muCflux150 - muCflux200
 
 C.depth.200.300 <- merge(C_flux.depth.200,C_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-C.depth.200.300$D_bar <- C.depth.200.300$C_avg.200 - C.depth.200.300$C_avg.300
+D_bar.C.200.300 <- muCflux200 - muCflux300
 
 N.depth.150.200 <- merge(N_flux.depth.150,N_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-N.depth.150.200$D_bar <- N.depth.150.200$N_avg.150 - N.depth.150.200$N_avg.200
+D_bar.N.150.200 <- muNflux150 - muNflux200
 
 N.depth.200.300 <- merge(N_flux.depth.200,N_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-N.depth.200.300$D_bar <- N.depth.200.300$N_avg.200 - N.depth.200.300$N_avg.300
+D_bar.N.200.300 <- muNflux200 - muNflux300
 
 P.depth.150.200 <- merge(P_flux.depth.150,P_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-P.depth.150.200$D_bar <- P.depth.150.200$P_avg.150 - P.depth.150.200$P_avg.200
+D_bar.P.150.200 <- muPflux150 - muPflux200
 
 P.depth.200.300 <- merge(P_flux.depth.200,P_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-P.depth.200.300$D_bar <- P.depth.200.300$P_avg.200 - P.depth.200.300$P_avg.300
+D_bar.P.200.300 <- muPflux200 - muPflux300
 
 M.depth.150.200 <- merge(M_flux.depth.150,M_flux.depth.200,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-M.depth.150.200$D_bar <- M.depth.150.200$M_avg.150 - M.depth.150.200$M_avg.200
+D_bar.M.150.200 <- muMflux150 - muMflux200
 
 M.depth.200.300 <- merge(M_flux.depth.200,M_flux.depth.300,by = c("cr","yymmdd1","yymmdd2","Lat2","Lat2.1","Long1","Long2"))
-M.depth.200.300$D_bar <- M.depth.200.300$M_avg.200 - M.depth.200.300$M_avg.300
+D_bar.M.200.300 <- muMflux200 -muMflux300
 
-D_bar.mean <- data.frame(c("dep150.200","dep200.300"), c(mean(C.depth.150.200$D_bar), mean(C.depth.200.300$D_bar)), c(mean(N.depth.150.200$D_bar), mean(N.depth.200.300$D_bar)), c(mean(P.depth.150.200$D_bar), mean(P.depth.200.300$D_bar)), c(mean(M.depth.150.200$D_bar), mean(M.depth.200.300$D_bar)))
+D_bar.mean <- data.frame(c("dep150.200","dep200.300"), c(D_bar.C.150.200, D_bar.C.200.300), c(D_bar.N.150.200, D_bar.N.200.300), c(D_bar.P.150.200 ,D_bar.P.200.300 ), c(D_bar.M.150.200 ,D_bar.M.200.300))
 colnames(D_bar.mean)[1] <- "Depth.Compare"
 colnames(D_bar.mean)[2] <- "C_flux"
 colnames(D_bar.mean)[3] <- "N_flux"
@@ -824,6 +831,10 @@ abline(h=0)
 
 *We see collineary between Nitrogen and Carbon flux predictors, so they were combined into a sing flux categorie to predict mass flux*
 
+*add comment of EDA ouput* 
+
+<br>
+
 How does depth affect flux? 
 
 Regression Model: $Y_i$ = $\beta_0$ + $\beta_1x_i$ + $\epsilon_i$ where $\epsilon_i$ ~ $N(0,\sigma^2)$
@@ -989,4 +1000,9 @@ fit <-fitted(ANCOVA)
 # Limitations:
 
 # References:
-
+1.     	B. Szymczycha, Z. Klostowska, M. Lengier, L. Dzierzbicka-Glowacka, Significance of nutrient fluxes via submarine groundwater discharge in the Bay of Puck, southern Baltic Sea. Oceanologia 62, 117-125 (2020).
+2.     	H. C. Zhao, L. Zhang, S. R. Wang, L. X. Jiao, Features and influencing factors of nitrogen and phosphorus diffusive fluxes at the sediment-water interface of Erhai Lake. Environmental Science and Pollution Research 25, 1933-1942 (2018).
+3.     	K. Khan, C. W. Su, R. Tao, L. N. Hao, Urbanization and carbon emission: causality evidence from the new industrialized economies. Environment Development and Sustainability 22, 7193-7213 (2020).
+4.     	C. A. Wynn-Edwards et al., Particle Fluxes at the Australian Southern Ocean Time Series (SOTS) Achieve Organic Carbon Sequestration at Rates Close to the Global Median, Are Dominated by Biogenic Carbonates, and Show No Temporal Trends Over 20-Years. Frontiers in Earth Science 8, 20 (2020).
+5.	BATS Methods. Chapter 20. Trap collected particle flux with surface tethered traps (2017)
+6.	BATS Methods. Chapter 1. Introduction (1997).
