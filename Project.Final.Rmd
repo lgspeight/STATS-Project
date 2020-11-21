@@ -20,12 +20,19 @@ output:
   Nitrogen, phosphorus, and carbon are all connected in that they relate to the biological pump and the solubility pump. They all interact with marine organisms that use them for growth and energy, and they are eventually respired or excreted out of these organisms to sink to depth (4). Ocean physics and the solubility pump also helps to aid these to sink to depth, especially in areas of deep, cold water mixing, like the Southern Ocean (4).  The sinking of this nitrogen, phosphorus, and carbon is flux (4). These fluxes are important, especially when it comes to carbon sequestration, which has often been a hot topic as a way to decrease the amount of carbon in the atmosphere. Typically, these fluxes tend to decrease with depth due to the carbon, phosphorus, and nitrogen being used by organisms along the way down to the benthos (4). 
   
   The best way to measure these fluxes is using sediment traps. Sediments traps are a method for collecting and determining the sinking fluxes of particulate matter, carbon, and nitrogen in the sea. These values are expressed as mg m^-2 day^-1. Total particulate mass flux is defined as the amount of sinking particulate matter passing through a depth level as ( mg dry weight m^-2 day^-2). Total particulate carbon flux is defined as the amount of sinking particulate organic carbon passing through a depth level (mg carbon m^-2 day^-1). Total nitrogen mass flux is defined as the amount of sinking particulate organic nitrogen passing through a depth level (mg nitrogen m^-2 day^-1) (5).
+  
   In our study we looked at fluxes of nitrogen, phosphorus, carbon, and mass in the Bermuda Atlantic Time-series through The Joint Global Ocean Flux Study. The Joint Global Ocean FLux Study (JGOFS) is a multi-disciplinary and international study that aims to understand the ocean's role in global carbon and nutrient cycles. One of the objectives of the U.S JGOFS- sponsored Bermuda Atlantic Time-series Study (BATS) is to “observe and interpret the annual and interannual variability in the rates of particle flux and the apparent rates of particle remineralization over the entire water column”. BATS began in October 1988 and is through December 2016.(6)
+  
+  Our objectives include evaluating how depth affects each flux and how each flux affects mass flux. 
     
 # Toolbox discussion: 
 
+Over the course of MSCI 504, we learn key statistical topics and skills, including, but not limited too, statistical inference, distributional assumption and rational, confidence intervals, hypothesis testing, linear and multiple regression, analysis of variance (ANOVA), and analysis of covariance (ANCOVA). All of these course topics are included in this project. 
+Our data included the values of carbon, nitrogen, phosphorus, and mass flux sampled at various depths along multiple cruises. The mean and standard deviation of each flux at each depth was taken. To analyze the structure and distribution of our sample, histograms and boxplots were made. Hypothesis testing in the form of paired sample t-test. Linear and multiple regression was performed to predict mass flux. An ANOVA test was performed to compare large vs small models. An ANCOVA model was done to take into account covariance and blocking factors within our data.
 
 # Description:
+
+
 
 # Implementation:
 
