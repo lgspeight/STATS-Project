@@ -70,7 +70,7 @@ Our Data was subset from the original data set to exclude all blank columns and 
 
 # Implementation:
 
-*See Appendix for all code*
+*See Appendix i for all code*
 
 ### Reading csv data in 
 
@@ -218,7 +218,7 @@ bar.Cflux
 #### Figure 1
 Graph of C-flux
 
-```{r, echo = FALSE}
+```{r}
 library(ggplot2)
 library(dplyr)
 
@@ -266,7 +266,7 @@ bar.Pflux
 #### Figure 2
 Graph of P-flux 
 
-```{r, echo = FALSE}
+```{r, echo}
 library(ggplot2)
 library(dplyr)
 
@@ -283,7 +283,7 @@ xlab("Depth (m)") + ylab("Mean of P Flux(mg phospohorous m^-2 day^-1)") + ggtitl
 
 n value of N-flux at each depth
 
-```{r, echo = FALSE}
+```{r, echo=FALSE}
 #n values for N-flux
 length(N_flux.depth.150$N_avg.150)
 length(N_flux.depth.200$N_avg.200)
@@ -316,7 +316,7 @@ bar.Nflux
 #### Figure 3
 Graph of N-flux
 
-```{r, echo= FALSE}
+```{r}
 library(ggplot2)
 library(dplyr)
 
@@ -366,7 +366,7 @@ bar.Mflux
 #### Figure 4
 Graph of M-flux
 
-```{r, echo = FALSE}
+```{r}
 library(ggplot2)
 library(dplyr)
 
@@ -388,7 +388,7 @@ Checking for normality and outliers in flux distribution
 
 Log transfromation was needed for all Fluxes 
 
-*See Appendix ii for distributional hitrograms and log tranformation histograms*
+*See Appendix ii for distributional hitrograms, log tranformation histograms, and boxpplots*
 
 ```{r,eval=TRUE, echo=FALSE, include=FALSE}
 
@@ -407,7 +407,7 @@ hist(log(C_flux.depth.300$C_avg.300), main ="Fig 11 C Flux depth 300 (log)")
 hist(log(C_flux.depth.400$C_avg.400), main ="Fig 12 C Flux depth 400 (log)")
 ```
 
-```{r, eval=TRUE,echo=FALSE}
+```{r, eval=TRUE,echo=FALSE, include= FALSE}
 # Checking for outliers
 par(mfrow=c(1,1))
 i = "150"
@@ -424,7 +424,7 @@ boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 5", xlab =
 Dsts.test <- rbind(cbind(C_flux.depth.150$C_avg.150))
 ```
 
-*boxplot means overlap, but box sizes for 150, 200, 300, and 400 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other. However, the concern is the overlap suggesting that they break homoscedasticity and are not good predictors of one another.*
+Boxplot means for carbon flux overlap, but box sizes for 150, 200, 300, and 400 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other. However, the concern is the overlap suggesting that they break homoscedasticity and are not good predictors of one another.
 
 <br>
 
@@ -444,7 +444,7 @@ hist(log(N_flux.depth.300$N_avg.300), main ="Fig 23 N Flux depth 300 (log)")
 hist(log(N_flux.depth.400$N_avg.400), main ="Fig 24 N Flux depth 400 (log)")
 ```
 
-```{r,eval=TRUE,echo=FALSE}
+```{r,eval=TRUE,echo=FALSE, include=FALSE}
 # Checking for outliers
 
 par(mfrow=c(1,1))
@@ -462,7 +462,7 @@ boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 6", xlab =
 Dsts.test <- rbind(cbind(N_flux.depth.150$N_avg.150))
 ```
 
-*boxplot means seem to overlap a bit for 150, 200, 300, and 400. The 400 depth has a lot of overlap and a very different shape and whiskers. All of these observations suggest that the model breaks homosedasticity and that the depths are not good good predictors of one another*
+Boxplot means for nitroen flux seem to overlap a bit for 150, 200, 300, and 400. The 400 depth has a lot of overlap and a very different shape and whiskers. All of these observations suggest that the model breaks homosedasticity and that the depths are not good good predictors of one another.
 
 <br>
 
@@ -478,7 +478,9 @@ par(mfrow=c(1,3))
 hist(log(P_flux.depth.150$P_avg.150), main ="Fig 32 P Flux depth 150 (log)")
 hist(log(P_flux.depth.200$P_avg.200), main ="Fig 33 P Flux depth 200 (log)")
 hist(log(P_flux.depth.300$P_avg.300), main ="Fig 34 P Flux depth 300 (log)")
+```
 
+```{r, eval=TRUE,echo=FALSE,include=FALSE}
 # Checking for outliers
 
 par(mfrow=c(1,1))
@@ -497,7 +499,9 @@ Dsts.test <- rbind(cbind(P_flux.depth.150$P_avg.150))
 
 ```
 
-*boxplot means seem to overlap a for 150, 200, and 300. Even though they are similar in box and whisker length, the overlap suggests that the model breaks homosedasticity and that the depths are not good good predictors of one another*
+Boxplot means for phosphorous flux seem to overlap a for 150, 200, and 300. Even though they are similar in box and whisker length, the overlap suggests that the model breaks homosedasticity and that the depths are not good good predictors of one another.
+
+<br>
 
 ```{r,eval=TRUE, echo=FALSE, include=FALSE}
 # Checking for normaility and no outliers in Mass Flux 
@@ -513,7 +517,9 @@ hist(log(M_flux.depth.150$M_avg.150), main ="Fig 42 M Flux depth 150 (log)")
 hist(log(M_flux.depth.200$M_avg.200), main ="Fig 43 M Flux depth 200 (log)")
 hist(log(M_flux.depth.300$M_avg.300), main ="Fig 44 M Flux depth 300 (log)")
 hist(log(M_flux.depth.400$M_avg.400), main ="Fig 45 M Flux depth 400 (log)")
+```
 
+```{r,eval=TRUE,echo=FALSE,include=FALSE}
 # Checking for outliers
 
 par(mfrow=c(1,1))
@@ -530,12 +536,17 @@ test.object <- as.data.frame(test.object)
 boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 8", xlab = "Depth (m)", ylab = "log of M-Flux (mg mass m^-2 day^-1)")
 Dsts.test <- rbind(cbind(M_flux.depth.150$M_avg.150))
 
-
 ```
 
-*boxplot means seem to have some overlap. They are similar in box size except for 400, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity. Conclusively, depths are not good predictors of one another and will no be used in our results*
+Boxplot means for mass flux seem to have some overlap. They are similar in box size except for 400, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity.
 
-*Since many of the 400 m depth distrubutions were not normal, even after transformation and have small n, they will not be used in the hypothesis testing* 
+<br>
+
+Conclusively, flux at one depth is not good predictors of the sae flux at another depth and will no be used in our analysis. 
+
+Since many of the 400 m depth distrubutions were not normal, even after transformation and have small n, they will not be used in the hypothesis testing.
+
+All other depth flux distributions increased normality with log transformation.
 
 <br>
 
@@ -812,9 +823,9 @@ t.test(log(M.depth.200.300$M_avg.200) ,log(M.depth.200.300$M_avg.300), alternati
 
 <br>
 
-### Simple Linear Regression via LS
+### Simple Linear Regression via OLS
 
-How does each flux predict Mass Flux? 
+#### How does each flux predict Mass Flux? 
 
 Regression Model: $Y_i$ = $\beta_0$ + $\beta_1x_i$ + $\epsilon_i$ where $\epsilon_i$ ~ $N(0,\sigma^2)$
 
@@ -852,9 +863,13 @@ abline(lmfit_P.M)
 
 <br>
 
+*See Appendix ii for all EDA output*
+
+<br>
+
 Carbon flux seems to be the best predictor of Mass flux. Lets run some EDA. 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,include=FALSE}
 #Carbon EDA
 resids <- resid( lmfit_C.M ) # extract epsilon_hats
 fit <- fitted ( lmfit_C.M ) # extract y_hats
@@ -870,7 +885,6 @@ abline(h=0) # mean of epsilon_hat
 
 plot(x=fit, y=resids, main="Fig 38 resid vs y_hat")
 abline(h=0)
-
 ```
 
 *Not very normal, linearity is okay, but not great, both residual are not very evenly scattered and there is clumping around the line, so not heteroscedasicity, trifecta is broken* 
@@ -879,7 +893,7 @@ abline(h=0)
  
 Lets compare these EDA's to that of Nitrogen Flux and Mass Flux. Nitrogen Flux was also a strong predictor of Mass Flux. 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,include=FALSE}
 #Nitrogen EDA
 resids <- resid( lmfit_N.M ) # extract epsilon_hats
 fit <- fitted ( lmfit_N.M ) # extract y_hats
@@ -905,7 +919,7 @@ abline(h=0)
 
 Lets now compare these to Phosphorous Flux, a weak predcitor of Mass Flux. 
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,include=FALSE}
 #Phosphorus EDA
 resids <- resid( lmfit_P.M ) # extract epsilon_hats
 fit <- fitted ( lmfit_P.M ) # extract y_hats
@@ -927,7 +941,7 @@ abline(h=0)
 
 <br>
 
-Do we see collinearity between the different fluxes that are predicting mass flux? Should we combine the fluxes? 
+#### Do we see collinearity between the different fluxes that are predicting mass flux? Should we combine the fluxes? 
 
 Regression Model: $Y_i$ = $\beta_0$ + $\beta_1x_i$ + $\epsilon_i$ where $\epsilon_i$ ~ $N(0,\sigma^2)$
 
@@ -943,7 +957,8 @@ lmfit.flux <- lm(log(M_avg) ~ log(flux),
 summary(lmfit.flux)
 plot(log(Data.noNA$flux), log(Data.noNA$M_avg), main ="Fig 45")
 abline(lmfit.flux)
-
+```
+```{r,echo=FALSE,include=FALSE}
 resids <- resid( lmfit.flux ) # extract epsilon_hats
 fit <- fitted ( lmfit.flux ) # extract y_hats
 
@@ -961,13 +976,11 @@ abline(h=0)
 
 ```
 
-*We see collineary between Nitrogen and Carbon flux predictors, so they were combined into a sing flux categorie to predict mass flux*
-
-*add comment of EDA ouput* 
+*We see collineary between Nitrogen and Carbon flux predictors, so they were combined into a singal flux categorie to predict mass flux*
 
 <br>
 
-How does depth affect flux? 
+#### How does depth affect flux? 
 
 Regression Model: $Y_i$ = $\beta_0$ + $\beta_1x_i$ + $\epsilon_i$ where $\epsilon_i$ ~ $N(0,\sigma^2)$
 
@@ -1013,6 +1026,9 @@ Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
 #multiple regression
 lmfit.MR <- lm(log(M_avg) ~ log(flux) + dep, data = Data.noNA)
 summary(lmfit.MR)
+```
+
+```{r,echo=FALSE, include=FALSE}
 
 resids <- resid( lmfit.MR ) # extract epsilon_hats
 fit <- fitted ( lmfit.MR ) # extract y_hats
@@ -1030,11 +1046,13 @@ plot(x=fit, y=resids, main="Fig 55 resid vs y_hat")
 abline(h=0)
 ```
 
-*Fairly normal and linear, but very clustered for residules*
+Multiple regression plot shows lower $R^2$ then simple linear regression plot with just flux predictors.We see strong signals in our intercept and flux, but weak signal in depth in summary output. 
 
 <br>
 
-which one is better?
+#### which one is better?
+
+Comparing simple linear regression of carbon,nitrogen combined flux to multple regression of flux + depth.
 
 ```{r,echo=FALSE}
 #anova 1
@@ -1043,6 +1061,10 @@ anova(smaller, larger)
 ```
 
 *There is no significance difference in the first anova model, our p-value is to large to assume that lossing df due to an extra parameter is worthwhile*
+
+<br>
+
+Comapring simple linear regression of depth to multple regression of flux + depth. 
 
 ```{r,echo=FALSE}
 #anova 2
@@ -1053,6 +1075,8 @@ anova(smaller.1, larger)
 *However there our p-value is small in our second anova model indicates that losing df due to an extra paramter is worthwhile, or signiicantly improves the fit*
 
 ### ANCOVA 
+
+Depth is our categorical predictor, different nutrition fluxes are numerical predictors. 
 
 ```{r,echo=FALSE}
 #we want to make predictions on the Mass average flux. 
@@ -1089,7 +1113,7 @@ xyplot(log(M_avg) ~ log(C_avg) | as.factor(dep),
            )
 ```
 
-*After log transforming data, C, N, P, and M distributions look much more noraml. Linearlity is looking better, especially for C and N. Activity level specific scatterplots highlight the interaction with C and M through depths and have somewhat of a linear reationship*
+*After log transforming data, C, N, P, and M distributions look much more noraml. Linearlity is looking better, especially for C and N. Activity level specific scatterplots highlight the interaction with C,N, and P flux with M flux through depths and have somewhat of a linear reationship. Scatterplot combined, shows overlap between our predictors*
 
 ```{r,echo=FALSE}
 #reformat yymmdd so that r can better use it blocking factors 
@@ -1130,7 +1154,6 @@ resids <- resid(ANCOVA)
 fit <-fitted(ANCOVA)
 ```
 
-*These do not present strong relationships*
 
 <br>
 
@@ -1186,7 +1209,256 @@ We had limitations in our data from a lot of N/As that prevented us on running f
 
 # Appendix ii
 
-```{r}
+### Distribution of carbon flux
 
+```{r,eval=TRUE, echo=FALSE, include=TRUE}
+
+# Checking for normaility and no outliers in Carbon Flux 
+
+hist((C_flux.depth.150$C_avg.150), main ="Fig 5 C Flux depth 150")
+hist((C_flux.depth.200$C_avg.200), main ="Fig 6 C Flux depth 200")
+hist((C_flux.depth.300$C_avg.300), main ="Fig 7 C Flux depth 300")
+hist((C_flux.depth.400$C_avg.400), main ="Fig 8 C Flux depth 400")
+
+# using natural log to Transform the data 
+
+hist(log(C_flux.depth.150$C_avg.150), main ="Fig 9 C Flux depth 150 (log)")
+hist(log(C_flux.depth.200$C_avg.200), main ="Fig 10 C Flux depth 200 (log)")
+hist(log(C_flux.depth.300$C_avg.300), main ="Fig 11 C Flux depth 300 (log)")
+hist(log(C_flux.depth.400$C_avg.400), main ="Fig 12 C Flux depth 400 (log)")
+```
+
+### Boxplot of carbon flux 
+
+```{r, eval=TRUE,echo=FALSE, include=TRUE}
+# Checking for outliers
+par(mfrow=c(1,1))
+i = "150"
+
+depth <- c("150", "200", "300", "400")
+test.object <- NULL
+for (i in depth){
+  test <- cbind(i,get(paste0("C_flux.depth.", i))[,9])
+  test.object <- rbind(test.object,test)
+}
+test.object <- as.data.frame(test.object)
+#View(test.object)
+boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 5", xlab = "Depth (m)", ylab = "log of C-Flux (mg carbon m^-2 day^-1)")
+Dsts.test <- rbind(cbind(C_flux.depth.150$C_avg.150))
+```
+
+### Distribution of nitrogen flux 
+
+```{r,eval=TRUE, echo=FALSE, include=TRUE}
+# Checking for normaility and no outliers in Nitrogen Flux 
+
+hist((N_flux.depth.150$N_avg.150), breaks = "FD", main ="Fig 17 N Flux depth 150")
+hist((N_flux.depth.200$N_avg.200), breaks = "FD", main ="Fig 18 N Flux depth 200")
+hist((N_flux.depth.300$N_avg.300), breaks = "FD", main ="Fig 19 N Flux depth 300")
+hist((N_flux.depth.400$N_avg.400), breaks = "FD", main ="Fig 20 N Flux depth 400")
+
+# using natural log to Transform the data 
+
+hist(log(N_flux.depth.150$N_avg.150), main ="Fig 21 N Flux depth 150 (log)")
+hist(log(N_flux.depth.200$N_avg.200), main ="Fig 22 N Flux depth 200 (log)")
+hist(log(N_flux.depth.300$N_avg.300), main ="Fig 23 N Flux depth 300 (log)")
+hist(log(N_flux.depth.400$N_avg.400), main ="Fig 24 N Flux depth 400 (log)")
+```
+
+### Boxplot of nitrogen flux 
+
+```{r,eval=TRUE,echo=FALSE,include=TRUE}
+# Checking for outliers
+
+par(mfrow=c(1,1))
+i = "150"
+
+depth <- c("150", "200", "300", "400")
+test.object <- NULL
+for (i in depth){
+  test <- cbind(i,get(paste0("N_flux.depth.", i))[,9])
+  test.object <- rbind(test.object,test)
+}
+test.object <- as.data.frame(test.object)
+#View(test.object)
+boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 6", xlab = "Depth (m)", ylab = "log of N-Flux (mg nitrogen m^-2 day^-1)")
+Dsts.test <- rbind(cbind(N_flux.depth.150$N_avg.150))
+```
+
+### Distribution of phosporous flux
+
+```{r,eval=TRUE, echo=FALSE, include=TRUE}
+# Checking for normaility and no outliers in Phosporous Flux 
+par(mfrow=c(1,3))
+hist((P_flux.depth.150$P_avg.150), breaks = "FD", main ="Fig 29 P Flux depth 150")
+hist((P_flux.depth.200$P_avg.200), breaks = "FD", main ="Fig 30 P Flux depth 200")
+hist((P_flux.depth.300$P_avg.300), breaks = "FD", main ="Fig 31 P Flux depth 300")
+
+# using natural log to Transform the data 
+par(mfrow=c(1,3))
+hist(log(P_flux.depth.150$P_avg.150), main ="Fig 32 P Flux depth 150 (log)")
+hist(log(P_flux.depth.200$P_avg.200), main ="Fig 33 P Flux depth 200 (log)")
+hist(log(P_flux.depth.300$P_avg.300), main ="Fig 34 P Flux depth 300 (log)")
+```
+
+### Boxplot of phosphorous flux
+
+```{r,eval=TRUE,echo=FALSE,include=TRUE}
+# Checking for outliers
+
+par(mfrow=c(1,1))
+i = "150"
+
+depth <- c("150", "200", "300")
+test.object <- NULL
+for (i in depth){
+  test <- cbind(i,get(paste0("P_flux.depth.", i))[,9])
+  test.object <- rbind(test.object,test)
+}
+test.object <- as.data.frame(test.object)
+#View(test.object)
+boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 7", xlab = "Depth (m)", ylab = "log of P-Flux (mg phosphorous m^-2 day^-1)")
+Dsts.test <- rbind(cbind(P_flux.depth.150$P_avg.150))
+
+```
+
+### Distribution of mass Flux
+
+```{r,eval=TRUE, echo=FALSE, include=TRUE}
+# Checking for normaility and no outliers in Mass Flux 
+
+hist((M_flux.depth.150$M_avg.150), breaks = "FD", main ="Fig 38 M Flux depth 150")
+hist((M_flux.depth.200$M_avg.200), breaks = "FD", main ="Fig 39 M Flux depth 200")
+hist((M_flux.depth.300$M_avg.300), breaks = "FD", main ="Fig 40 M Flux depth 300")
+hist((M_flux.depth.400$M_avg.400), breaks = "FD", main ="Fig 41 M Flux depth 400")
+
+# using natural log to Transform the data 
+
+hist(log(M_flux.depth.150$M_avg.150), main ="Fig 42 M Flux depth 150 (log)")
+hist(log(M_flux.depth.200$M_avg.200), main ="Fig 43 M Flux depth 200 (log)")
+hist(log(M_flux.depth.300$M_avg.300), main ="Fig 44 M Flux depth 300 (log)")
+hist(log(M_flux.depth.400$M_avg.400), main ="Fig 45 M Flux depth 400 (log)")
+```
+
+### Boxplot of mass flux
+
+```{r,eval=TRUE,echo=FALSE,include=TRUE}
+# Checking for outliers
+
+par(mfrow=c(1,1))
+i = "150"
+
+depth <- c("150", "200", "300", "400")
+test.object <- NULL
+for (i in depth){
+  test <- cbind(i,get(paste0("M_flux.depth.", i))[,9])
+  test.object <- rbind(test.object,test)
+}
+test.object <- as.data.frame(test.object)
+#View(test.object)
+boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 8", xlab = "Depth (m)", ylab = "log of M-Flux (mg mass m^-2 day^-1)")
+Dsts.test <- rbind(cbind(M_flux.depth.150$M_avg.150))
+
+```
+
+### EDA for carbon flux
+
+```{r,eval=TRUE, echo=FALSE, include=TRUE}
+#Carbon EDA
+resids <- resid( lmfit_C.M ) # extract epsilon_hats
+fit <- fitted ( lmfit_C.M ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20, main = "Fig 36")
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="Fig 37 resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="Fig 38 resid vs y_hat")
+abline(h=0)
+```
+
+### EDA for nitrogen flux
+
+```{r,eval=TRUE, echo=FALSE,include=TRUE}
+#Nitrogen EDA
+resids <- resid( lmfit_N.M ) # extract epsilon_hats
+fit <- fitted ( lmfit_N.M ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20, main = "Fig 39")
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="Fig 40 resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="Fig 41 resid vs y_hat")
+abline(h=0)
+
+```
+
+### EDA for Phosphorous
+
+```{r,echo=FALSE,include=TRUE}
+#Phosphorus EDA
+resids <- resid( lmfit_P.M ) # extract epsilon_hats
+fit <- fitted ( lmfit_P.M ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20, main = "Fig 42")
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="Fig 43 resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="Fig 44 resid vs y_hat")
+abline(h=0)
+```
+
+### EDA for nitrogen and carbon flux combined
+
+```{r,echo=FALSE,include=TRUE}
+resids <- resid( lmfit.flux ) # extract epsilon_hats
+fit <- fitted ( lmfit.flux ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20, main ="Fig 46")
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="Fig 47 resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="Fig 48 resid vs y_hat")
+abline(h=0)
+
+```
+
+### EDA for multiple regression
+
+```{r,echo=FALSE, include=TRUE}
+
+resids <- resid( lmfit.MR ) # extract epsilon_hats
+fit <- fitted ( lmfit.MR ) # extract y_hats
+
+par(mfrow=c(1,2))
+
+hist(resids, breaks=20,  main= "Fig 53")
+qqnorm(resids)
+qqline(resids) # add straight line from true normal
+
+plot(resids, main="Fig 54 resid vs i") 
+abline(h=0) # mean of epsilon_hat
+
+plot(x=fit, y=resids, main="Fig 55 resid vs y_hat")
+abline(h=0)
 ```
 
