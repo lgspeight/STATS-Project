@@ -215,6 +215,7 @@ colnames(bar.Cflux)[3] <- "C_flux.SE"
 bar.Cflux
 ```
 
+#### Figure 1
 Graph of C-flux
 
 ```{r, echo = FALSE}
@@ -262,6 +263,7 @@ colnames(bar.Pflux)[3] <- "P_flux.SE"
 bar.Pflux
 ```
 
+#### Figure 2
 Graph of P-flux 
 
 ```{r, echo = FALSE}
@@ -311,6 +313,7 @@ colnames(bar.Nflux)[3] <- "N_flux.SE"
 bar.Nflux
 ```
 
+#### Figure 3
 Graph of N-flux
 
 ```{r, echo= FALSE}
@@ -360,6 +363,7 @@ colnames(bar.Mflux)[3] <- "M_flux.SE"
 bar.Mflux
 ```
 
+#### Figure 4
 Graph of M-flux
 
 ```{r, echo = FALSE}
@@ -384,6 +388,8 @@ Checking for normality and outliers in flux distribution
 
 Log transfromation was needed for all Fluxes 
 
+*See Appendix ii for distributional hitrograms and log tranformation histograms*
+
 ```{r,eval=TRUE, echo=FALSE, include=FALSE}
 # Checking for normaility and no outliers in Carbon Flux 
 
@@ -398,7 +404,9 @@ hist(log(C_flux.depth.150$C_avg.150), main ="Fig 9 C Flux depth 150 (log)")
 hist(log(C_flux.depth.200$C_avg.200), main ="Fig 10 C Flux depth 200 (log)")
 hist(log(C_flux.depth.300$C_avg.300), main ="Fig 11 C Flux depth 300 (log)")
 hist(log(C_flux.depth.400$C_avg.400), main ="Fig 12 C Flux depth 400 (log)")
+```
 
+```{r, eval=TRUE,echo=FALSE}
 # Checking for outliers
 par(mfrow=c(1,1))
 i = "150"
@@ -413,7 +421,6 @@ test.object <- as.data.frame(test.object)
 #View(test.object)
 boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 5", xlab = "Depth (m)", ylab = "log of C-Flux (mg carbon m^-2 day^-1)")
 Dsts.test <- rbind(cbind(C_flux.depth.150$C_avg.150))
-
 ```
 
 *boxplot means do not overlap, and box sizes for 150, 200, 300, and 400 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has some overlap which could break homosedasticity*
@@ -434,7 +441,9 @@ hist(log(N_flux.depth.150$N_avg.150), main ="Fig 21 N Flux depth 150 (log)")
 hist(log(N_flux.depth.200$N_avg.200), main ="Fig 22 N Flux depth 200 (log)")
 hist(log(N_flux.depth.300$N_avg.300), main ="Fig 23 N Flux depth 300 (log)")
 hist(log(N_flux.depth.400$N_avg.400), main ="Fig 24 N Flux depth 400 (log)")
+```
 
+```{r,eval=TRUE,echo=FALSE}
 # Checking for outliers
 
 par(mfrow=c(1,1))
@@ -450,7 +459,6 @@ test.object <- as.data.frame(test.object)
 #View(test.object)
 boxplot(log(as.numeric(test.object$V2))~test.object$i, main = "Figure 6", xlab = "Depth (m)", ylab = "log of N-Flux (mg nitrogen m^-2 day^-1)")
 Dsts.test <- rbind(cbind(N_flux.depth.150$N_avg.150))
-
 ```
 
 *boxplot means do not too seem to overlab too much for 150, 200, and 300 but ther is a bit of overlap in 300 and 400. 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape and whiskers which could break homosedasticity*
@@ -679,9 +687,7 @@ boxplot(log(M.depth.200.300$D), main ="Fig 30 M.depth.200.300$D_bar") #lots of o
 
 *Mdepth (200.300) is not normal, but log transformation increases normality. Outliers present in box plot*
 
-<br>
-
-Proceed with hypothesis test of log transformed data
+                    Proceed with hypothesis test of log transformed data
 
 #### Hyp 1
 
@@ -1098,12 +1104,10 @@ Data.noNA$Date <- as.Date(paste(substr(Data.noNA$yymmdd1,1,4),
 
 Data.noNA$Year <- substr(Data.noNA$yymmdd1,1,4)
 
-<<<<<<< HEAD
-                            
-=======
+
+
 #install.packages("lubridate")
 library(lubridate)                            
->>>>>>> ea0b83fb6a1c621d0b724359d1520d55515aad1d
 Data.noNA$month <- as.Date(paste(substr(Data.noNA$yymmdd1,5,6),
                               substr(Data.noNA$yymmdd1,7,8), sep = "-"),
                         format = '%m-%d')           
@@ -1153,7 +1157,7 @@ We then ran an ANCOVA model. After log transforming data, C, N, P, and M distrib
 Through all our model tests. We see that flux consistently decreases with depth in each, N, P, C, and M. Depth can be used as a predictor of flux. We also see that C-flux seems to be the best predictor of mass flux. This could be potentially due to the additional carbon flux promoted by biological organisms such as copepods that excrete fecal pellets that are able to sink this carbon to depth (7). In our second anova model, we see that the best way to predict mass flux is by using all of the flux averages as well as depth for parameters. We expected to see these trends as previous literature had suggested that flux decrease with depth (4).
 
 # Limitations:
-We had limitations in our data from a lot of N/As that prevented us on running full analyses. If this data had been available, we could have seen much stronger trends in our data. 
+We had limitations in our data from a lot of N/As that prevented us on running full analyses. If this data had been available, we could have seen much stronger trends in our data. We did see numerous outliers in our data, but proceeded with hypothesis testing anyways, could have led to unreliable results.  
 
 # References:
 1. B. Szymczycha, Z. Klostowska, M. Lengier, L. Dzierzbicka-Glowacka, Significance of nutrient fluxes via submarine groundwater discharge in the Bay of Puck, southern Baltic Sea. Oceanologia 62, 117-125 (2020).
@@ -1173,7 +1177,7 @@ We had limitations in our data from a lot of N/As that prevented us on running f
 
 # Appendix i
 
-```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE, include=TRUE}
 ```
 
 # Appendix ii
