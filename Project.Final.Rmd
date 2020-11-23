@@ -385,6 +385,7 @@ Checking for normality and outliers in flux distribution
 Log transfromation was needed for all Fluxes 
 
 ```{r,eval=TRUE, echo=FALSE, include=FALSE}
+
 # Checking for normaility and no outliers in Carbon Flux 
 
 hist((C_flux.depth.150$C_avg.150), main ="Fig 5 C Flux depth 150")
@@ -416,7 +417,7 @@ Dsts.test <- rbind(cbind(C_flux.depth.150$C_avg.150))
 
 ```
 
-*boxplot means do not overlap, and box sizes for 150, 200, 300, and 400 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has some overlap which could break homosedasticity*
+*boxplot means overlap, but box sizes for 150, 200, 300, and 400 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other. However, the concern is the overlap suggesting that they break homoscedasticity and are not good predictors of one another.*
 
 <br>
 
@@ -453,7 +454,7 @@ Dsts.test <- rbind(cbind(N_flux.depth.150$N_avg.150))
 
 ```
 
-*boxplot means do not too seem to overlab too much for 150, 200, and 300 but ther is a bit of overlap in 300 and 400. 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape and whiskers which could break homosedasticity*
+*boxplot means seem to overlap a bit for 150, 200, 300, and 400. The 400 depth has a lot of overlap and a very different shape and whiskers. All of these observations suggest that the model breaks homosedasticity and that the depths are not good good predictors of one another*
 
 <br>
 
@@ -488,7 +489,7 @@ Dsts.test <- rbind(cbind(P_flux.depth.150$P_avg.150))
 
 ```
 
-*boxplot means seem to have some overlap, but not too much and they are similar in box size and whisker length*
+*boxplot means seem to overlap a for 150, 200, and 300. Even though they are similar in box and whisker length, the overlap suggests that the model breaks homosedasticity and that the depths are not good good predictors of one another*
 
 ```{r,eval=TRUE, echo=FALSE, include=FALSE}
 # Checking for normaility and no outliers in Mass Flux 
@@ -524,7 +525,7 @@ Dsts.test <- rbind(cbind(M_flux.depth.150$M_avg.150))
 
 ```
 
-*boxplot means seem to have some overlap. They are similar in box size except for 400, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity*
+*boxplot means seem to have some overlap. They are similar in box size except for 400, but the concern is the overlap, making them not good predictors of one another and potentially breaking homosedasticity. Conclusively, depths are not good predictors of one another and will no be used in our results*
 
 *Since many of the 400 m depth distrubutions were not normal, even after transformation and have small n, they will not be used in the hypothesis testing* 
 
@@ -632,9 +633,9 @@ boxplot(log(N.depth.150.200$D), main = "Fig 17 N.depth.150.200$D") #lots of outl
 ```{r, echo=FALSE}
 # Nitrogen
 par(mfrow=c(1,3))
-hist(N.depth.200.300$D, breaks = "FD", main = "Fig 17 N.depth.200.300$D")
-hist(log(N.depth.200.300$D), breaks = "FD", main ="Fig 18 N.depth.200.300$D_bar") #try lo transform 
-boxplot(log(N.depth.200.300$D), main = "Fig 19 N.depth.200.300$D") #lots of outliers 
+hist(N.depth.200.300$D, breaks = "FD", main = "Fig 18 N.depth.200.300$D")
+hist(log(N.depth.200.300$D), breaks = "FD", main ="Fig 19 N.depth.200.300$D_bar") #try lo transform 
+boxplot(log(N.depth.200.300$D), main = "Fig 20 N.depth.200.300$D") #lots of outliers 
 ```
 
 *Ndepth (200.300) is skewed, but log transformation increases normality. Outliers present in box plot*
@@ -642,9 +643,9 @@ boxplot(log(N.depth.200.300$D), main = "Fig 19 N.depth.200.300$D") #lots of outl
 ```{r,echo=FALSE}
 # Phosphorous
 par(mfrow=c(1,3))
-hist(P.depth.150.200$D, breaks = "FD", main ="Fig 20 P.depth.150.200$D_bar")
-hist(log(P.depth.150.200$D), breaks = "FD", main ="Fig 21 P.depth.150.200$D_bar") #try lo transform 
-boxplot(log(P.depth.150.200$D), main ="Fig 22 P.depth.150.200$D_bar") #lots of outliers 
+hist(P.depth.150.200$D, breaks = "FD", main ="Fig 21 P.depth.150.200$D_bar")
+hist(log(P.depth.150.200$D), breaks = "FD", main ="Fig 22 P.depth.150.200$D_bar") #try lo transform 
+boxplot(log(P.depth.150.200$D), main ="Fig 23 P.depth.150.200$D_bar") #lots of outliers 
 ```
 
 *Pdepth (150.200) is not very normal, but log transformation increases normality. Outliers present in box plot*
@@ -652,9 +653,9 @@ boxplot(log(P.depth.150.200$D), main ="Fig 22 P.depth.150.200$D_bar") #lots of o
 ```{r,echo=FALSE}
 # Phosporous
 par(mfrow=c(1,3))
-hist(P.depth.200.300$D, breaks = "FD", main ="Fig 23 P.depth.200.300$D_bar")
-hist(log(P.depth.200.300$D), breaks = "FD", main ="Fig 24 P.depth.200.300$D_bar") #try lo transform 
-boxplot(log(P.depth.200.300$D), main ="Fig 25 P.depth.200.300$D_bar") #lots of outliers 
+hist(P.depth.200.300$D, breaks = "FD", main ="Fig 24 P.depth.200.300$D_bar")
+hist(log(P.depth.200.300$D), breaks = "FD", main ="Fig 25 P.depth.200.300$D_bar") #try lo transform 
+boxplot(log(P.depth.200.300$D), main ="Fig 26 P.depth.200.300$D_bar") #lots of outliers 
 ```
 
 *Pdepth (200.300) is not very normal, but log transformation increases normality. NO outliers present in box plot*
@@ -662,9 +663,9 @@ boxplot(log(P.depth.200.300$D), main ="Fig 25 P.depth.200.300$D_bar") #lots of o
 ```{r,echo=FALSE}
 # Mass 
 par(mfrow=c(1,3))
-hist(M.depth.150.200$D, breaks = "FD", main ="Fig 25 M.depth.150.200$D_bar")
-hist(log(M.depth.150.200$D), breaks = "FD", main ="Fig 26 M.depth.150.200$D_bar") #try lo transform 
-boxplot(log(M.depth.150.200$D), main ="Fig 27 M.depth.150.200$D_bar") #lots of outliers 
+hist(M.depth.150.200$D, breaks = "FD", main ="Fig 27 M.depth.150.200$D_bar")
+hist(log(M.depth.150.200$D), breaks = "FD", main ="Fig 28 M.depth.150.200$D_bar") #try lo transform 
+boxplot(log(M.depth.150.200$D), main ="Fig 29 M.depth.150.200$D_bar") #lots of outliers 
 ```
 
 *Mdepth (150.200) is fairly normal, but log transformation increases normality. Outliers present in box plot*
@@ -672,9 +673,9 @@ boxplot(log(M.depth.150.200$D), main ="Fig 27 M.depth.150.200$D_bar") #lots of o
 ```{r,echo=FALSE}
 # Mass
 par(mfrow=c(1,3))
-hist(M.depth.200.300$D, breaks = "FD", main ="Fig 28 M.depth.200.300$D_bar")
-hist(log(M.depth.200.300$D), breaks = "FD", main ="Fig 29 M.depth.200.300$D_bar") #try lo transform 
-boxplot(log(M.depth.200.300$D), main ="Fig 30 M.depth.200.300$D_bar") #lots of outliers 
+hist(M.depth.200.300$D, breaks = "FD", main ="Fig 30 M.depth.200.300$D_bar")
+hist(log(M.depth.200.300$D), breaks = "FD", main ="Fig 31 M.depth.200.300$D_bar") #try lo transform 
+boxplot(log(M.depth.200.300$D), main ="Fig 32 M.depth.200.300$D_bar") #lots of outliers 
 ```
 
 *Mdepth (200.300) is not normal, but log transformation increases normality. Outliers present in box plot*
@@ -818,17 +819,17 @@ Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
 
 #plot(Data.noNA) # we see some relationships between mass flux and the rest of the nutrient fluxes
 par(mfrow=c(1,3))
-plot(log(Data.noNA$C_avg),log(Data.noNA$M_avg), main ="Fig 31 M v. C") #good linearity, but clumping
+plot(log(Data.noNA$C_avg),log(Data.noNA$M_avg), main ="Fig 33 M v. C") #good linearity, but clumping
 lmfit_C.M <- lm(log(M_avg) ~ log(C_avg), data = Data.noNA)
 summary(lmfit_C.M)
 abline(lmfit_C.M)
 
-plot(log(Data.noNA$N_avg),log(Data.noNA$M_avg), main ="Fig 32 M v. N") # alright linearity, still clumping 
+plot(log(Data.noNA$N_avg),log(Data.noNA$M_avg), main ="Fig 34 M v. N") # alright linearity, still clumping 
 lmfit_N.M <- lm(log(M_avg) ~ log(N_avg), data = Data.noNA)
 summary(lmfit_N.M)
 abline(lmfit_N.M)
 
-plot(log(Data.noNA$P_avg),log(Data.noNA$M_avg), main ="Fig 33 M v. P") # worse, still clumping 
+plot(log(Data.noNA$P_avg),log(Data.noNA$M_avg), main ="Fig 35 M v. P") # worse, still clumping 
 lmfit_P.M <- lm(log(M_avg) ~ log(P_avg), data = Data.noNA)
 summary(lmfit_P.M)
 abline(lmfit_P.M)
@@ -854,14 +855,14 @@ fit <- fitted ( lmfit_C.M ) # extract y_hats
 
 par(mfrow=c(1,2))
 
-hist(resids, breaks=20, main = "Fig 34")
+hist(resids, breaks=20, main = "Fig 36")
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="Fig 35 resid vs i") 
+plot(resids, main="Fig 37 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="Fig 36 resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 38 resid vs y_hat")
 abline(h=0)
 
 ```
@@ -879,14 +880,14 @@ fit <- fitted ( lmfit_N.M ) # extract y_hats
 
 par(mfrow=c(1,2))
 
-hist(resids, breaks=20, main = "Fig 37")
+hist(resids, breaks=20, main = "Fig 39")
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="Fig 38 resid vs i") 
+plot(resids, main="Fig 40 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="Fig 39 resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 41 resid vs y_hat")
 abline(h=0)
 
 ```
@@ -905,14 +906,14 @@ fit <- fitted ( lmfit_P.M ) # extract y_hats
 
 par(mfrow=c(1,2))
 
-hist(resids, breaks=20, main = "Fig 40")
+hist(resids, breaks=20, main = "Fig 42")
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="Fig 41 resid vs i") 
+plot(resids, main="Fig 43 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="Fig 42 resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 44 resid vs y_hat")
 abline(h=0)
 ```
 
@@ -934,7 +935,7 @@ Data.noNA$flux <- Data.noNA$C_avg - Data.noNA$N_avg  #combine the fluxes
 lmfit.flux <- lm(log(M_avg) ~ log(flux),
          data=Data.noNA)
 summary(lmfit.flux)
-plot(log(Data.noNA$flux), log(Data.noNA$M_avg), main ="Fig 43")
+plot(log(Data.noNA$flux), log(Data.noNA$M_avg), main ="Fig 45")
 abline(lmfit.flux)
 
 resids <- resid( lmfit.flux ) # extract epsilon_hats
@@ -942,14 +943,14 @@ fit <- fitted ( lmfit.flux ) # extract y_hats
 
 par(mfrow=c(1,2))
 
-hist(resids, breaks=20, main ="Fig 44")
+hist(resids, breaks=20, main ="Fig 46")
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="Fig 45 resid vs i") 
+plot(resids, main="Fig 47 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="Fig 46 resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 48 resid vs y_hat")
 abline(h=0)
 
 ```
@@ -971,22 +972,22 @@ Best Fit line: $f(x)$ = $\hat{\beta_0}$ + $\hat{\beta_1}x$
 
 par(mfrow=c(1,4))
 
-plot(Data.noNA$dep, log(Data.noNA$C_avg), main ="Fig 47")
+plot(Data.noNA$dep, log(Data.noNA$C_avg), main ="Fig 49")
 lmfit_Dep.C <- lm(log(C_avg) ~ dep, data = Data.noNA)
 summary(lmfit_Dep.C)
 abline(lmfit_Dep.C)
 
-plot(Data.noNA$dep, log(Data.noNA$N_avg), main= "Fig 48")
+plot(Data.noNA$dep, log(Data.noNA$N_avg), main= "Fig 50")
 lmfit_Dep.N <- lm(log(N_avg) ~ dep, data = Data.noNA)
 summary(lmfit_Dep.N)
 abline(lmfit_Dep.N)
 
-plot(Data.noNA$dep, log(Data.noNA$P_avg),  main= "Fig 49")
+plot(Data.noNA$dep, log(Data.noNA$P_avg),  main= "Fig 51")
 lmfit_Dep.P <- lm(log(P_avg) ~ dep, data = Data.noNA)
 summary(lmfit_Dep.P)
 abline(lmfit_Dep.P)
 
-plot(Data.noNA$dep, log(Data.noNA$M_avg),  main= "Fig 50")
+plot(Data.noNA$dep, log(Data.noNA$M_avg),  main= "Fig 52")
 lmfit_Dep.M <- lm(log(M_avg) ~ dep, data = Data.noNA)
 summary(lmfit_Dep.M)
 abline(lmfit_Dep.M)
@@ -1012,14 +1013,14 @@ fit <- fitted ( lmfit.MR ) # extract y_hats
 
 par(mfrow=c(1,2))
 
-hist(resids, breaks=20,  main= "Fig 51")
+hist(resids, breaks=20,  main= "Fig 53")
 qqnorm(resids)
 qqline(resids) # add straight line from true normal
 
-plot(resids, main="Fig 52 resid vs i") 
+plot(resids, main="Fig 54 resid vs i") 
 abline(h=0) # mean of epsilon_hat
 
-plot(x=fit, y=resids, main="Fig 53 resid vs y_hat")
+plot(x=fit, y=resids, main="Fig 55 resid vs y_hat")
 abline(h=0)
 ```
 
@@ -1063,22 +1064,22 @@ attach(ANOCOVA.data)
 
 summary(ANOCOVA.data)
 
-pairs.panels(data.frame(as.factor(dep),log(C_avg),log(N_avg),log(P_avg),log(M_avg)), main = "Fig 54")
+pairs.panels(data.frame(as.factor(dep),log(C_avg),log(N_avg),log(P_avg),log(M_avg)), main = "Fig 56")
 
 xyplot(log(M_avg) ~ log(C_avg) | as.factor(dep), 
-                  main="Fig 55: Activity level-specific scatterplots"
+                  main="Fig 57: Activity level-specific scatterplots"
            )
 
     xyplot(log(M_avg) ~ log(C_avg), groups=as.factor(dep), 
                   auto.key=TRUE,
-                  main="Fig 56: Scatterplot with color=group level"
+                  main="Fig 58: Scatterplot with color=group level"
            )
     
     xyplot(log(M_avg) ~ log(C_avg), groups=as.factor(dep), 
                   type=c("p","r"), # `p` for _points_, `r` for _regression line_
                                    # see https://stackoverflow.com/questions/12972039/plotting-xyplot-with-regression-line-on-lattice-graphics for more
                   auto.key=TRUE,
-                  main="Fig 57: Three standalone depth level-specific `lm()` fits"
+                  main="Fig 59: Three standalone depth level-specific `lm()` fits"
            )
 ```
 
@@ -1131,22 +1132,25 @@ fit <-fitted(ANCOVA)
 
 # Results: 
 
-Flux consistently decreases with depth in all parameters, carbon, nitrogen, phosphorus, and mass (Fig, 1-4). 
-In order to perform t-tests with our data we needed to first check for normality and outliers in our data. All fluxes went through log transformations. C-flux boxplot boxplot means do not overlap, and box sizes for 150, 200, 300, and 400 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has some overlap which could break homosedasticity (Fig 5). N-flux boxplot means do not too seem to overlab too much for 150, 200, and 300 but ther is a bit of overlap in 300 and 400. 150, 200, and 300 seem to be similar in box size as well as whisker length which means that they could be good predictors of each other and do not break homoscedasticity. However, the 400 depth has a lot of overlap and a very different shape and whiskers which could break homosedasticity (Fig 6). For P-flux, boxplot means seem to have some overlap, but not too much and they are similar in box size and whisker length (Fig 7). For M-flux, boxplot means seem to have some overlap. They are similar in box size except for 400, but the concern is the overlap, making them not good predictors of one another and potentially breaking homoscedasticity (Fig 8). 
+Flux consistently decreases with depth in all parameters, carbon, nitrogen, phosphorus, and mass (Fig, 1-4).
+
+In order to perform t-tests with our data we needed to first check for normality and outliers in our data (Fig 15- 32). All fluxes went through log transformations.
 
 After running 95 percent confidence intervals for each flux compared to depth, we reject the null for H1. as carbon flux is lower at 200 meters than at 150 meters (t = 14.668, df = 302, p-value < 2.2e-16). We reject the null for H2 as carbon flux is lower at 300 meters than at 200 meters (t = 13.324, df = 299, p-value < 2.2e-16). We reject the null for H3 as nitrogen flux is lower at 200 meters than at 150 meters (t = 14.918, df = 300, p-value < 2.2e-16). We reject the null for H4 as nitrogen flux is lower at 300 meters than at 200 meters (t = 15.938, df = 297, p-value < 2.2e-16). We reject the null for H5 as phosphorus flux is lower at 200 meters than at 150 meters (t = 10.941, df = 105, p-value < 2.2e-16). We reject the null for H6 as phosphorus flux is lower at 300 meters than at 200 meters (t = 12.446, df = 104, p-value < 2.2e-16). We reject the null for H7 as mass flux is lower at 200 meters than at 150 meters (t = 11.049, df = 303, p-value < 2.2e-16). We reject the null for H8 as mass flux is lower at 300 meter then at 200 meter (t = 12.054, df = 300, p-value < 2.2e-16). 
 
-In order to see how well P, N, and C were able to predict mass flux, simple linear regression was performed with log transformed data. C-flux was the best predictor of mass flux, but still had a little clumping (Fig 58, r2=0.7405). N-flux was the next best predictor (Fig 59, r2 = 0.6446). P-flux was the worst predictor of mass flux (Fig 60, r2=0.3592).
+In order to see how well P, N, and C were able to predict mass flux, simple linear regression was performed with log transformed data (Fig 33, 34, 35). C-flux was the best predictor of mass flux, but still had a little clumping (Fig 33, r2=0.7405). N-flux was the next best predictor (Fig 34, r2 = 0.6446). P-flux was the worst predictor of mass flux (Fig 35, r2=0.3592).
 
-Even though carbon-flux seemed to be a good predictor of mass flux in the simple linear regression model, after running EDA we see that the model is not very normal, poor linearity, and both residual are not very evenly scattered and there is clumping around the line, showing that they are not heteroscedasticity. All these models suggest that trifecta is broken (Fig 61 and 62 with associated distribution and linear fit model). We see this same trend as we look at N-flux as a predictor (Fig 63 and 64 with associated distribution and linear fit model). As well as P-flux (Fig 65 and 66 with associated distribution and linear fit model).
-We next wanted to see if collinearity between the different fluxes that are predicting mass flux and potentially combine the fluxes, so we ran a ANOVA regression model and best fit line model. Collinearity was observed between Nitrogen and Carbon flux predictors, so they were combined into a single flux categorie to predict mass flux (Fig 67-68).
+Even though carbon-flux seemed to be a good predictor of mass flux in the simple linear regression model, after running EDA we see that the model is not very normal, poor linearity, and both residual are not very evenly scattered and there is clumping around the line, showing that they are not heteroscedasticity. All these models suggest that trifecta is broken (Fig 36, 37, 38). We see this same trend as we look at N-flux as a predictor (Fig 39, 40, 41). As well as P-flux (Fig 42, 43, 44).
 
-Next, we ran a regression model to see how depth affects flux, and we see that as depth decreases so does flux, so depth can be a predictor of flux (Fig 70-73).
+We next wanted to see if collinearity between the different fluxes that are predicting mass flux and potentially combine the fluxes, so we ran a ANOVA regression model and best fit line model. Collinearity was observed between Nitrogen and Carbon flux predictors, so they were combined into a single flux categorie to predict mass flux (Fig 45-48).
 
-We ran a second ANOVA model with an extra parameter to see if this would improve the model fit. The extra parameter did improve the mode and made it more normal and linear, but was still very clustered for residuals (Fig 74-76).
-In comparing our two Anova models, we see that we see that there is no significant difference in the first anova model, as our p-value is too large to assume that losing df due to an extra parameter is worthwhile (Fig 67-69). However, our p-value is significantly small in our second anova model indicating that losing df due to an extra parameter is worthwhile, and improves the fit (Fig 74-76).
+Next, we ran a regression model to see how depth affects flux, and we see that as depth decreases so does flux, so depth can be a predictor of flux (Fig 49-52).
 
-We then ran an ANCOVA model. After log transforming data, C, N, P, and M distributions look much more normal and linearity is looking better, especially for C and N. Activity level specific scatterplots highlight the interaction with C and M through depths and have somewhat of a linear relationship. However, the three standalone depth level-specific lm fits are not parallel to each other, suggesting that they may not be good predictors of one another.
+We ran a second ANOVA model with an extra parameter to see if this would improve the model fit. The extra parameter did improve the mode and made it more normal and linear, but was still very clustered for residuals (Fig 53-55).
+
+In comparing our two Anova models, we see that we see that there is no significant difference in the first anova model, as our p-value is too large to assume that losing df due to an extra parameter is worthwhile. However, our p-value is significantly small in our second anova model indicating that losing df due to an extra parameter is worthwhile, and improves the fit.
+
+We then ran an ANCOVA model. After log transforming data, C, N, P, and M distributions look much more normal and linearity is looking better, especially for C and N. Activity level specific scatterplots highlight the interaction with C and M through depths and have somewhat of a linear relationship. However, the three standalone depth level-specific lm fits are not parallel to each other, suggesting that they may not be good predictors of one another (Fig 56-59).
 
 # Discussion:
 
