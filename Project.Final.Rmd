@@ -5,6 +5,8 @@ date: "11/13/2020"
 output:
   html_document:
     df_print: paged
+    toc: True
+    toc_float: True
 ---
 
 # Title: Fluxes in the ocean 
@@ -64,7 +66,7 @@ Our data included the values of carbon, nitrogen, phosphorus, and mass flux samp
 
 # Description:
 
-Our Data was subset from the original data set to exclude all blank columns and include just the average flux values from each of the samples taken at a specific cruise, location, and depth. Each Flux was then subset into their own data frame and then each depth was subset into their own dataframe. These data frames were then used to take statistical inference in the form of number of observations, means and standard error from each flux at each depth. The means were then used to visually access the difference in each depth of each flux in the form of barplots. To check for distribution normality and outliers, histograms and boxplots for each flux at each depth were created. Log transformations for all flux values were done to increase normality and eventually linearity in regression models. To test for significant difference in flux values as depth increases, paired sample t-test were performed. Two paired sample t-test was performed for each flux, comparing flux values at 150 meters to 200 meters and 200 meters to 300 meters. All 400 meter values were excluded from hypothesis testing due to low observational units and non-Gaussian distributions, even after log transformations. A paired sample t-test was chosen because some. samples were collected on the same cruise and at the same location. So for each flux value at one depth, there was a flux value collected at a different depth at the same location. Data frames for each paired sample t-test were merged based on cruise, year, and location to have the same number of values. The dbar (ybar_1 - ybar_2) was created for each  distribution of the difference between each pair …. To be continued… simple linear regression … collinearity …. Multiple regression … anova…. Ancova.  
+Our Data was subset from the original data set to exclude all blank columns and include just the average flux values from each of the samples taken at a specific cruise, location, and depth. Each Flux was then subset into their own data frame and then each depth was subset into their own dataframe. These data frames were then used to take statistical inference in the form of number of observations, means and standard error from each flux at each depth. The means were then used to visually access the difference in each depth of each flux in the form of barplots. To check for distribution normality and outliers, histograms and boxplots for each flux at each depth were created. Log transformations for all flux values were done to increase normality and eventually linearity in regression models. To test for significant difference in flux values as depth increases, paired sample t-test were performed. Two paired sample t-test was performed for each flux, comparing flux values at 150 meters to 200 meters and 200 meters to 300 meters. All 400 meter values were excluded from hypothesis testing due to low observational units and non-Gaussian distributions, even after log transformations. A paired sample t-test was chosen because samples were collected on the same cruise and at the same location, but at differnt depths. So for each flux value at one depth, there was a flux value collected at a different depth at the same location. Data frames for each paired sample t-test were merged based on cruise, year, and location to have the same number of values. The dbar (ybar_1 - ybar_2) was created for  the difference between each pair,and histograms and boxplots were made to look at normality and outliers. Natural log transformations for dbar was needed to increase normality. Paired sample-test with a 95% confidence interval were preformed for each depth comparison. Our null hypothesis is that the avergage flux at each depth is the same, our alternative hypothesis being that shallower depths would have a greater flux value then deeper depth. We then used simple linear regression to determine how well different nutrient flux predict mass flux. When inspecting a plot of the entire data set, collinearity can be seen between carbon and nitrogren. These carbon and nitrogen flux were then combined and plotted as a predictor of mass flux. Simple linear regression of depth as predictors of all the fluxes were preformed. Multiple regression analysis was preformed using both depth and cabron,nitrogen flux combined as predictors for mass flux. We then did two anova tests to compare the fit our simple linear regression models (small) of carbon,nitrogen flux combined predicting mass flux, and depth predicting mass flux, against our multple regression model (large) that used both flux and depth to predict mass flux. Ancova model was then created to look at how all variables predict mass flux: carbon, nitrogen, phosphorous, depth, and month and year as blocking factors to account for interanual and anual variation.  
 
 # Implementation:
 
@@ -382,7 +384,7 @@ Checking for normality and outliers in flux distribution
 
 Log transfromation was needed for all Fluxes 
 
-```{r,eval=TRUE, echo=FALSE}
+```{r,eval=TRUE, echo=FALSE, include=FALSE}
 # Checking for normaility and no outliers in Carbon Flux 
 
 hist((C_flux.depth.150$C_avg.150), main ="Fig 5 C Flux depth 150")
@@ -418,7 +420,7 @@ Dsts.test <- rbind(cbind(C_flux.depth.150$C_avg.150))
 
 <br>
 
-```{r,eval=TRUE, echo=FALSE}
+```{r,eval=TRUE, echo=FALSE, include=FALSE}
 # Checking for normaility and no outliers in Nitrogen Flux 
 
 hist((N_flux.depth.150$N_avg.150), breaks = "FD", main ="Fig 17 N Flux depth 150")
@@ -455,7 +457,7 @@ Dsts.test <- rbind(cbind(N_flux.depth.150$N_avg.150))
 
 <br>
 
-```{r,eval=TRUE, echo=FALSE}
+```{r,eval=TRUE, echo=FALSE, include=FALSE}
 # Checking for normaility and no outliers in Phosporous Flux 
 par(mfrow=c(1,3))
 hist((P_flux.depth.150$P_avg.150), breaks = "FD", main ="Fig 29 P Flux depth 150")
@@ -488,7 +490,7 @@ Dsts.test <- rbind(cbind(P_flux.depth.150$P_avg.150))
 
 *boxplot means seem to have some overlap, but not too much and they are similar in box size and whisker length*
 
-```{r,eval=TRUE, echo=FALSE}
+```{r,eval=TRUE, echo=FALSE, include=FALSE}
 # Checking for normaility and no outliers in Mass Flux 
 
 hist((M_flux.depth.150$M_avg.150), breaks = "FD", main ="Fig 38 M Flux depth 150")
@@ -1096,7 +1098,12 @@ Data.noNA$Date <- as.Date(paste(substr(Data.noNA$yymmdd1,1,4),
 
 Data.noNA$Year <- substr(Data.noNA$yymmdd1,1,4)
 
+<<<<<<< HEAD
                             
+=======
+#install.packages("lubridate")
+library(lubridate)                            
+>>>>>>> ea0b83fb6a1c621d0b724359d1520d55515aad1d
 Data.noNA$month <- as.Date(paste(substr(Data.noNA$yymmdd1,5,6),
                               substr(Data.noNA$yymmdd1,7,8), sep = "-"),
                         format = '%m-%d')           
@@ -1164,8 +1171,14 @@ We had limitations in our data from a lot of N/As that prevented us on running f
 7. H. van der Jagt, I. Wiedmann, N. Hildebrandt, B. Niehoff, M. H. Iversen, Aggregate Feeding by the Copepods Calanus and Pseudocalanus Controls Carbon Flux Attenuation in the Arctic Shelf Sea During the Productive Period. Frontiers in Marine Science 7, 16 (2020).
 
 
-# Appendix 
+# Appendix i
 
 ```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```
+
+# Appendix ii
+
+```{r}
+
 ```
 
